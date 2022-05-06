@@ -1,0 +1,55 @@
+.login-container{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    background-color: rgba($color: #ff4500, $alpha: 0.05);
+    .card{
+        width: 400px;
+        padding: 20px;
+        background-color: rgba($color: #ffffff, $alpha: 0.85);
+        border-radius: 8px;
+    }
+    form{
+        width: 100%;
+    }
+    .full-width{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .center{
+        text-align: center;
+    }
+    .info-text{
+      letter-spacing: 1px;
+    }
+    .info-text a{
+        color:#ff4500;
+        font-weight: 600;
+        letter-spacing: 2px;
+    }
+    .secondary-color{
+        color: #ff4500;
+    }
+    .heading{
+        font-weight: 500;
+    }
+}
+
+.login-bg-image{
+    width: 100%;
+    height: 100vh;
+    background-image: url('../../assets/bg-images/hands-indian-bride-groom-intertwined-together-making-authentic-wedding-ritual.jpg');
+    background-size: cover;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
