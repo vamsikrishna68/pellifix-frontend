@@ -74,7 +74,7 @@ const Welcome = () => {
                                 <span onClick={() => navigate('/login')} className="getstarted"> Login</span>
                             </li>
                             <li>
-                                <span onClick={() => navigate('/login')} className="getstarted"> Register</span>
+                                <span onClick={() => navigate('/register')} className="getstarted"> Register</span>
                             </li>
                         </ul>
                         <i className="bi bi-list mobile-nav-toggle"></i>

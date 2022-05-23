@@ -4,6 +4,7 @@ import Login from "./pages/Login/Login";
 import Welcome from "./pages/Welcome/Welcome"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import './App.css';
+import Register from './pages/Register/Register';
 
 
 let theme = createTheme({
@@ -25,6 +26,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Welcome />}></Route>
             <Route path="login" element={<Login />}></Route>
+            <Route path="register" element={<Register />}></Route>
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
