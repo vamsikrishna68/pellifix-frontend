@@ -20,7 +20,7 @@ const Register = () => {
                 <span style={{ width: '45%' }} className='para'>Let's get you all set up so you can verify your personal account and begin setting up your profile.</span>
                 <Formik
 
-                    initialValues={{ firstname: '', lastname: '', email: '', password: '',phone:'',confirmPwd:'' }}
+                    initialValues={{ name: '', profileCreatedBy: '', email: '', password: '',phone:'',confirmPwd:'' }}
                     validate={values => {
                         const errors = {};
                         if (!values.email) {
@@ -33,11 +33,11 @@ const Register = () => {
                         if (!values.password) {
                             errors.password = 'Password is Required';
                         }
-                        if (!values.firstname) {
-                            errors.firstname = 'First Name is Required';
+                        if (!values.name) {
+                            errors.name = 'Name is Required';
                         }
-                        if (!values.lastname) {
-                            errors.lastname = 'Last Name is Required';
+                        if (!values.profileCreatedBy) {
+                            errors.profileCreatedBy = 'Profile created by is Required';
                         }
                         if (!values.phone) {
                             errors.phone = 'Phone Number is Required';
@@ -72,31 +72,31 @@ const Register = () => {
                                 <div className='col-sm-6'>
                                     <TextField
                                         className='formField '
-                                        name='firstname'
+                                        name='name'
                                         fullWidth
-                                        label="First Name"
+                                        label="Name"
                                         variant="outlined"
                                         size='small'
-                                        error={errors.firstname && touched.firstname && errors.firstname ? true : false}
+                                        error={errors.name && touched.name && errors.name ? true : false}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        value={values.firstname}
-                                        helperText={errors.firstname && touched.firstname ? errors.firstname : ''}
+                                        value={values.name}
+                                        helperText={errors.name && touched.name ? errors.name : ''}
                                     />
                                 </div>
                                 <div className='col-sm-6'>
                                     <TextField
                                         className='formField '
-                                        name='lastname'
+                                        name='profileCreatedBy'
                                         fullWidth
-                                        label="Last Name"
+                                        label="Profile created by"
                                         variant="outlined"
                                         size='small'
-                                        error={errors.lastname && touched.lastname && errors.lastname ? true : false}
+                                        error={errors.profileCreatedBy && touched.profileCreatedBy && errors.profileCreatedBy ? true : false}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
-                                        value={values.lastname}
-                                        helperText={errors.lastname && touched.lastname ? errors.lastname : ''}
+                                        value={values.profileCreatedBy}
+                                        helperText={errors.profileCreatedBy && touched.profileCreatedBy ? errors.profileCreatedBy : ''}
                                     />
                                 </div>
                                 <div className='col-sm-6'>
