@@ -12,6 +12,7 @@
 
     .formField {
         margin-top: 30px;
+        width: 100%;
     }
 
     .button {
@@ -112,6 +113,9 @@
     }
     .login-bg-image:hover{
         background-size: 120% 100%;
+    }
+    .grecaptcha-badge{
+        display: none;
     }
 
  

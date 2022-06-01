@@ -2,34 +2,67 @@ import './style.scss'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { Formik } from 'formik';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
+import { ToastContainer, toast, Zoom } from 'react-toastify';
+import Loading from '../../ui-components/Loding/Loading'
 
 const Login = () => {
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false)
+
+
+    const login = (values) => {
+        setLoading(true)
+        axios.post('http://api.dev.pellifix.com/v1/customer/login', { ...values }).then(response => {
+            console.log(response)
+            setLoading(false)
+            toast.success("Login Successfully!", {
+                position: "top-right",
+                autoClose: 1500,
+                theme: 'colored',
+                transition: Zoom
+            })
+            setTimeout(() => {
+                navigate('/home')
+            }, 1500)
+
+        }).catch(err => {
+            console.log(err)
+            toast.error(err.response.data.error.message, {
+                position: "top-right",
+                autoClose: 3000,
+                theme: 'colored',
+                transition: Zoom
+            })
+            setLoading(false)
+        })
+    }
+
     return (
         <div className='container-fluid login-container'>
 
-            <div className='col-sm-8' style={{ position: 'relative' }}>
+            <div className='col-sm-7' style={{ position: 'relative' }}>
                 <div className='login-bg-image'></div>
 
             </div>
-            <div className='col-sm-4 align-center'>
+            <div className='col-sm-5 align-center'>
                 <h3 className='primaryColor heading1'>Login</h3>
                 <br />
                 <h5 className='heading2'>Login to your account</h5>
                 <span className='para'>Thank you for get back to Pellifix, Lets acess our the best recommendation for you.</span>
                 <Formik
 
-                    initialValues={{ email: '', password: '' }}
+                    initialValues={{ email_id: '', password: '' }}
                     validate={values => {
                         const errors = {};
-                        if (!values.email) {
-                            errors.email = 'Email is Required';
+                        if (!values.email_id) {
+                            errors.email_id = 'Email is Required';
                         } else if (
-                            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+                            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email_id)
                         ) {
-                            errors.email = 'Invalid email address';
+                            errors.email_id = 'Invalid email address';
                         }
                         if (!values.password) {
                             errors.password = 'Password is Required';
@@ -39,8 +72,7 @@ const Login = () => {
 
                     onSubmit={(values, { setSubmitting }) => {
                         setTimeout(() => {
-                            navigate('/products')
-                            setSubmitting(false);
+                            login(values)
                         }, 400);
 
                     }}
@@ -59,16 +91,16 @@ const Login = () => {
                         <form onSubmit={handleSubmit}>
                             <TextField
                                 className='formField'
-                                name='email'
+                                name='email_id'
                                 fullWidth
                                 label="Email"
                                 variant="outlined"
                                 size='small'
-                                error={errors.email && touched.email && errors.email ? true : false}
+                                error={errors.email_id && touched.email_id && errors.email_id ? true : false}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                value={values.email}
-                                helperText={errors.email && touched.email ? errors.email : ''}
+                                value={values.email_id}
+                                helperText={errors.email_id && touched.email_id ? errors.email_id : ''}
                             />
                             <TextField
                                 className='formField'
@@ -94,7 +126,8 @@ const Login = () => {
                 </Formik>
 
             </div>
-
+            <Loading loading={loading} />
+            <ToastContainer />
         </div>
     )
 };
