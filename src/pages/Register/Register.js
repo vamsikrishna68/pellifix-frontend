@@ -185,16 +185,16 @@ const Register = () => {
     return (
         <div className='container-fluid register-container'>
 
-            <div className='col-sm-5'>
-                <div className='login-bg-image'></div>
+            <div className='col-xs-12 col-sm-12 col-md-12 col-lg-5'>
+                <div className='register-bg-image'></div>
             </div>
             {
                 otpSent ?
-                    <div className='col-sm-7 align-center'>
+                    <div className='col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center'>
                         <h3 className='primaryColor heading1'>Verify Your Mobile Number</h3>
                         <br />
                         <h5 className='heading2'>One Step ahead to complete your registration process</h5>
-                        <span style={{ width: '45%' }} className='para'>An 6 digit OTP has sent to your +91 {formData.mobileno} mobile number, please enter below</span>
+                        <span className='para'>An 6 digit OTP has sent to your +91 {formData.mobileno} mobile number, please enter below</span>
                         <Formik
 
                             initialValues={{ otp: '' }}
@@ -258,11 +258,11 @@ const Register = () => {
 
                         </Formik>
                     </div> :
-                    <div className='col-sm-7 align-center'>
+                    <div className='col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center'>
                         <h3 className='primaryColor heading1'>Register</h3>
                         <br />
                         <h5 className='heading2'>Manage all your matchings</h5>
-                        <span style={{ width: '45%' }} className='para'>Let's get you all set up so you can verify your personal account and begin setting up your profile.</span>
+                        <span className='para'>Let's get you all set up so you can verify your personal account and begin setting up your profile.</span>
                         <Formik
 
                             initialValues={{ name: '', profile_creater: '', email_id: '', password: '', mobileno: '', confirmPwd: '', gender: '', dob: moment().subtract(18, 'years').calendar() }}

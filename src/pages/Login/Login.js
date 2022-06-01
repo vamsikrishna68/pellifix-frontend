@@ -43,11 +43,11 @@ const Login = () => {
     return (
         <div className='container-fluid login-container'>
 
-            <div className='col-sm-7' style={{ position: 'relative' }}>
+            <div className='col-xs-12 col-sm-12 col-md-12 col-lg-7' style={{ position: 'relative' }}>
                 <div className='login-bg-image'></div>
 
             </div>
-            <div className='col-sm-5 align-center'>
+            <div className='col-xs-12 col-sm-12 col-md-12 col-lg-5 align-center'>
                 <h3 className='primaryColor heading1'>Login</h3>
                 <br />
                 <h5 className='heading2'>Login to your account</h5>
