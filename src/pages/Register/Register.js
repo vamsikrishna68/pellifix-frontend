@@ -451,12 +451,35 @@ const Register = () => {
 
                                     </div>
                                     <div className='row' style={{ paddingLeft: 0 }}>
+
+                                    <div className='col-sm-6'>
+                                            <TextField
+                                                className='formField'
+                                                type='confirmPwd'
+                                                name='confirmPwd'
+                                                variant="outlined"
+                                                error={errors.confirmPwd && touched.confirmPwd && errors.confirmPwd ? true : false}
+                                                fullWidth
+                                                label="Confirm Password"
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
+                                                value={values.confirmPwd}
+                                                size='small'
+                                                helperText={errors.confirmPwd && touched.confirmPwd ? errors.confirmPwd : ''}
+                                                InputProps={{
+                                                    endAdornment: <InputAdornment position="end"><LockIcon /></InputAdornment>
+                                                }}
+                                            />
+                                        </div>
+
+
                                         <div className='col-sm-6'>
                                             <Button className='button' type="submit" variant="contained" color='primary'>Create Account</Button>
-                                            <div className='newuser'>
+                                            
+                                        </div>
+                                        <div className='newuser'>
                                                 <span>Already have an account? <span onClick={() => navigate('/login')} className='primaryColor'>Login</span></span>
                                             </div>
-                                        </div>
                                     </div>
 
 

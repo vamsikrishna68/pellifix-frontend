@@ -578,11 +578,11 @@ const Welcome = () => {
                             <div className="col-lg-3 col-md-6 footer-contact">
                                 <h3>Pellifix</h3>
                                 <p>
-                                    Thummapala <br />
-                                   Anakapalli<br />
-                                   Visakhapatnam <br /><br />
-                                    <strong>Phone:</strong> +91 830980570<br />
-                                    <strong>Email:</strong> sab@gmail.com<br />
+                                    C.C.S Colony <br />
+                                   Dargamitta<br />
+                                   Nellore <br /><br />
+                                    <strong>Phone:</strong> +91 **********<br />
+                                    <strong>Email:</strong> vamsi68krishna@gmail.com<br />
                                 </p>
                             </div>
 
