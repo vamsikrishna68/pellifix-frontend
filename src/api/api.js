@@ -1,3 +1,2 @@
-import axios from 'axios';
-axios.defaults.baseURL = 'http://api.dev.pellifix.com/v1/';
-
+import axios from "axios";
+axios.defaults.baseURL = "https://api.pellifix.com/v1/";
