@@ -3,20 +3,18 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './style.scss'
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { loadAnimation } from "lottie-web";
+import { defineLordIconElement } from "lord-icon-element";
+
+// register lottie and define custom element
+defineLordIconElement(loadAnimation);
 
 const responsive = {
     desktop: {
@@ -96,21 +94,21 @@ const Home = () => {
             img: 'p4.jpg'
         }
     ]
-    const corousel=(
+    const corousel = (
         <Carousel
-        responsive={responsive}
-        autoPlay={false}
-        infinite={true}>
+            responsive={responsive}
+            autoPlay={false}
+            infinite={true}>
             {
                 profiles.map(profile => (
-                    <div style={{padding:'10px 15px 10px 0px'}}>
+                    <div style={{ padding: '10px 15px 10px 0px' }}>
 
 
-                        <Card sx={{ maxWidth: 345 }}>
+                        <Card className="profile-card" elevation={3} sx={{ maxWidth: 345 }}>
                             <CardHeader
                                 action={
                                     <IconButton aria-label="settings">
-                                         <FavoriteIcon />
+                                        <FavoriteIcon />
                                     </IconButton>
                                 }
                                 title={profile.name}
@@ -146,17 +144,42 @@ const Home = () => {
     )
     return (
         <Box className="home_page">
-            <Typography variant="h6">Daily Recommendations</Typography>
+            <span style={{ display: 'flex', alignItems: 'center' }}>
+                <lord-icon
+                    src="https://cdn.lordicon.com/lupuorrc.json"
+                    trigger="loop"
+                    colors="primary:#121331,secondary:#d53833"
+                    style={{ width: 55, height: 50}}>
+                </lord-icon>
+                <Typography variant="h5">Daily Recommendations</Typography>
+            </span>
             {corousel}
-            <br/>
-            <Divider/>
-            <br/>
-            <Typography variant="h6">Horoscopic Matches</Typography>
+            <br />
+            <Divider />
+            <br />
+            <span style={{ display: 'flex', alignItems: 'center' }}>
+
+                <lord-icon
+                    src="https://cdn.lordicon.com/nxaaasqe.json"
+                    trigger="loop"
+                    colors="primary:#121331,secondary:#d53833"
+                    style={{ width: 55, height: 50,marginTop:'-2px' }}>
+                </lord-icon>
+                <Typography variant="h5">Horoscopic Matches</Typography>
+            </span>
             {corousel}
-            <br/>
-            <Divider/>
-            <br/>
-            <Typography variant="h6">Preference Matches</Typography>
+            <br />
+            <Divider />
+            <br />
+            <span style={{ display: 'flex', alignItems: 'center' }}>
+                <lord-icon
+                    src="https://cdn.lordicon.com/uukerzzv.json"
+                    trigger="loop"
+                    colors="primary:#121331,secondary:#d53833"
+                    style={{ width: 55, height: 50,marginTop:'-2px' }}>
+                </lord-icon>
+                <Typography variant="h5">Preference Matches</Typography>
+            </span>
             {corousel}
         </Box>
     )

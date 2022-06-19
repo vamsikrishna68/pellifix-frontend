@@ -18,16 +18,20 @@ const Login = () => {
       .post("https://api.pellifix.com/v1/customer/login", { ...values })
       .then((response) => {
         console.log(response);
-        setLoading(false);
-        toast.success("Login Successfully!", {
-          position: "top-right",
-          autoClose: 1500,
-          theme: "colored",
-          transition: Zoom,
-        });
-        setTimeout(() => {
-          navigate("/home");
-        }, 1500);
+        if(response && response.status==200){
+          localStorage.setItem('pfToken',response.data.token)
+          setLoading(false);
+          toast.success("Login Successfully!", {
+            position: "top-right",
+            autoClose: 1500,
+            theme: "colored",
+            transition: Zoom,
+          });
+          setTimeout(() => {
+            navigate("/auth/home");
+          }, 1000);
+        }
+  
       })
       .catch((err) => {
         console.log(err);

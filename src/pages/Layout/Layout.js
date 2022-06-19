@@ -15,7 +15,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Home from '../Home/Home';
 import Avatar from '@mui/material/Avatar';
 import ChatIcon from '@mui/icons-material/Chat';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -25,6 +24,11 @@ import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import PreviewIcon from '@mui/icons-material/Preview';
 import HomeIcon from '@mui/icons-material/Home';
 import IconButton from '@mui/material/IconButton';
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import Menu from '@mui/material/Menu';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+import './style.scss'
 
 const drawerWidth = 280;
 
@@ -125,17 +129,31 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const Layout = () => {
     const theme = useTheme();
+    const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
 
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const logout = () => {
+        localStorage.removeItem('pfToken')
+        navigate("/");
+    }
 
     const sideMenu = [
-        { title: 'Home', icon: <HomeIcon /> },
-        { title: 'Whist List', icon: <FavoriteIcon /> },
-        { title: 'Chat', icon: <ChatIcon /> },
-        { title: 'Edit Profile', icon: <ManageAccountsIcon /> },
-        { title: 'Edit Preference', icon: <DisplaySettingsIcon /> },
-        { title: 'Compare Profiles', icon: <CompareArrowsIcon /> },
-        { title: 'Profile Viewed', icon: <PreviewIcon /> },
+        { title: 'Home', icon: 'https://cdn.lordicon.com/gmzxduhd.json', path: 'home' },
+        { title: 'Whist List', icon: 'https://cdn.lordicon.com/rjzlnunf.json', path: 'wishlist' },
+        { title: 'Chat', icon: 'https://cdn.lordicon.com/zpxybbhl.json', path: 'chat' },
+        { title: 'Edit Profile', icon: 'https://cdn.lordicon.com/wloilxuq.json', path: 'profile' },
+        { title: 'Edit Preference', icon: 'https://cdn.lordicon.com/sbiheqdr.json', path: 'preference' },
+        { title: 'Compare Profiles', icon: 'https://cdn.lordicon.com/soseozvi.json', path: 'compare-profiles' },
+        { title: 'Profile Viewed', icon: 'https://cdn.lordicon.com/tyounuzx.json', path: 'profile-viewed' },
     ]
 
     const handleDrawerOpen = () => {
@@ -151,7 +169,7 @@ const Layout = () => {
     return (
         <Box>
             <CssBaseline />
-            <AppBar color='secondary' position="fixed" open={open}>
+            <AppBar position="fixed" open={open}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -173,9 +191,20 @@ const Layout = () => {
                             size="large"
                             aria-label="show more"
                             color="inherit"
+                            onClick={handleClick}
                         >
                             <Avatar src={require('../../assets/img/testimonials/testimonials-5.jpg')} />
                         </IconButton>
+                        <Menu
+                            id="simple-menu"
+                            anchorEl={anchorEl}
+                            keepMounted
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                        >
+                            <MenuItem onClick={handleClose}>Profile</MenuItem>
+                            <MenuItem onClick={logout}>Logout</MenuItem>
+                        </Menu>
                     </Box>
                 </Toolbar>
             </AppBar>
@@ -186,36 +215,40 @@ const Layout = () => {
                     </IconButton>
                 </DrawerHeader>
                 <Divider />
-                <List>
+                <List sx={{ paddingTop: 0 }}>
                     {sideMenu.map((menu, index) => (
-                        <ListItem key={menu.title} disablePadding sx={{ display: 'block', backgroundColor:index==0?'#F7C254':'white' }}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                }}
-                            >
-                                <ListItemIcon
+                        <NavLink to={menu.path} className={({ isActive }) =>
+                            isActive ? 'activeRoute' : 'routes'
+                        }
+                        >
+                            <ListItem key={menu.title} disablePadding sx={{ display: 'block' }}>
+                                <ListItemButton
                                     sx={{
-                                        minWidth: 0,
-                                        mr: open ? 3 : 'auto',
-                                        justifyContent: 'center',
-                                       
+                                        minHeight: 48,
+                                        justifyContent: open ? 'initial' : 'center',
+                                        padding:0
                                     }}
                                 >
-                                    {menu.icon}
-                                </ListItemIcon>
-                                <ListItemText primary={menu.title} sx={{ opacity: open ? 1 : 0 }} />
-                            </ListItemButton>
-                        </ListItem>
+                                    {/* <Tooltip title={menu.title} placement="top"> */}
+                                        <lord-icon
+                                            src={menu.icon}
+                                            trigger="loop"
+                                            colors="primary:#121331,secondary:#d53833"
+                                            style={{ width: open?'60px':'300px'}}>
+                                        </lord-icon>
+                                    {/* </Tooltip> */}
+                                   
+                                    <ListItemText className='menu-text' primary={menu.title} sx={{ opacity: open ? 1 : 0 }} />
+                                </ListItemButton>
+                            </ListItem>
+                        </NavLink>
                     ))}
                 </List>
 
             </Drawer>
             <Main open={open}>
                 <DrawerHeader />
-                <Home />
+                <Outlet />
             </Main>
         </Box>
     );
