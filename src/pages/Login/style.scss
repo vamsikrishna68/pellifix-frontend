@@ -23,7 +23,9 @@
     .forgotpwd {
         margin-top: 10px;
         width: 100%;
-        text-align: end;
+        display: flex;
+        justify-content: end;
+        text-decoration: none;
         color: gray;
         font-size: 14px;
         font-weight: 500;
@@ -108,7 +110,7 @@
         transition: 0.8s all ease;
     }
 
-    .login-bg-image:hover{
+    .login-bg-image:hover {
         background-size: 130% 130%;
     }
 
@@ -122,10 +124,11 @@
         display: block;
         height: 100%;
         overflow: auto;
-         .login-bg-image{
-             height: 200px;
-             background-size:cover ;
-         }
+
+        .login-bg-image {
+            height: 200px;
+            background-size: cover;
+        }
     }
 }
 
@@ -135,10 +138,11 @@
         display: block;
         height: 100%;
         overflow: auto;
-         .login-bg-image{
-             height: 300px;
-             background-size:cover ;
-         }
+
+        .login-bg-image {
+            height: 300px;
+            background-size: cover;
+        }
     }
 }
 
@@ -149,11 +153,10 @@
         display: block;
         height: 100%;
         overflow: auto;
-         .login-bg-image{
-             height: 300px;
-             background-size:cover ;
-         }
+
+        .login-bg-image {
+            height: 300px;
+            background-size: cover;
+        }
     }
 }
-
-

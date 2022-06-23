@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { Formik } from "formik";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import Loading from "../../ui-components/Loding/Loading";
@@ -140,7 +140,10 @@ const Login = () => {
               >
                 Login
               </Button>
-              <div className="forgotpwd">Forgot Password?</div>
+              <div>
+              <NavLink to={'/forgot-password'} className="forgotpwd">Forgot Password?</NavLink>
+                </div>
+             
               <div className="newuser">
                 <span>
                   Don't have an account yet?{" "}

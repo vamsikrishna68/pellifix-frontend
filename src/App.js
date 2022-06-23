@@ -11,6 +11,8 @@ import Home from './pages/Home/Home';
 import WhistList from './pages/Whistlist/Whistlist'
 import Profile from './pages/Profile/Profile'
 import { PrivateRoute } from './utils/privateRoute';
+import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
+import ResetPassword from './pages/ResetPassword/ResetPassword';
 
 
 let theme = createTheme({
@@ -33,6 +35,8 @@ function App() {
             <Route path="/" element={<Welcome />}></Route>
             <Route path="login" element={<Login />}></Route>
             <Route path="register" element={<Register />}></Route>
+            <Route path="forgot-password" element={<ForgotPassword />}></Route>
+            <Route path="reset-password" element={<ResetPassword />}></Route>
             <Route
               exact
               path="auth"
