@@ -358,17 +358,7 @@
         padding: 140px 0 100px 0;
     }
 
-    #hero::before {
-        content: "";
-        position: absolute;
-        right: -100%;
-        top: 20%;
-        width: 250%;
-        height: 200%;
-        z-index: -1;
-        background-color: #e8ecf5;
-        transform: skewY(135deg);
-    }
+
 
     #hero h1 {
         margin: 0 0 10px 0;
