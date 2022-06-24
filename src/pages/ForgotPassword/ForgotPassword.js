@@ -62,9 +62,9 @@ const ForgotPassword = () => {
             <ToastContainer />
             <div className="forgot-password container-fluid">
                 <div className="row">
-                    <div data-aos="fade-down" className="center col-sm-8">
+                    <div data-aos="fade-down" className="center  col-xs-12 col-sm-12 col-md-8 col-lg-8">
                     </div>
-                    <div data-aos="fade-up" className="center-left col-sm-4">
+                    <div data-aos="fade-up" className="center-left col-xs-12 col-sm-12 col-md-4 col-lg-4">
 
                         <h3 className="primaryColor heading1">Forgot Password</h3>
                         <br />

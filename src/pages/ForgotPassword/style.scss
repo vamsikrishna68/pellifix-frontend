@@ -1,13 +1,15 @@
 .forgot-password{
-    .row{
-        min-height: 100vh;
-    }
+   min-height: 100vh;
+   .row{
+    min-height: 100vh;
+   }
     .center{
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         background-image: url('../../assets/forgot-password.gif');
+        background-size: 70%;
         background-position: center;
         background-repeat: no-repeat;
     }
@@ -27,10 +29,10 @@
     }
     .formField {
         margin-top: 30px;
-        width: 60%;
+        width: 80%;
     }
     .button {
         margin-top: 30px;
-        width: 60%;
+        width: 80%;
     }
 }

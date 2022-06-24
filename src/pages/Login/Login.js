@@ -1,16 +1,27 @@
-import "./style.scss";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { Formik } from "formik";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import Loading from "../../ui-components/Loding/Loading";
+import AOS from 'aos';
+import './style.scss'
+import "aos/dist/aos.css";
 
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  useEffect(() => {
+
+    AOS.init({
+        duration: 1000,
+        easing: "ease-in-out",
+        once: false,
+        mirror: true
+    });
+})
 
   const login = (values) => {
     setLoading(true);
@@ -48,12 +59,13 @@ const Login = () => {
   return (
     <div className="container-fluid login-container">
       <div
+        data-aos="fade-down"
         className="col-xs-12 col-sm-12 col-md-12 col-lg-7"
         style={{ position: "relative" }}
       >
         <div className="login-bg-image"></div>
       </div>
-      <div className="col-xs-12 col-sm-12 col-md-12 col-lg-5 align-center">
+      <div data-aos="fade-up" className="col-xs-12 col-sm-12 col-md-12 col-lg-5 align-center">
         <h3 className="primaryColor heading1">Login</h3>
         <br />
         <h5 className="heading2">Login to your account</h5>
