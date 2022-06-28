@@ -145,6 +145,9 @@ const Layout = () => {
         localStorage.removeItem('pfToken')
         navigate("/");
     }
+    const profilePage = () => {
+        navigate("/auth/profile");
+    }
 
     const sideMenu = [
         { title: 'Home', icon: 'https://cdn.lordicon.com/gmzxduhd.json', path: 'home' },
@@ -202,7 +205,7 @@ const Layout = () => {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>Profile</MenuItem>
+                            <MenuItem onClick={profilePage}>Profile</MenuItem>
                             <MenuItem onClick={logout}>Logout</MenuItem>
                         </Menu>
                     </Box>
