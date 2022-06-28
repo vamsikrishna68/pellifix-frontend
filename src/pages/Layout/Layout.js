@@ -229,14 +229,14 @@ const Layout = () => {
                                         padding:0
                                     }}
                                 >
-                                    {/* <Tooltip title={menu.title} placement="top"> */}
+                                    <Tooltip title={menu.title} placement="right"> 
                                         <lord-icon
                                             src={menu.icon}
                                             trigger="loop"
                                             colors="primary:#121331,secondary:#d53833"
                                             style={{ width: open?'60px':'300px'}}>
                                         </lord-icon>
-                                    {/* </Tooltip> */}
+                                  </Tooltip> 
                                    
                                     <ListItemText className='menu-text' primary={menu.title} sx={{ opacity: open ? 1 : 0 }} />
                                 </ListItemButton>

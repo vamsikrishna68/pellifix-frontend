@@ -5,7 +5,7 @@ const Loading = ({ loading }) => {
         <>
             {
                 loading ? <div style={{ zIndex: 10000, width: '100vw', height: '100vh', position: 'absolute', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(0,0,0,0.4)' }}>
-                    <CircularProgress color="secondary" />
+                    <CircularProgress color="primary" />
                 </div> : null
             }
         </>
