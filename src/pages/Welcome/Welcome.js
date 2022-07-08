@@ -21,7 +21,7 @@ const Welcome = () => {
     useLayoutEffect(() => {
         function updatePosition() {
             let selectHeader = select('#header')
-            
+
             if (window.scrollY > 100) {
                 selectHeader.classList.add('header-scrolled')
             } else {
@@ -91,13 +91,15 @@ const Welcome = () => {
                         <div className="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1" data-aos="fade-up">
                             <div>
                                 <h1>Welcome to Pellifix</h1>
-                                <h2>Lorem ipsum dolor sit amet, tota senserit percipitur ius ut, usu et fastidii forensibus voluptatibus. His ei nihil feugait</h2>
-                                <span onClick={()=>navigate('/login')} className="download-btn"> Login</span>
-                                <span onClick={()=>navigate('/login')} className="download-btn"> Register</span>
+                                <h2>
+                                    Life is the greatest gift humanity has been given, and surviving it is the ultimate test. Having a great partner by your side can make this journey much easier and more enjoyable. Here at Pelli fix, we take great pleasure in helping you find the perfect partner to make your life more glorious.
+                                </h2>
+                                <span onClick={() => navigate('/login')} className="download-btn"> Login</span>
+                                <span onClick={() => navigate('/login')} className="download-btn"> Register</span>
                             </div>
                         </div>
                         <div className="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 hero-img" data-aos="fade-up">
-                            <img style={{width:'140%',height:'600px'}} src={require("../../assets/img/img1.gif")} className="img-fluid" alt="" />
+                            <img style={{ width: '140%', height: '600px' }} src={require("../../assets/img/img1.gif")} className="img-fluid" alt="" />
                         </div>
                     </div>
                 </div>
@@ -407,8 +409,8 @@ const Welcome = () => {
                                 <h3>Pellifix</h3>
                                 <p>
                                     C.C.S Colony <br />
-                                   Dargamitta<br />
-                                   Nellore <br /><br />
+                                    Dargamitta<br />
+                                    Nellore <br /><br />
                                     <strong>Phone:</strong> +91 **********<br />
                                     <strong>Email:</strong> vamsi68krishna@gmail.com<br />
                                 </p>
@@ -428,11 +430,9 @@ const Welcome = () => {
                             <div className="col-lg-3 col-md-6 footer-links">
                                 <h4>Our Services</h4>
                                 <ul>
-                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Matches</a></li>
+                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Chat</a></li>
+                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Horescope</a></li>
                                 </ul>
                             </div>
 
@@ -440,11 +440,9 @@ const Welcome = () => {
                                 <h4>Our Social Networks</h4>
                                 <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
                                 <div className="social-links mt-3">
-                                    <a href="#" className="twitter"><i className="bx bxl-twitter"></i></a>
-                                    <a href="#" className="facebook"><i className="bx bxl-facebook"></i></a>
-                                    <a href="#" className="instagram"><i className="bx bxl-instagram"></i></a>
-                                    <a href="#" className="google-plus"><i className="bx bxl-skype"></i></a>
-                                    <a href="#" className="linkedin"><i className="bx bxl-linkedin"></i></a>
+                                    <a href="https://twitter.com/home" className="twitter"><i className="bx bxl-twitter"></i></a>
+                                    <a href="https://www.facebook.com/profile.php?id=100082580644187" className="facebook"><i className="bx bxl-facebook"></i></a>
+                                    <a href="https://instagram.com/pellifix?igshid=YmMyMTA2M2Y=" className="instagram"><i className="bx bxl-instagram"></i></a>
                                 </div>
                             </div>
 
