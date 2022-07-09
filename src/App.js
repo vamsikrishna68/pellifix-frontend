@@ -14,6 +14,7 @@ import { PrivateRoute } from './utils/privateRoute';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import ViewProfile from './pages/ViewProfile/ViewProfile'
+import EditProfile from './pages/EditProfile/EditProfile'
 
 
 let theme = createTheme({
@@ -50,6 +51,7 @@ function App() {
               <Route path="home" element={<Home />} />
               <Route path="wishList" element={<WhistList />} />
               <Route path="profile" element={<Profile />} />
+              <Route path="edit-profile" element={<EditProfile />} />
               <Route path="view-profile" element={<ViewProfile />} />
           </Route>
           <Route path="*" element={<PageNotFound />}></Route>

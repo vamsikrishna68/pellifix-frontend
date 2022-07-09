@@ -81,18 +81,6 @@ const ViewProfile = () => {
                                         <ListItem className="row">
                                             <div className="col-sm-4">
                                                 <Typography variant="subtitle1" color="text.secondary" component="div">
-                                                    Color:
-                                                </Typography>
-                                            </div>
-                                            <div className="col-sm-6">
-                                                <Typography variant="h6" color="primary" component="div">
-                                                    Fair
-                                                </Typography>
-                                            </div>
-                                        </ListItem>
-                                        <ListItem className="row">
-                                            <div className="col-sm-4">
-                                                <Typography variant="subtitle1" color="text.secondary" component="div">
                                                     Height (In CM):
                                                 </Typography>
                                             </div>
@@ -123,6 +111,18 @@ const ViewProfile = () => {
                                             <div className="col-sm-8">
                                                 <Typography variant="h6" color="primary" component="div">
                                                     Ocassionally
+                                                </Typography>
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Drinking Habits:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-8">
+                                                <Typography variant="h6" color="primary" component="div">
+                                                    No
                                                 </Typography>
                                             </div>
                                         </ListItem>
@@ -199,18 +199,6 @@ const ViewProfile = () => {
                                             <div className="col-sm-8">
                                                 <Typography variant="h6" color="primary" component="div">
                                                     Non-Vegetarian
-                                                </Typography>
-                                            </div>
-                                        </ListItem>
-                                        <ListItem className="row">
-                                            <div className="col-sm-4">
-                                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                                    Drinking Habits:
-                                                </Typography>
-                                            </div>
-                                            <div className="col-sm-8">
-                                                <Typography variant="h6" color="primary" component="div">
-                                                    No
                                                 </Typography>
                                             </div>
                                         </ListItem>
