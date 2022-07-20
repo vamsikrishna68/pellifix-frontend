@@ -1,5 +1,5 @@
 import './style.scss'
-import { TextField, Card, CardMedia, CardContent, Typography, List, ListItem, MenuItem, InputAdornment, Fab } from '@mui/material';
+import { TextField, Select, InputLabel, FormControl, Typography, List, ListItem, MenuItem, InputAdornment, Fab, Autocomplete } from '@mui/material';
 import {
     genderList,
     physicalStatusList,
@@ -18,716 +18,862 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import SaveIcon from '@mui/icons-material/Save';
+import { Formik } from "formik";
+import { useEffect, useState } from 'react';
+import { getProfileData, updateProfileData } from '../../api/api'
+import Loading from '../../ui-components/Loding/Loading';
+import { ToastContainer, toast, Zoom } from "react-toastify";
+
+
 
 const EditProfile = () => {
     const religionList = religionsList.map(e => ({ label: e.name, value: e.name }))
+    const [loading, setLoading] = useState(true)
+    const [casteList, setCasteList] = useState(religionsList.map(e => [...e.castes]).flat().map(e => ({ label: e.name, value: e.name })))
+    const [formData, setFormData] = useState({
+        name: '',
+        surname: '',
+        gender: null,
+        dob: null,
+        physicalStatus: null,
+        bodyType: null,
+        height: null,
+        weight: null,
+        maritalStatus: null,
+        motherTounge: null,
+        smokingHabit: null,
+        eatingHabit: null,
+        drinkingHabit: null,
+        religion: null,
+        nakshtram: null,
+        caste: null,
+        raasi: null,
+        dot: null,
+        country: null,
+        citizen: null,
+        state: null,
+        district: null,
+        city: null,
+        higherQualification: null,
+        employedIn: null,
+        occupation: null,
+        annualIncome: null,
+        familyType: null,
+        familyStatus: null,
+        fathersOccupation: null,
+        mothersOccupation: null,
+        noOfBrothers: null,
+        noOfBrothersMarried: null,
+        noOfSisters: null,
+        noOfSistersMarried: null,
+        hobbies: null,
+        interests: null,
+        aboutMe: null
+
+    })
+
+    const filterCasteByReligion = (religion) => {
+        const filteredList = religionsList.filter(e => e.name === religion)[0].castes.map(e => ({ label: e.name, value: e.name }))
+        setCasteList([...filteredList])
+    }
+
+
+    useEffect(() => {
+        fetchProfileData()
+
+    }, [])
+
+    const fetchProfileData = async () => {
+
+        try {
+            setLoading(true)
+            const response = await getProfileData()
+            if (response && response.data) {
+
+                setFormData({ ...formData, ...response.data })
+                if (formData.religion) {
+                    filterCasteByReligion(formData.religion)
+                }
+
+                // setLoading(false)
+            }
+        } catch (error) {
+            setLoading(false)
+            console.log(error)
+        }
+    }
+    const updateProfile = async (data) => {
+        try {
+            const response = await updateProfileData(data)
+            console.log(response, "response")
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <div className="container-fluid edit-profile">
-            <h1>Edit Profile</h1>
-            <br/>
-            <Fab className='save_btn' variant="extended" color="primary" >
-                <SaveIcon /> Save Changes
-            </Fab>
-            <div className='row'>
-                <div className='row'>
-                    <div className='col-sm-12'>
-                        <Typography gutterBottom variant="h5" component="div">
-                            Personal Information
-                        </Typography>
-                    </div>
-                </div>
-                <div className='col-sm-6'>
-                    <List>
+            <div>
+                <h1>Edit Profile</h1>
+                <br />
 
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Name:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField size="small" fullWidth label="Name" variant="outlined" />
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Gender:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    select
-                                    label="Gender"
-                                    size="small"
-                                    id='Gender'
-                                    variant="outlined"
-                                    fullWidth
-                                >
-                                    {genderList.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Physical Status:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    select
-                                    id='Physical_Status'
-                                    label="Physical Status"
-                                    size="small"
-                                    variant="outlined"
-                                    fullWidth
-                                >
-                                    {physicalStatusList.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Height (In CM):
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="start">cms</InputAdornment>
-                                    }}
-                                    size="small"
-                                    fullWidth
-                                    label="Height"
-                                    variant="outlined" />
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Marital Status:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    select
-                                    id='Marital Status'
-                                    label="Marital Status"
-                                    size="small"
-                                    variant="outlined"
-                                    fullWidth
-                                >
-                                    {maritalStatusList.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Smoking Habit:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    select
-                                    label="Smoking Habit"
-                                    size="small"
-                                    id='Smoking Habit'
-                                    variant="outlined"
-                                    fullWidth
-                                >
-                                    {smokingHabitsList.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Drinking Habit:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    select
-                                    label="Drinking Habit"
-                                    size="small"
-                                    id='Drinking Habit'
-                                    variant="outlined"
-                                    fullWidth
-                                >
-                                    {drinkingHabitsList.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
-                        </ListItem>
-                    </List>
-                </div>
-                <div className='col-sm-6'>
-                    <List>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Surname:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField size="small" fullWidth label="Surname" variant="outlined" />
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Date Of Birth:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                    <DatePicker
-                                        label="Date Of Birth"
+                <Formik
+                    enableReinitialize
+                    initialValues={formData}
+                    validate={(values) => {
+                        const errors = {};
+                        return errors;
+                    }}
+                    onSubmit={(values, { setSubmitting }) => {
+                        updateProfile({ ...formData, ...values })
+                    }}
+                >
+                    {({
+                        values,
+                        errors,
+                        touched,
+                        handleChange,
+                        handleBlur,
+                        handleSubmit,
+                        isSubmitting,
+                    }) => (
+                        <form onSubmit={handleSubmit}>
+                            <Fab type='submit' className='save_btn' variant="extended" color="primary" >
+                                <SaveIcon /> Save Changes
+                            </Fab>
+                            <div className='row'>
+                                <div className='row'>
+                                    <div className='col-sm-12'>
+                                        <Typography gutterBottom variant="h5" component="div">
+                                            Personal Information
+                                        </Typography>
+                                    </div>
+                                </div>
+                                <div className='col-sm-6'>
+                                    <List>
 
-                                        renderInput={(params) => <TextField size="small" fullWidth {...params} />}
-                                    />
-                                </LocalizationProvider>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Name:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.name}
+                                                    size="small"
+                                                    fullWidth
+                                                    label="Name" variant="outlined" />
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Gender:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+
+                                                <FormControl size="small" fullWidth>
+                                                    <InputLabel>Gender</InputLabel>
+                                                    <Select
+                                                        name='gender'
+                                                        value={values.gender || ''}
+                                                        label="Gender"
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                    >
+                                                        {genderList.map((option) => (
+                                                            <MenuItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                </FormControl>
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Physical Status:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <FormControl size="small" fullWidth>
+                                                    <InputLabel >Physical Status</InputLabel>
+                                                    <Select
+                                                        name='physicalStatus'
+                                                        label="Physical Status"
+                                                        value={values.physicalStatus || ''}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                    >
+                                                        {physicalStatusList.map((option) => (
+                                                            <MenuItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                </FormControl>
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Height (In CM):
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField
+                                                    InputProps={{
+                                                        endAdornment: <InputAdornment position="start">cms</InputAdornment>
+                                                    }}
+                                                    size="small"
+                                                    fullWidth
+                                                    name='height'
+                                                    value={values.height || ''}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    label="Height"
+                                                    variant="outlined" />
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Marital Status:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <FormControl size="small" fullWidth>
+                                                    <InputLabel > Marital Status</InputLabel>
+                                                    <Select
+                                                        name='maritalStatus'
+                                                        label="Marital Status"
+                                                        value={values.maritalStatus || ''}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                    >
+                                                        {maritalStatusList.map((option) => (
+                                                            <MenuItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                </FormControl>
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Smoking Habit:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <FormControl size="small" fullWidth>
+                                                    <InputLabel > Smoking Habit</InputLabel>
+                                                    <Select
+                                                        name='smokingHabit'
+                                                        label="Smoking Habit"
+                                                        value={values.smokingHabit || ''}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                    >
+                                                        {smokingHabitsList.map((option) => (
+                                                            <MenuItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                </FormControl>
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Drinking Habit:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <FormControl size="small" fullWidth>
+                                                    <InputLabel > Drinking Habit</InputLabel>
+                                                    <Select
+                                                        name='drinkingHabit'
+                                                        label="Drinking Habit"
+                                                        value={values.drinkingHabit || ''}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                    >
+                                                        {drinkingHabitsList.map((option) => (
+                                                            <MenuItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                </FormControl>
+
+                                            </div>
+                                        </ListItem>
+                                    </List>
+                                </div>
+                                <div className='col-sm-6'>
+                                    <List>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Surname:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField
+                                                    size="small"
+                                                    name='surname'
+                                                    value={values.surname || ''}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    fullWidth label="Surname" variant="outlined" />
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Date Of Birth:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                                    <DatePicker
+                                                        label="Date Of Birth"
+                                                        value={values.dob}
+                                                        onChange={handleChange}
+                                                        renderInput={(params) => <TextField size="small" fullWidth {...params} />}
+                                                    />
+                                                </LocalizationProvider>
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Body Type:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <FormControl size="small" fullWidth>
+                                                    <InputLabel > Body Type</InputLabel>
+                                                    <Select
+                                                        name='bodyType'
+                                                        label="Body Type"
+                                                        value={values.bodyType || ''}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                    >
+                                                        {bodyTypeList.map((option) => (
+                                                            <MenuItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                </FormControl>
+
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Weight (In KG):
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField
+                                                    InputProps={{
+                                                        endAdornment: <InputAdornment position="start">kgs</InputAdornment>
+                                                    }}
+                                                    size="small"
+                                                    fullWidth
+                                                    name='weight'
+                                                    value={values.weight || ''}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    label="Weight"
+                                                    variant="outlined" />
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Mother Tounge:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <FormControl size="small" fullWidth>
+                                                    <InputLabel > Mother Tounge</InputLabel>
+                                                    <Select
+                                                        name='motherTounge'
+                                                        label="Mother Tounge"
+                                                        value={values.motherTounge || ''}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                    >
+                                                        {motherToungeList.map((option) => (
+                                                            <MenuItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                </FormControl>
+
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Eating Habit:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <FormControl size="small" fullWidth>
+                                                    <InputLabel > Eating Habit</InputLabel>
+                                                    <Select
+                                                        name='eatingHabit'
+                                                        label="Eating Habit"
+                                                        value={values.eatingHabit || ''}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                    >
+                                                        {eatingHabitsList.map((option) => (
+                                                            <MenuItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                </FormControl>
+
+                                            </div>
+                                        </ListItem>
+                                    </List>
+                                </div>
                             </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Body Type:
-                                </Typography>
+                            <br />
+                            <div className='row'>
+                                <div className='col-sm-6'>
+                                    <div className='row'>
+                                        <div className='col-sm-12'>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                Religion Information
+                                            </Typography>
+                                        </div>
+                                    </div>
+                                    <List>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Religion:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <Autocomplete
+                                                    disablePortal
+                                                    id="religion"
+                                                    
+                                                    options={religionList}
+                                                    size="small"
+                                                    fullWidth
+                                                    onChange={(e,v) => {
+                                                        console.log(v)
+                                                        filterCasteByReligion(v.value)
+                                                        handleChange(v.value)
+                                                    }}
+                                                    onBlur={handleBlur}
+                                                    value={values.religion || ''}
+                                                    renderInput={(params) => <TextField {...params} label="Religion" />}
+                                                />
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Caste:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <FormControl size="small" fullWidth>
+                                                    <InputLabel > Caste</InputLabel>
+                                                    <Select
+                                                        name='caste'
+                                                        label="Caste"
+                                                        value={values.caste || ''}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                    >
+                                                        {casteList.map((option) => (
+                                                            <MenuItem key={option.value} value={option.value}>
+                                                                {option.label}
+                                                            </MenuItem>
+                                                        ))}
+                                                    </Select>
+                                                </FormControl>
+                                            </div>
+                                        </ListItem>
+                                    </List>
+                                </div>
+                                <div className='col-sm-6'>
+                                    <div className='row'>
+                                        <div className='col-sm-12'>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                Horoscopic Information
+                                            </Typography>
+                                        </div>
+                                    </div>
+                                    <List>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Nakshtram:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField
+                                                    select
+                                                    label="Nakshtram"
+                                                    size="small"
+                                                    id='Nakshtram'
+                                                    variant="outlined"
+                                                    fullWidth
+                                                >
+                                                    {nakshtramList.map((option) => (
+                                                        <MenuItem key={option.value} value={option.value}>
+                                                            {option.label}
+                                                        </MenuItem>
+                                                    ))}
+                                                </TextField>
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Raasi:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField
+                                                    select
+                                                    label="Raasi"
+                                                    size="small"
+                                                    id='Raasi'
+                                                    variant="outlined"
+                                                    fullWidth
+                                                >
+                                                    {raasilist.map((option) => (
+                                                        <MenuItem key={option.value} value={option.value}>
+                                                            {option.label}
+                                                        </MenuItem>
+                                                    ))}
+                                                </TextField>
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Time of Birth:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                                    <TimePicker
+                                                        label="Time of Birth"
+                                                        onChange={handleChange}
+                                                        renderInput={(params) => <TextField size="small" fullWidth {...params} />}
+                                                    />
+                                                </LocalizationProvider>
+                                            </div>
+                                        </ListItem>
+                                    </List>
+
+                                </div>
                             </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    select
-                                    label="Body Type"
-                                    size="small"
-                                    id='Body Type'
-                                    variant="outlined"
-                                    fullWidth
-                                >
-                                    {bodyTypeList.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
+                            <br />
+                            <div className='row'>
+                                <div className='col-sm-6'>
+                                    <div className='row'>
+                                        <div className='col-sm-12'>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                Location Information
+                                            </Typography>
+                                        </div>
+                                    </div>
+                                    <List>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Country:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Country" variant="outlined" />
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Citizenship:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Citizenship" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    State:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="State" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    District:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="District" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Town/City:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Town/City" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                    </List>
+
+                                </div>
+                                <div className='col-sm-6'>
+                                    <div className='row'>
+                                        <div className='col-sm-12'>
+                                            <Typography gutterBottom variant="h5" component="div">
+                                                Professional Information
+                                            </Typography>
+                                        </div>
+                                    </div>
+                                    <List>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Higher Qualification:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Higher Qualification" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Employed In:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Employed In" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Occuption:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Occuption" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Annual Income:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Annual Income" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                    </List>
+
+                                </div>
                             </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Weight (In KG):
-                                </Typography>
+                            <br />
+                            <div className='row'>
+                                <div className='col-sm-12'>
+                                    <Typography gutterBottom variant="h5" component="div">
+                                        Family Information
+                                    </Typography>
+                                </div>
+                                <div className='col-sm-6'>
+
+                                    <List>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Family Type:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Family Type" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Fathers Occupation:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Fathers Occupation" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Number of Brothers:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Number of Brothers" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Number of Brothers Married:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Number of Brothers Married" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+
+                                    </List>
+                                </div>
+                                <div className='col-sm-6'>
+
+                                    <List>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Family Status:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Family Status" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Mothers Occupation:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Mothers Occupation" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Number of Sisters:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Number of Sisters" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Number of Sisters Married:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Number of Sisters Married" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                    </List>
+                                </div>
+
+
                             </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    InputProps={{
-                                        endAdornment: <InputAdornment position="start">kgs</InputAdornment>
-                                    }}
-                                    size="small"
-                                    fullWidth
-                                    label="Weight"
-                                    variant="outlined" />
+                            <br />
+                            <div className='row'>
+                                <div className='col-sm-12'>
+                                    <Typography gutterBottom variant="h5" component="div">
+                                        Other Information
+                                    </Typography>
+                                </div>
+                                <div className='col-sm-6'>
+
+                                    <List>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Hobbies:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Hobbies" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                    </List>
+                                </div>
+                                <div className='col-sm-6'>
+
+                                    <List>
+                                        <ListItem className="row">
+                                            <div className="col-sm-4">
+                                                <Typography variant="subtitle1" color="text.secondary" component="div">
+                                                    Interests:
+                                                </Typography>
+                                            </div>
+                                            <div className="col-sm-6">
+                                                <TextField size="small" fullWidth label="Interests" variant="outlined" />
+
+                                            </div>
+                                        </ListItem>
+                                    </List>
+                                </div>
                             </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Mother Tounge:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    select
-                                    label="Mother Tounge"
-                                    size="small"
-                                    id='Mother Tounge'
-                                    variant="outlined"
-                                    fullWidth
-                                >
-                                    {motherToungeList.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Eating Habits:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    select
-                                    id='Eating Habits'
-                                    label="Eating Habits"
-                                    size="small"
-                                    variant="outlined"
-                                    fullWidth
-                                >
-                                    {eatingHabitsList.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
-                        </ListItem>
-                    </List>
-                </div>
+                            <br />
+                        </form>)}
+                </Formik>
             </div>
-            <br />
-            <div className='row'>
-                <div className='col-sm-6'>
-                    <div className='row'>
-                        <div className='col-sm-12'>
-                            <Typography gutterBottom variant="h5" component="div">
-                                Religion Information
-                            </Typography>
-                        </div>
-                    </div>
-                    <List>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Religion:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    select
-                                    label="Religion"
-                                    size="small"
-                                    id='Religion'
-                                    variant="outlined"
-                                    fullWidth
-                                >
-                                    {religionList.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Caste:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    select
-                                    label="Caste"
-                                    size="small"
-                                    id='Caste'
-                                    variant="outlined"
-                                    fullWidth
-                                >
-                                    {religionList.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Sub Caste:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField size="small" fullWidth label="Sub Caste" variant="outlined" />
-                            </div>
-                        </ListItem>
-                    </List>
-                </div>
-                <div className='col-sm-6'>
-                    <div className='row'>
-                        <div className='col-sm-12'>
-                            <Typography gutterBottom variant="h5" component="div">
-                                Horoscopic Information
-                            </Typography>
-                        </div>
-                    </div>
-                    <List>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Nakshtram:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    select
-                                    label="Nakshtram"
-                                    size="small"
-                                    id='Nakshtram'
-                                    variant="outlined"
-                                    fullWidth
-                                >
-                                    {nakshtramList.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Raasi:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <TextField
-                                    select
-                                    label="Raasi"
-                                    size="small"
-                                    id='Raasi'
-                                    variant="outlined"
-                                    fullWidth
-                                >
-                                    {raasilist.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Time of Birth:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-6">
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                    <TimePicker
-                                        label="Time of Birth"
-                                        renderInput={(params) => <TextField size="small" fullWidth {...params} />}
-                                    />
-                                </LocalizationProvider>
-                            </div>
-                        </ListItem>
-                    </List>
-
-                </div>
-            </div>
-            <br />
-            <div className='row'>
-                <div className='col-sm-6'>
-                    <div className='row'>
-                        <div className='col-sm-12'>
-                            <Typography gutterBottom variant="h5" component="div">
-                                Location Information
-                            </Typography>
-                        </div>
-                    </div>
-                    <List>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Town/City:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    Anakapalle
-                                </Typography>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    District:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    Visakhapatnam
-                                </Typography>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    State:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    Andhra Pradesh
-                                </Typography>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Country:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    India
-                                </Typography>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Citizenship:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    India
-                                </Typography>
-                            </div>
-                        </ListItem>
-                    </List>
-
-                </div>
-                <div className='col-sm-6'>
-                    <div className='row'>
-                        <div className='col-sm-12'>
-                            <Typography gutterBottom variant="h5" component="div">
-                                Professional Information
-                            </Typography>
-                        </div>
-                    </div>
-                    <List>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Higher Qualification:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    B.Tech
-                                </Typography>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Employed In:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    Private
-                                </Typography>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Occuption:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    Senior Software Engineer
-                                </Typography>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Country:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    India
-                                </Typography>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Annual Income:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    12LPA
-                                </Typography>
-                            </div>
-                        </ListItem>
-                    </List>
-
-                </div>
-            </div>
-            <br />
-            <div className='row'>
-                <div className='col-sm-12'>
-                    <Typography gutterBottom variant="h5" component="div">
-                        Family Information
-                    </Typography>
-                </div>
-                <div className='col-sm-6'>
-
-                    <List>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Family Type:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    Joint Family
-                                </Typography>
-                            </div>
-                        </ListItem>
-
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Fathers Occupation:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    Bussiness
-                                </Typography>
-                            </div>
-                        </ListItem>
-
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Number of Brothers:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    2/1 Married
-                                </Typography>
-                            </div>
-                        </ListItem>
-
-                    </List>
-                </div>
-                <div className='col-sm-6'>
-
-                    <List>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Family Status:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    Middle Class
-                                </Typography>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Mothers Occupation:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    House Keeper
-                                </Typography>
-                            </div>
-                        </ListItem>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Number of Sisters:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    0
-                                </Typography>
-                            </div>
-                        </ListItem>
-                    </List>
-                </div>
-
-
-            </div>
-            <br />
-            <div className='row'>
-                <div className='col-sm-12'>
-                    <Typography gutterBottom variant="h5" component="div">
-                        Other Information
-                    </Typography>
-                </div>
-                <div className='col-sm-6'>
-
-                    <List>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Hobbies:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    Cooking
-                                </Typography>
-                            </div>
-                        </ListItem>
-                    </List>
-                </div>
-                <div className='col-sm-6'>
-
-                    <List>
-                        <ListItem className="row">
-                            <div className="col-sm-4">
-                                <Typography variant="subtitle1" color="text.secondary" component="div">
-                                    Interest:
-                                </Typography>
-                            </div>
-                            <div className="col-sm-8">
-                                <Typography variant="h6" color="primary" component="div">
-                                    Short Films
-                                </Typography>
-                            </div>
-                        </ListItem>
-                    </List>
-                </div>
-            </div>
-            <br />
+            {/* <Loading loading={loading} /> */}
+            <ToastContainer />
         </div>
 
     )
