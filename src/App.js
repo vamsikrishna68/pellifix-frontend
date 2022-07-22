@@ -15,6 +15,7 @@ import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
 import ResetPassword from './pages/ResetPassword/ResetPassword';
 import ViewProfile from './pages/ViewProfile/ViewProfile'
 import EditProfile from './pages/EditProfile/EditProfile'
+import EditPreferences from './pages/EditPreferences/EditPreferences';
 
 
 let theme = createTheme({
@@ -53,6 +54,7 @@ function App() {
               <Route path="profile" element={<Profile />} />
               <Route path="edit-profile" element={<EditProfile />} />
               <Route path="view-profile" element={<ViewProfile />} />
+              <Route path="edit-preference" element={<EditPreferences />} />
           </Route>
           <Route path="*" element={<PageNotFound />}></Route>
         </Routes>

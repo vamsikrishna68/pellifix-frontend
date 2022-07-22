@@ -1,5 +1,12 @@
 import './style.scss'
-import { TextField, Select, InputLabel, FormControl, Typography, List, ListItem, MenuItem, InputAdornment, Fab, Autocomplete } from '@mui/material';
+import {
+    TextField,
+    Select, InputLabel,
+    FormControl, Typography,
+    List, ListItem,
+    MenuItem, InputAdornment,
+    Fab, Autocomplete
+} from '@mui/material';
 import {
     genderList,
     physicalStatusList,
@@ -475,11 +482,11 @@ const EditProfile = () => {
                                                 <Autocomplete
                                                     disablePortal
                                                     id="religion"
-                                                    
+
                                                     options={religionList}
                                                     size="small"
                                                     fullWidth
-                                                    onChange={(e,v) => {
+                                                    onChange={(e, v) => {
                                                         console.log(v)
                                                         filterCasteByReligion(v.value)
                                                         handleChange(v.value)

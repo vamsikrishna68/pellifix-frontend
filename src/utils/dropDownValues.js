@@ -2805,4 +2805,3 @@ export const religionsList = [
     }
 ]
 
-

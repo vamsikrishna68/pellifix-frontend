@@ -154,7 +154,7 @@ const Layout = () => {
         { title: 'Whist List', icon: 'https://cdn.lordicon.com/rjzlnunf.json', path: 'wishlist' },
         { title: 'Chat', icon: 'https://cdn.lordicon.com/zpxybbhl.json', path: 'chat' },
         { title: 'Edit Profile', icon: 'https://cdn.lordicon.com/wloilxuq.json', path: 'edit-profile' },
-        { title: 'Edit Preference', icon: 'https://cdn.lordicon.com/sbiheqdr.json', path: 'preference' },
+        { title: 'Edit Preference', icon: 'https://cdn.lordicon.com/sbiheqdr.json', path: 'edit-preference' },
         { title: 'Compare Profiles', icon: 'https://cdn.lordicon.com/soseozvi.json', path: 'compare-profiles' },
         { title: 'Profile Viewed', icon: 'https://cdn.lordicon.com/tyounuzx.json', path: 'profile-viewed' },
     ]
