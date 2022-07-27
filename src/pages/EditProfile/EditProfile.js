@@ -573,7 +573,23 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField
+                                            <Autocomplete
+                                                    disablePortal
+                                                    id="Nakshtram"
+
+                                                    options={nakshtramList}
+                                                    size="small"
+                                                    fullWidth
+                                                    onChange={(e, v) => {
+                                                        console.log(v)
+                                                        filterCasteByReligion(v.value)
+                                                        handleChange(v.value)
+                                                    }}
+                                                    onBlur={handleBlur}
+                                                    value={values.nakshtram || ''}
+                                                    renderInput={(params) => <TextField {...params} label="Nakshtram" />}
+                                                />
+                                                {/* <TextField
                                                     select
                                                     label="Nakshtram"
                                                     size="small"
@@ -586,7 +602,7 @@ const EditProfile = () => {
                                                             {option.label}
                                                         </MenuItem>
                                                     ))}
-                                                </TextField>
+                                                </TextField> */}
                                             </div>
                                         </ListItem>
                                         <ListItem className="row">
@@ -596,7 +612,24 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField
+                                            <Autocomplete
+                                                    disablePortal
+                                                    id="Raasi"
+
+                                                    options={raasilist}
+                                                    size="small"
+                                                    fullWidth
+                                                    onChange={(e, v) => {
+                                                        console.log(v)
+                                                        filterCasteByReligion(v.value)
+                                                        handleChange(v.value)
+                                                    }}
+                                                    onBlur={handleBlur}
+                                                    value={values.raasi || ''}
+                                                    renderInput={(params) => <TextField {...params} label="Raasi" />}
+                                                />
+                                               
+                                                {/* <TextField
                                                     select
                                                     label="Raasi"
                                                     size="small"
@@ -609,7 +642,7 @@ const EditProfile = () => {
                                                             {option.label}
                                                         </MenuItem>
                                                     ))}
-                                                </TextField>
+                                                </TextField> */}
                                             </div>
                                         </ListItem>
                                         <ListItem className="row">
