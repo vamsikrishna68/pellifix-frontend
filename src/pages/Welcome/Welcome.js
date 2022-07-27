@@ -67,7 +67,6 @@ const Welcome = () => {
                             <li><a className="nav-link scrollto active" href="#hero">Home</a></li>
                             <li><a className="nav-link scrollto" href="#features">App Features</a></li>
                             {/* <li><a className="nav-link scrollto" href="#gallery">Gallery</a></li> */}
-                            <li><a className="nav-link scrollto" href="#pricing">Pricing</a></li>
                             <li><a className="nav-link scrollto" href="#faq">F.A.Q</a></li>
                             <li><a className="nav-link scrollto" href="#contact">Contact</a></li>
                             <li>
