@@ -22,7 +22,8 @@ RUN npm prune --production
 # Main Image
 FROM nginx:alpine 
 # Nginx config
-RUN rm -rf /etc/nginx/conf.d
+RUN rm /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
+COPY content /usr/share/nginx/html
 COPY conf /etc/nginx
 
 # Copy from build image
