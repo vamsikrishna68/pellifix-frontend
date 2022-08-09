@@ -18,7 +18,8 @@ import {
     motherToungeList,
     religionsList,
     nakshtramList,
-    raasilist
+    raasilist, 
+    countries
 } from '../../utils/dropDownValues'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -81,12 +82,12 @@ const EditProfile = () => {
 
     const filterCasteByReligion = (religion) => {
         const filteredList = religionsList.filter(e => e.name === religion)[0].castes.map(e => ({ label: e.name, value: e.name }))
-        setCasteList([...filteredList])
+        setCasteList([...filteredList]);
     }
 
 
     useEffect(() => {
-        fetchProfileData()
+        fetchProfileData();
 
     }, [])
 
@@ -413,7 +414,7 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <FormControl size="small" fullWidth>
+                                                {/* <FormControl size="small" fullWidth>
                                                     <InputLabel > Mother Tounge</InputLabel>
                                                     <Select
                                                         name='motherTounge'
@@ -428,8 +429,24 @@ const EditProfile = () => {
                                                             </MenuItem>
                                                         ))}
                                                     </Select>
-                                                </FormControl>
+                                                </FormControl> */}
 
+                                                <Autocomplete
+                                                    disablePortal
+                                                    id="language"
+
+                                                    options={motherToungeList}
+                                                    size="small"
+                                                    fullWidth
+                                                    onChange={(e, v) => {
+                                                        console.log(v)
+                                                        filterCasteByReligion(v.value)
+                                                        handleChange(v.value)
+                                                    }}
+                                                    onBlur={handleBlur}
+                                                    value={values.language || ''}
+                                                    renderInput={(params) => <TextField {...params} label="Language" />}
+                                                />
                                             </div>
                                         </ListItem>
                                         <ListItem className="row">
@@ -504,6 +521,22 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
+                                            {/* <Autocomplete
+                                                    disablePortal
+                                                    id="caste"
+
+                                                    options={casteList}
+                                                    size="small"
+                                                    fullWidth
+                                                    onChange={(e, v) => {
+                                                        console.log(v)
+                                                        filterCasteByReligion(v.value)
+                                                        handleChange(v.value)
+                                                    }}
+                                                    onBlur={handleBlur}
+                                                    value={values.caste || ''}
+                                                    renderInput={(params) => <TextField {...params} label="Caste" />}
+                                                /> */}
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel > Caste</InputLabel>
                                                     <Select
@@ -540,7 +573,23 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField
+                                            <Autocomplete
+                                                    disablePortal
+                                                    id="Nakshtram"
+
+                                                    options={nakshtramList}
+                                                    size="small"
+                                                    fullWidth
+                                                    onChange={(e, v) => {
+                                                        console.log(v)
+                                                        filterCasteByReligion(v.value)
+                                                        handleChange(v.value)
+                                                    }}
+                                                    onBlur={handleBlur}
+                                                    value={values.nakshtram || ''}
+                                                    renderInput={(params) => <TextField {...params} label="Nakshtram" />}
+                                                />
+                                                {/* <TextField
                                                     select
                                                     label="Nakshtram"
                                                     size="small"
@@ -553,7 +602,7 @@ const EditProfile = () => {
                                                             {option.label}
                                                         </MenuItem>
                                                     ))}
-                                                </TextField>
+                                                </TextField> */}
                                             </div>
                                         </ListItem>
                                         <ListItem className="row">
@@ -563,7 +612,24 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField
+                                            <Autocomplete
+                                                    disablePortal
+                                                    id="Raasi"
+
+                                                    options={raasilist}
+                                                    size="small"
+                                                    fullWidth
+                                                    onChange={(e, v) => {
+                                                        console.log(v)
+                                                        filterCasteByReligion(v.value)
+                                                        handleChange(v.value)
+                                                    }}
+                                                    onBlur={handleBlur}
+                                                    value={values.raasi || ''}
+                                                    renderInput={(params) => <TextField {...params} label="Raasi" />}
+                                                />
+                                               
+                                                {/* <TextField
                                                     select
                                                     label="Raasi"
                                                     size="small"
@@ -576,7 +642,7 @@ const EditProfile = () => {
                                                             {option.label}
                                                         </MenuItem>
                                                     ))}
-                                                </TextField>
+                                                </TextField> */}
                                             </div>
                                         </ListItem>
                                         <ListItem className="row">
@@ -617,7 +683,23 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Country" variant="outlined" />
+                                                  <Autocomplete
+                                                    disablePortal
+                                                    id="country"
+
+                                                    options={countries}
+                                                    size="small"
+                                                    fullWidth
+                                                    onChange={(e, v) => {
+                                                        console.log(v)
+                                                       // filterCasteByReligion(v.value)
+                                                        handleChange(v.value)
+                                                    }}
+                                                    onBlur={handleBlur}
+                                                    value={values.countries || ''}
+                                                    renderInput={(params) => <TextField {...params} label="Country" />}
+                                                />
+                                                {/* <TextField size="small" fullWidth label="Country" variant="outlined" /> */}
                                             </div>
                                         </ListItem>
                                         <ListItem className="row">
