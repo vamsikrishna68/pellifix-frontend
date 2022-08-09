@@ -1,0 +1,44 @@
+.admin-login {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../../assets/admin-bg.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    .card {
+        width: 350px;
+        min-height: 400px;
+    }
+
+    .content {
+        padding: 20px 30px;
+    }
+
+    .formField {
+        margin-top: 30px;
+    }
+
+    .button {
+        margin-top: 30px;
+        width: 100%;
+    }
+
+    .forgotpwd {
+        margin-top: 10px;
+        width: 100%;
+        display: flex;
+        justify-content: end;
+        text-decoration: none;
+        color: gray;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .heading1 {
+        font-size: 35px;
+    }
+}
