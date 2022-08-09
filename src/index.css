@@ -21,3 +21,14 @@ button{
   text-transform: none!important;
   font-weight: 500!important;
 }
+.align-right{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.activeColor{
+  color: green!important;
+}
+.inActiveColor{
+  color: red!important;
+}

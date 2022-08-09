@@ -16,7 +16,10 @@ import ResetPassword from './pages/ResetPassword/ResetPassword';
 import ViewProfile from './pages/ViewProfile/ViewProfile'
 import EditProfile from './pages/EditProfile/EditProfile'
 import EditPreferences from './pages/EditPreferences/EditPreferences';
-
+import AdminLogin from './pages/AdminLogin/AdminLogin';
+import SubOrdinates from './pages/SubOrdinates/SubOrdinates';
+import Associates from './pages/Associates/Associates'
+import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
 
 let theme = createTheme({
   palette: {
@@ -37,6 +40,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Welcome />}></Route>
             <Route path="login" element={<Login />}></Route>
+            <Route path="admin-login" element={<AdminLogin />}></Route>
             <Route path="register" element={<Register />}></Route>
             <Route path="forgot-password" element={<ForgotPassword />}></Route>
             <Route path="reset-password" element={<ResetPassword />}></Route>
@@ -44,9 +48,9 @@ function App() {
               exact
               path="auth"
               element={
-                <PrivateRoute>
+                // <PrivateRoute>
                   <Layout />
-                </PrivateRoute>
+                // </PrivateRoute>
               }
             >
               <Route path="home" element={<Home />} />
@@ -55,6 +59,9 @@ function App() {
               <Route path="edit-profile" element={<EditProfile />} />
               <Route path="view-profile" element={<ViewProfile />} />
               <Route path="edit-preference" element={<EditPreferences />} />
+              <Route path="sub-ordinates" element={<SubOrdinates />} />
+              <Route path='associates' element={<Associates/>} />
+              <Route path='admin-dashboard' element={<AdminDashboard/>} />
           </Route>
           <Route path="*" element={<PageNotFound />}></Route>
         </Routes>
