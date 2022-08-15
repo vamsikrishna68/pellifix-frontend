@@ -132,7 +132,7 @@ const Layout = () => {
     const navigate = useNavigate();
     const [open, setOpen] = React.useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const role='SUPER_ADMIN'
+    const role=''
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -226,7 +226,7 @@ const Layout = () => {
                 <List sx={{ paddingTop: 0 }}>
                     {sideMenu.map((menu, index) => (
 
-                        menu.role === 'SUPER_ADMIN' ?
+                        menu.role === 'USER' ?
                             <NavLink to={menu.path} className={({ isActive }) =>
                                 isActive ? 'activeRoute' : 'routes'
                             }
