@@ -4,8 +4,8 @@ import {
     Select, InputLabel,
     FormControl, Typography,
     List, ListItem,
-    MenuItem, InputAdornment,
-    Fab, Autocomplete
+    MenuItem, InputAdornment, Card,
+    Fab, Autocomplete, IconButton
 } from '@mui/material';
 import {
     genderList,
@@ -18,7 +18,7 @@ import {
     motherToungeList,
     religionsList,
     nakshtramList,
-    raasilist, 
+    raasilist,
     countries
 } from '../../utils/dropDownValues'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -31,12 +31,14 @@ import { useEffect, useState } from 'react';
 import { getProfileData, updateProfileData } from '../../api/api'
 import Loading from '../../ui-components/Loding/Loading';
 import { ToastContainer, toast, Zoom } from "react-toastify";
-
+import { useDropzone } from 'react-dropzone';
+import ClearIcon from '@mui/icons-material/Clear';
 
 
 const EditProfile = () => {
     const religionList = religionsList.map(e => ({ label: e.name, value: e.name }))
     const [loading, setLoading] = useState(true)
+    const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
     const [casteList, setCasteList] = useState(religionsList.map(e => [...e.castes]).flat().map(e => ({ label: e.name, value: e.name })))
     const [formData, setFormData] = useState({
         name: '',
@@ -84,6 +86,18 @@ const EditProfile = () => {
         const filteredList = religionsList.filter(e => e.name === religion)[0].castes.map(e => ({ label: e.name, value: e.name }))
         setCasteList([...filteredList]);
     }
+
+    const files = acceptedFiles.map(file => {
+        const objectUrl = URL.createObjectURL(file)
+        return (
+            <div className='uploaded-image'>
+                <IconButton size='small' className="clear-btn" color="primary" component="span">
+                    <ClearIcon />
+                </IconButton>
+                <img src={objectUrl} />
+            </div>
+        )
+    })
 
 
     useEffect(() => {
@@ -521,7 +535,7 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                            {/* <Autocomplete
+                                                {/* <Autocomplete
                                                     disablePortal
                                                     id="caste"
 
@@ -573,7 +587,7 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                            <Autocomplete
+                                                <Autocomplete
                                                     disablePortal
                                                     id="Nakshtram"
 
@@ -612,7 +626,7 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                            <Autocomplete
+                                                <Autocomplete
                                                     disablePortal
                                                     id="Raasi"
 
@@ -628,7 +642,7 @@ const EditProfile = () => {
                                                     value={values.raasi || ''}
                                                     renderInput={(params) => <TextField {...params} label="Raasi" />}
                                                 />
-                                               
+
                                                 {/* <TextField
                                                     select
                                                     label="Raasi"
@@ -683,7 +697,7 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                  <Autocomplete
+                                                <Autocomplete
                                                     disablePortal
                                                     id="country"
 
@@ -692,7 +706,7 @@ const EditProfile = () => {
                                                     fullWidth
                                                     onChange={(e, v) => {
                                                         console.log(v)
-                                                       // filterCasteByReligion(v.value)
+                                                        // filterCasteByReligion(v.value)
                                                         handleChange(v.value)
                                                     }}
                                                     onBlur={handleBlur}
@@ -955,6 +969,43 @@ const EditProfile = () => {
                                             </div>
                                         </ListItem>
                                     </List>
+                                </div>
+                            </div>
+                            <br />
+                            <div className='row'>
+                                <div className='col-sm-12'>
+                                    <Typography gutterBottom variant="h5" component="div">
+                                        About Me
+                                    </Typography>
+                                </div>
+                                <div className='col-sm-12'>
+                                    <TextField
+                                        size="small" fullWidth
+                                        rows={4}
+                                        id="outlined-textarea"
+                                        label="About me"
+                                        placeholder="Describe yourself"
+                                        multiline
+                                    />
+                                </div>
+                            </div>
+                            <br />
+                            <div className='row'>
+                                <div className='col-sm-12'>
+                                    <Typography gutterBottom variant="h5" component="div">
+                                        Images
+                                    </Typography>
+                                </div>
+                                <div className='col-sm-12'>
+                                    <section className="image-container">
+                                        <div {...getRootProps({ className: 'dropzone' })}>
+                                            <input {...getInputProps()} />
+                                            <p>Drag 'n' drop Images here, or click to select Images</p>
+                                        </div>
+                                    </section>
+                                    <div className='image-list'>
+                                        {files}
+                                    </div>
                                 </div>
                             </div>
                             <br />

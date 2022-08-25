@@ -11,6 +11,7 @@ import { Paper, Divider, IconButton, Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import AddAssociate from './AddAssociates/AddAssociates';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -45,6 +46,7 @@ const rows = [
 
 const Associates = () => {
     const [page, setPage] = React.useState(0);
+    const [open, setOpen] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const handleChangePage = (event, newPage) => {
@@ -55,12 +57,20 @@ const Associates = () => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClickClose = () => {
+        setOpen(false);
+    };
     return (
         <>
             <h3>Associates</h3>
             <div className='row'>
                 <div className='col-sm-12 align-right'>
-                    <Button variant="contained"><AddIcon/> Add Associate</Button>
+                    <Button onClick={() => handleClickOpen()}  variant="contained"><AddIcon/> Add Associate</Button>
                 </div>
             </div>
             <br />
@@ -105,6 +115,9 @@ const Associates = () => {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
+            {
+                open ? <AddAssociate close={handleClickClose} /> : null
+            }
         </>
     );
 
