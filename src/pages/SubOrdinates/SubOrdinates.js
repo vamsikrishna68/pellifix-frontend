@@ -11,6 +11,7 @@ import { Paper, Divider, IconButton, Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
+import AddSubordinate from './AddSubordinate/AddSubordinate'
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -36,14 +37,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 
 const rows = [
-    { name: 'Sabareesh', phone: '8309890570',status:'Active' },
-    { name: 'Ganesh', phone: '7659960779' ,status:'InActive'},
-    { name: 'Surya', phone: '8309890570',status:'Active' },
-    { name: 'Hari Krishna', phone: '8309890570' ,status:'Active'},
+    { name: 'Sabareesh', phone: '8309890570', status: 'Active', amount: 200 },
+    { name: 'Ganesh', phone: '7659960779', status: 'InActive', amount: 1200 },
+    { name: 'Surya', phone: '8309890570', status: 'Active', amount: 10000 },
+    { name: 'Hari Krishna', phone: '8309890570', status: 'Active', amount: 800 },
 ]
 
 const SubOrdinates = () => {
     const [page, setPage] = React.useState(0);
+    const [open, setOpen] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
     const handleChangePage = (event, newPage) => {
@@ -54,12 +56,19 @@ const SubOrdinates = () => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClickClose = () => {
+        setOpen(false);
+    };
     return (
         <>
             <h3>Sub-Ordinates</h3>
             <div className='row'>
                 <div className='col-sm-12 align-right'>
-                    <Button variant="contained"><AddIcon/> Add Sub-Ordinate</Button>
+                    <Button onClick={() => handleClickOpen()} variant="contained"><AddIcon /> Add Sub-Ordinate</Button>
                 </div>
             </div>
             <br />
@@ -71,6 +80,7 @@ const SubOrdinates = () => {
                                 <StyledTableCell>Name</StyledTableCell>
                                 <StyledTableCell>Mobile Number</StyledTableCell>
                                 <StyledTableCell>Status</StyledTableCell>
+                                <StyledTableCell>Amount Earned</StyledTableCell>
                                 <StyledTableCell>Action</StyledTableCell>
                             </TableRow>
                         </TableHead>
@@ -81,10 +91,11 @@ const SubOrdinates = () => {
                                         {row.name}
                                     </StyledTableCell>
                                     <StyledTableCell>{row.phone}</StyledTableCell>
-                                    <StyledTableCell className={row.status==='Active'?'activeColor':'inActiveColor'}>{row.status}</StyledTableCell>
+                                    <StyledTableCell className={row.status === 'Active' ? 'activeColor' : 'inActiveColor'}>{row.status}</StyledTableCell>
+                                    <StyledTableCell>{row.amount}</StyledTableCell>
                                     <StyledTableCell>
-                                        <IconButton><EditIcon style={{fontSize:'smaller'}} /></IconButton>
-                                        <IconButton><DeleteIcon style={{color:'red',fontSize:'smaller'}} /></IconButton>
+                                        <IconButton><EditIcon style={{ fontSize: 'smaller' }} /></IconButton>
+                                        <IconButton><DeleteIcon style={{ color: 'red', fontSize: 'smaller' }} /></IconButton>
                                     </StyledTableCell>
                                 </StyledTableRow>
                             ))}
@@ -102,6 +113,9 @@ const SubOrdinates = () => {
                     onRowsPerPageChange={handleChangeRowsPerPage}
                 />
             </Paper>
+            {
+                open ? <AddSubordinate close={handleClickClose} /> : null
+            }
         </>
     );
 
