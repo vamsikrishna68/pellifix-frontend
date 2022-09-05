@@ -42,22 +42,22 @@ const EditProfile = () => {
     const [casteList, setCasteList] = useState(religionsList.map(e => [...e.castes]).flat().map(e => ({ label: e.name, value: e.name })))
     const [formData, setFormData] = useState({
         name: '',
-        surname: '',
+        // surname: '',
         gender: null,
         dob: null,
-        physicalStatus: null,
-        bodyType: null,
+        physical_status: null,
+        body_type: null,
         height: null,
         weight: null,
-        maritalStatus: null,
+        marital_status: null,
         motherTounge: null,
-        smokingHabit: null,
-        eatingHabit: null,
-        drinkingHabit: null,
+        smoking_habit: null,
+        eating_habit: null,
+        drinking_habit: null,
         religion: null,
-        nakshtram: null,
+        star: null,
         caste: null,
-        raasi: null,
+        zodiac: null,
         dot: null,
         country: null,
         citizen: null,
@@ -225,9 +225,9 @@ const EditProfile = () => {
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel >Physical Status</InputLabel>
                                                     <Select
-                                                        name='physicalStatus'
+                                                        name='physical_status'
                                                         label="Physical Status"
-                                                        value={values.physicalStatus || ''}
+                                                        value={values.physical_status || ''}
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
@@ -271,9 +271,9 @@ const EditProfile = () => {
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel > Marital Status</InputLabel>
                                                     <Select
-                                                        name='maritalStatus'
+                                                        name='marital_status'
                                                         label="Marital Status"
-                                                        value={values.maritalStatus || ''}
+                                                        value={values.marital_status || ''}
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
@@ -296,9 +296,9 @@ const EditProfile = () => {
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel > Smoking Habit</InputLabel>
                                                     <Select
-                                                        name='smokingHabit'
+                                                        name='smoking_habit'
                                                         label="Smoking Habit"
-                                                        value={values.smokingHabit || ''}
+                                                        value={values.smoking_habit || ''}
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
@@ -321,9 +321,9 @@ const EditProfile = () => {
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel > Drinking Habit</InputLabel>
                                                     <Select
-                                                        name='drinkingHabit'
+                                                        name='drinking_habit'
                                                         label="Drinking Habit"
-                                                        value={values.drinkingHabit || ''}
+                                                        value={values.drinking_habit || ''}
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
@@ -384,9 +384,9 @@ const EditProfile = () => {
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel > Body Type</InputLabel>
                                                     <Select
-                                                        name='bodyType'
+                                                        name='body_type'
                                                         label="Body Type"
-                                                        value={values.bodyType || ''}
+                                                        value={values.body_type || ''}
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
@@ -473,9 +473,9 @@ const EditProfile = () => {
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel > Eating Habit</InputLabel>
                                                     <Select
-                                                        name='eatingHabit'
+                                                        name='eating_habit'
                                                         label="Eating Habit"
-                                                        value={values.eatingHabit || ''}
+                                                        value={values.eating_habit || ''}
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
@@ -600,7 +600,7 @@ const EditProfile = () => {
                                                         handleChange(v.value)
                                                     }}
                                                     onBlur={handleBlur}
-                                                    value={values.nakshtram || ''}
+                                                    value={values.star || ''}
                                                     renderInput={(params) => <TextField {...params} label="Nakshtram" />}
                                                 />
                                                 {/* <TextField
@@ -639,7 +639,7 @@ const EditProfile = () => {
                                                         handleChange(v.value)
                                                     }}
                                                     onBlur={handleBlur}
-                                                    value={values.raasi || ''}
+                                                    value={values.zodiac || ''}
                                                     renderInput={(params) => <TextField {...params} label="Raasi" />}
                                                 />
 
