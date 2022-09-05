@@ -1,3 +1,9 @@
 .home_page {
+    .profile-card {
+        transition: 0.8s all ease;
+    }
 
+    .profile-card:hover {
+        box-shadow: 0px 2px 4px -1px rgba(220, 24, 24, 0.2),0px 4px 5px 0px rgba(232, 10, 10, 0.14),0px 1px 10px 0px rgba(243, 2, 2, 0.12)!important
+    }
 }

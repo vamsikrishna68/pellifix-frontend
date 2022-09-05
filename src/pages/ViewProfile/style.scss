@@ -1,0 +1,18 @@
+.view_profile {
+    .profile_details {
+        height: 78vh;
+        overflow-y: auto;
+        padding-bottom: 20px;
+        padding-top: 10px;
+    }
+
+    .profile_image {
+        padding-top: 10px;
+    }
+
+    .other_images {
+        .col-sm-4 {
+            margin-bottom: 15px;
+        }
+    }
+}

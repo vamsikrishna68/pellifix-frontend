@@ -105,15 +105,12 @@
     .register-bg-image {
         width: 100%;
         height: 100vh;
-        background-image: url('../../assets/bg-images/register.jpg');
-        background-size: 140% 120%;
+        background-image: url('../../assets/marriage.gif');
+        background-size: 100%;
         background-position: center;
         background-repeat: no-repeat;
-        transition: 0.8s all ease;
     }
-    .register-bg-image:hover{
-        background-size: 120% 100%;
-    }
+
     .grecaptcha-badge{
         display: none;
     }

@@ -21,7 +21,7 @@ const Welcome = () => {
     useLayoutEffect(() => {
         function updatePosition() {
             let selectHeader = select('#header')
-            
+
             if (window.scrollY > 100) {
                 selectHeader.classList.add('header-scrolled')
             } else {
@@ -67,7 +67,6 @@ const Welcome = () => {
                             <li><a className="nav-link scrollto active" href="#hero">Home</a></li>
                             <li><a className="nav-link scrollto" href="#features">App Features</a></li>
                             {/* <li><a className="nav-link scrollto" href="#gallery">Gallery</a></li> */}
-                            <li><a className="nav-link scrollto" href="#pricing">Pricing</a></li>
                             <li><a className="nav-link scrollto" href="#faq">F.A.Q</a></li>
                             <li><a className="nav-link scrollto" href="#contact">Contact</a></li>
                             <li>
@@ -91,13 +90,15 @@ const Welcome = () => {
                         <div className="col-lg-6 d-lg-flex flex-lg-column justify-content-center align-items-stretch pt-5 pt-lg-0 order-2 order-lg-1" data-aos="fade-up">
                             <div>
                                 <h1>Welcome to Pellifix</h1>
-                                <h2>Lorem ipsum dolor sit amet, tota senserit percipitur ius ut, usu et fastidii forensibus voluptatibus. His ei nihil feugait</h2>
-                                <span onClick={()=>navigate('/login')} className="download-btn"> Login</span>
-                                <span onClick={()=>navigate('/login')} className="download-btn"> Register</span>
+                                <h2>
+                                    Life is the greatest gift humanity has been given, and surviving it is the ultimate test. Having a great partner by your side can make this journey much easier and more enjoyable. Here at Pelli fix, we take great pleasure in helping you find the perfect partner to make your life more glorious.
+                                </h2>
+                                <span onClick={() => navigate('/login')} className="download-btn"> Login</span>
+                                <span onClick={() => navigate('/login')} className="download-btn"> Register</span>
                             </div>
                         </div>
                         <div className="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 hero-img" data-aos="fade-up">
-                            <img src={require("../../assets/img/hero-img.png")} className="img-fluid" alt="" />
+                            <img style={{ width: '140%', height: '600px' }} src={require("../../assets/img/img1.gif")} className="img-fluid" alt="" />
                         </div>
                     </div>
                 </div>
@@ -249,178 +250,6 @@ const Welcome = () => {
                                     <li><i className="bi bi-check"></i> Facilis ut et voluptatem aperiam. Autem soluta ad fugiat.</li>
                                 </ul>
                             </div>
-                        </div>
-
-                    </div>
-                </section>
-
-
-                {/* <section id="gallery" className="gallery">
-                    <div className="container" data-aos="fade-up">
-
-                        <div className="section-title">
-                            <h2>Gallery</h2>
-                            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-                        </div>
-
-                    </div>
-
-                    <div className="container-fluid" data-aos="fade-up">
-                        <div className="gallery-slider swiper">
-                            <div className="swiper-wrapper">
-                                <div className="swiper-slide"><a href="assets/img/gallery/gallery-1.png" className="gallery-lightbox" data-gall="gallery-carousel"><img src={require("../../assets/img/gallery/gallery-1.png")} className="img-fluid" alt="" /></a></div>
-                                <div className="swiper-slide"><a href="assets/img/gallery/gallery-2.png" className="gallery-lightbox" data-gall="gallery-carousel"><img src={require("../../assets/img/gallery/gallery-2.png")} className="img-fluid" alt="" /></a></div>
-                                <div className="swiper-slide"><a href="assets/img/gallery/gallery-3.png" className="gallery-lightbox" data-gall="gallery-carousel"><img src={require("../../assets/img/gallery/gallery-3.png")} className="img-fluid" alt="" /></a></div>
-                                <div className="swiper-slide"><a href="assets/img/gallery/gallery-4.png" className="gallery-lightbox" data-gall="gallery-carousel"><img src={require("../../assets/img/gallery/gallery-4.png")} className="img-fluid" alt="" /></a></div>
-                                <div className="swiper-slide"><a href="assets/img/gallery/gallery-5.png" className="gallery-lightbox" data-gall="gallery-carousel"><img src={require("../../assets/img/gallery/gallery-5.png")} className="img-fluid" alt="" /></a></div>
-                                <div className="swiper-slide"><a href="assets/img/gallery/gallery-6.png" className="gallery-lightbox" data-gall="gallery-carousel"><img src={require("../../assets/img/gallery/gallery-6.png")} className="img-fluid" alt="" /></a></div>
-                                <div className="swiper-slide"><a href="assets/img/gallery/gallery-7.png" className="gallery-lightbox" data-gall="gallery-carousel"><img src={require("../../assets/img/gallery/gallery-7.png")} className="img-fluid" alt="" /></a></div>
-                                <div className="swiper-slide"><a href="assets/img/gallery/gallery-8.png" className="gallery-lightbox" data-gall="gallery-carousel"><img src={require("../../assets/img/gallery/gallery-8.png")} className="img-fluid" alt="" /></a></div>
-                                <div className="swiper-slide"><a href="assets/img/gallery/gallery-9.png" className="gallery-lightbox" data-gall="gallery-carousel"><img src={require("../../assets/img/gallery/gallery-9.png")} className="img-fluid" alt="" /></a></div>
-                                <div className="swiper-slide"><a href="assets/img/gallery/gallery-10.png" className="gallery-lightbox" data-gall="gallery-carousel"><img src={require("../../assets/img/gallery/gallery-10.png")} className="img-fluid" alt="" /></a></div>
-                                <div className="swiper-slide"><a href="assets/img/gallery/gallery-11.png" className="gallery-lightbox" data-gall="gallery-carousel"><img src={require("../../assets/img/gallery/gallery-11.png")} className="img-fluid" alt="" /></a></div>
-                                <div className="swiper-slide"><a href="assets/img/gallery/gallery-12.png" className="gallery-lightbox" data-gall="gallery-carousel"><img src={require("../../assets/img/gallery/gallery-12.png")} className="img-fluid" alt="" /></a></div>
-                            </div>
-                            <div className="swiper-pagination"></div>
-                        </div>
-
-                    </div>
-                </section> */}
-
-
-                <section id="testimonials" className="testimonials section-bg">
-                    <div className="container" data-aos="fade-up">
-
-                        <div className="section-title">
-                            <h2>Testimonials</h2>
-                            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-                        </div>
-
-                        <div className="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
-                            <div className="swiper-wrapper">
-
-                                <div className="swiper-slide">
-                                    <div className="testimonial-item">
-                                        <img src={require("../../assets/img/testimonials/testimonials-1.jpg")} className="testimonial-img" alt="" />
-                                        <h3>Saul Goodman</h3>
-                                        <h4>Ceo &amp; Founder</h4>
-                                        <p>
-                                            <i className="bx bxs-quote-alt-left quote-icon-left"></i>
-                                            Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                                            <i className="bx bxs-quote-alt-right quote-icon-right"></i>
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="swiper-slide">
-                                    <div className="testimonial-item">
-                                        <img src={require("../../assets/img/testimonials/testimonials-2.jpg")} className="testimonial-img" alt="" />
-                                        <h3>Sara Wilsson</h3>
-                                        <h4>Designer</h4>
-                                        <p>
-                                            <i className="bx bxs-quote-alt-left quote-icon-left"></i>
-                                            Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
-                                            <i className="bx bxs-quote-alt-right quote-icon-right"></i>
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="swiper-slide">
-                                    <div className="testimonial-item">
-                                        <img src={require("../../assets/img/testimonials/testimonials-3.jpg")} className="testimonial-img" alt="" />
-                                        <h3>Jena Karlis</h3>
-                                        <h4>Store Owner</h4>
-                                        <p>
-                                            <i className="bx bxs-quote-alt-left quote-icon-left"></i>
-                                            Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-                                            <i className="bx bxs-quote-alt-right quote-icon-right"></i>
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="swiper-slide">
-                                    <div className="testimonial-item">
-                                        <img src={require("../../assets/img/testimonials/testimonials-4.jpg")} className="testimonial-img" alt="" />
-                                        <h3>Matt Brandon</h3>
-                                        <h4>Freelancer</h4>
-                                        <p>
-                                            <i className="bx bxs-quote-alt-left quote-icon-left"></i>
-                                            Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-                                            <i className="bx bxs-quote-alt-right quote-icon-right"></i>
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="swiper-slide">
-                                    <div className="testimonial-item">
-                                        <img src={require("../../assets/img/testimonials/testimonials-5.jpg")} className="testimonial-img" alt="" />
-                                        <h3>John Larson</h3>
-                                        <h4>Entrepreneur</h4>
-                                        <p>
-                                            <i className="bx bxs-quote-alt-left quote-icon-left"></i>
-                                            Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
-                                            <i className="bx bxs-quote-alt-right quote-icon-right"></i>
-                                        </p>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div className="swiper-pagination"></div>
-                        </div>
-
-                    </div>
-                </section>
-
-
-                <section id="pricing" className="pricing">
-                    <div className="container">
-
-                        <div className="section-title">
-                            <h2>Pricing</h2>
-                            <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
-                        </div>
-
-                        <div className="row no-gutters">
-
-                            <div className="col-lg-4 box" data-aos="fade-right">
-                                <h3>Free</h3>
-                                <h4>$0<span>per month</span></h4>
-                                <ul>
-                                    <li><i className="bx bx-check"></i> Quam adipiscing vitae proin</li>
-                                    <li><i className="bx bx-check"></i> Nec feugiat nisl pretium</li>
-                                    <li><i className="bx bx-check"></i> Nulla at volutpat diam uteera</li>
-                                    <li className="na"><i className="bx bx-x"></i> <span>Pharetra massa massa ultricies</span></li>
-                                    <li className="na"><i className="bx bx-x"></i> <span>Massa ultricies mi quis hendrerit</span></li>
-                                </ul>
-                                <a href="#" className="get-started-btn">Get Started</a>
-                            </div>
-
-                            <div className="col-lg-4 box featured" data-aos="fade-up">
-                                <h3>Business</h3>
-                                <h4>$29<span>per month</span></h4>
-                                <ul>
-                                    <li><i className="bx bx-check"></i> Quam adipiscing vitae proin</li>
-                                    <li><i className="bx bx-check"></i> Nec feugiat nisl pretium</li>
-                                    <li><i className="bx bx-check"></i> Nulla at volutpat diam uteera</li>
-                                    <li><i className="bx bx-check"></i> Pharetra massa massa ultricies</li>
-                                    <li><i className="bx bx-check"></i> Massa ultricies mi quis hendrerit</li>
-                                </ul>
-                                <a href="#" className="get-started-btn">Get Started</a>
-                            </div>
-
-                            <div className="col-lg-4 box" data-aos="fade-left">
-                                <h3>Developer</h3>
-                                <h4>$49<span>per month</span></h4>
-                                <ul>
-                                    <li><i className="bx bx-check"></i> Quam adipiscing vitae proin</li>
-                                    <li><i className="bx bx-check"></i> Nec feugiat nisl pretium</li>
-                                    <li><i className="bx bx-check"></i> Nulla at volutpat diam uteera</li>
-                                    <li><i className="bx bx-check"></i> Pharetra massa massa ultricies</li>
-                                    <li><i className="bx bx-check"></i> Massa ultricies mi quis hendrerit</li>
-                                </ul>
-                                <a href="#" className="get-started-btn">Get Started</a>
-                            </div>
-
                         </div>
 
                     </div>
@@ -579,8 +408,8 @@ const Welcome = () => {
                                 <h3>Pellifix</h3>
                                 <p>
                                     C.C.S Colony <br />
-                                   Dargamitta<br />
-                                   Nellore <br /><br />
+                                    Dargamitta<br />
+                                    Nellore <br /><br />
                                     <strong>Phone:</strong> +91 **********<br />
                                     <strong>Email:</strong> vamsi68krishna@gmail.com<br />
                                 </p>
@@ -600,11 +429,9 @@ const Welcome = () => {
                             <div className="col-lg-3 col-md-6 footer-links">
                                 <h4>Our Services</h4>
                                 <ul>
-                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Matches</a></li>
+                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Chat</a></li>
+                                    <li><i className="bx bx-chevron-right"></i> <a href="#">Horescope</a></li>
                                 </ul>
                             </div>
 
@@ -612,11 +439,9 @@ const Welcome = () => {
                                 <h4>Our Social Networks</h4>
                                 <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
                                 <div className="social-links mt-3">
-                                    <a href="#" className="twitter"><i className="bx bxl-twitter"></i></a>
-                                    <a href="#" className="facebook"><i className="bx bxl-facebook"></i></a>
-                                    <a href="#" className="instagram"><i className="bx bxl-instagram"></i></a>
-                                    <a href="#" className="google-plus"><i className="bx bxl-skype"></i></a>
-                                    <a href="#" className="linkedin"><i className="bx bxl-linkedin"></i></a>
+                                    <a href="https://twitter.com/home" className="twitter"><i className="bx bxl-twitter"></i></a>
+                                    <a href="https://www.facebook.com/profile.php?id=100082580644187" className="facebook"><i className="bx bxl-facebook"></i></a>
+                                    <a href="https://instagram.com/pellifix?igshid=YmMyMTA2M2Y=" className="instagram"><i className="bx bxl-instagram"></i></a>
                                 </div>
                             </div>
 

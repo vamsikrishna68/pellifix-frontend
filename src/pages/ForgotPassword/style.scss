@@ -1,0 +1,38 @@
+.forgot-password{
+   min-height: 100vh;
+   .row{
+    min-height: 100vh;
+   }
+    .center{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background-image: url('../../assets/forgot-password.gif');
+        background-size: 70%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .center-left{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+    .heading1 {
+        line-height: 10rem;
+        font-size: 40px;
+    }
+    .para {
+        color: gray;
+        font-weight: 500;
+        font-size: 12px;
+    }
+    .formField {
+        margin-top: 30px;
+        width: 80%;
+    }
+    .button {
+        margin-top: 30px;
+        width: 80%;
+    }
+}

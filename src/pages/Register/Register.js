@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Zoom } from "react-toastify";
@@ -20,10 +20,13 @@ import Loading from "../../ui-components/Loding/Loading";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import axios from "axios";
 import moment from "moment";
 import * as Yup from "yup";
-import "./style.scss";
+import AOS from 'aos';
+import './style.scss'
+import "aos/dist/aos.css";
 import "react-toastify/dist/ReactToastify.css";
 import "yup-phone";
 
@@ -33,7 +36,15 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  useEffect(() => {
 
+    AOS.init({
+        duration: 1000,
+        easing: "ease-in-out",
+        once: false,
+        mirror: true
+    });
+})
   const configureCaptcha = () => {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
       "sign-in-button",
@@ -199,11 +210,11 @@ const Register = () => {
 
   return (
     <div className="container-fluid register-container">
-      <div className="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+      <div  data-aos="fade-down" className="col-xs-12 col-sm-12 col-md-12 col-lg-5">
         <div className="register-bg-image"></div>
       </div>
       {otpSent ? (
-        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center">
+        <div  data-aos="fade-up" className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center">
           <h3 className="primaryColor heading1">Verify Your Mobile Number</h3>
           <br />
           <h5 className="heading2">
@@ -280,7 +291,7 @@ const Register = () => {
           </Formik>
         </div>
       ) : (
-        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center">
+        <div  data-aos="fade-up" className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center">
           <h3 className="primaryColor heading1">Register</h3>
           <br />
           <h5 className="heading2">Manage all your matchings</h5>
@@ -297,6 +308,7 @@ const Register = () => {
               mobileno: "",
               confirmPwd: "",
               gender: "",
+              referalCode: "",
               dob: moment().subtract(18, "years").calendar(),
             }}
             validationSchema={SignupSchema}
@@ -447,8 +459,8 @@ const Register = () => {
                       size="small"
                       error={
                         errors.profile_creater &&
-                        touched.profile_creater &&
-                        errors.profile_creater
+                          touched.profile_creater &&
+                          errors.profile_creater
                           ? true
                           : false
                       }
@@ -552,8 +564,8 @@ const Register = () => {
                       variant="outlined"
                       error={
                         errors.confirmPwd &&
-                        touched.confirmPwd &&
-                        errors.confirmPwd
+                          touched.confirmPwd &&
+                          errors.confirmPwd
                           ? true
                           : false
                       }
@@ -582,31 +594,19 @@ const Register = () => {
                   <div className="col-sm-6">
                     <TextField
                       className="formField"
-                      type="confirmPwd"
-                      name="confirmPwd"
+                      type="referalCode"
+                      name="referalCode"
                       variant="outlined"
-                      error={
-                        errors.confirmPwd &&
-                        touched.confirmPwd &&
-                        errors.confirmPwd
-                          ? true
-                          : false
-                      }
                       fullWidth
-                      label="Confirm Password"
+                      label="Referal Code?"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={values.confirmPwd}
+                      value={values.referalCode}
                       size="small"
-                      helperText={
-                        errors.confirmPwd && touched.confirmPwd
-                          ? errors.confirmPwd
-                          : ""
-                      }
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
-                            <LockIcon />
+                            <ConfirmationNumberIcon />
                           </InputAdornment>
                         ),
                       }}

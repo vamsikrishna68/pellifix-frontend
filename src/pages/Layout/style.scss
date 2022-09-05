@@ -1,0 +1,18 @@
+.routes {
+    text-decoration: none;
+    color: black;
+}
+.activeRoute{
+    text-decoration: none;
+    color: #D53833;
+    font-weight: bold;
+}
+.activeRoute .menu-icon{
+    color: #d53833 !important;
+    background-color: gainsboro!important;
+}
+.activeRoute .menu-text span{
+    color: #d53833 !important;
+    font-weight: bold!important;
+
+}
