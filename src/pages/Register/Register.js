@@ -50,7 +50,7 @@ const Register = () => {
     setLoading(true);
     console.log(formData)
     const payload={
-      mobileno: formData.mobileNo,
+      mobileno: formData.mobileno,
       otp: values.otp
     }
     console.log(payload,"payload")
