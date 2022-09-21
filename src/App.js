@@ -20,6 +20,7 @@ import AdminLogin from './pages/AdminLogin/AdminLogin';
 import SubOrdinates from './pages/SubOrdinates/SubOrdinates';
 import Associates from './pages/Associates/Associates'
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
+import TableComponent from './ui-components/Table/Table';
 
 let theme = createTheme({
   palette: {
@@ -62,6 +63,7 @@ function App() {
               <Route path="sub-ordinates" element={<SubOrdinates />} />
               <Route path='associates' element={<Associates/>} />
               <Route path='admin-dashboard' element={<AdminDashboard/>} />
+              <Route path='table' element={<TableComponent/>} />
           </Route>
           <Route path="*" element={<PageNotFound />}></Route>
         </Routes>

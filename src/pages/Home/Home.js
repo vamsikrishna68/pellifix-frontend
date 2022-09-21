@@ -1,4 +1,4 @@
-import { Box, Divider } from "@mui/material"
+import { Box, Divider, Button } from "@mui/material"
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import './style.scss'
@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { loadAnimation } from "lottie-web";
 import { defineLordIconElement } from "lord-icon-element";
+import { useNavigate } from "react-router-dom";
 
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
@@ -34,6 +35,7 @@ const responsive = {
     }
 };
 const Home = () => {
+    const navigate = useNavigate();
     const profiles = [
         {
             id: 1,
@@ -142,44 +144,58 @@ const Home = () => {
             }
         </Carousel>
     )
+    const navigateToTable = () => {
+        navigate("/auth/table")
+    }
     return (
         <Box className="home_page">
-            <span style={{ display: 'flex', alignItems: 'center' }}>
-                <lord-icon
-                    src="https://cdn.lordicon.com/lupuorrc.json"
-                    trigger="loop"
-                    colors="primary:#121331,secondary:#d53833"
-                    style={{ width: 55, height: 50}}>
-                </lord-icon>
-                <Typography variant="h5">Daily Recommendations</Typography>
+            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ display: 'flex', alignItems: 'center' }}>
+                    <lord-icon
+                        src="https://cdn.lordicon.com/lupuorrc.json"
+                        trigger="loop"
+                        colors="primary:#121331,secondary:#d53833"
+                        style={{ width: 55, height: 50 }}>
+                    </lord-icon>
+                    <Typography variant="h5">Daily Recommendations</Typography>
+                </span>
+                <Button onClick={() => navigateToTable()} variant="contained">Show More</Button>
             </span>
             {corousel}
             <br />
             <Divider />
             <br />
-            <span style={{ display: 'flex', alignItems: 'center' }}>
+            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ display: 'flex', alignItems: 'center' }}>
 
-                <lord-icon
-                    src="https://cdn.lordicon.com/nxaaasqe.json"
-                    trigger="loop"
-                    colors="primary:#121331,secondary:#d53833"
-                    style={{ width: 55, height: 50,marginTop:'-2px' }}>
-                </lord-icon>
-                <Typography variant="h5">Horoscopic Matches</Typography>
+                    <lord-icon
+                        src="https://cdn.lordicon.com/nxaaasqe.json"
+                        trigger="loop"
+                        colors="primary:#121331,secondary:#d53833"
+                        style={{ width: 55, height: 50, marginTop: '-2px' }}>
+                    </lord-icon>
+                    <Typography variant="h5">Horoscopic Matches</Typography>
+                </span>
+                <Button onClick={() => navigateToTable()} variant="contained">Show More</Button>
             </span>
+
             {corousel}
             <br />
             <Divider />
             <br />
-            <span style={{ display: 'flex', alignItems: 'center' }}>
-                <lord-icon
-                    src="https://cdn.lordicon.com/uukerzzv.json"
-                    trigger="loop"
-                    colors="primary:#121331,secondary:#d53833"
-                    style={{ width: 55, height: 50,marginTop:'-2px' }}>
-                </lord-icon>
-                <Typography variant="h5">Preference Matches</Typography>
+            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span style={{ display: 'flex', alignItems: 'center' }}>
+                    <lord-icon
+                        src="https://cdn.lordicon.com/uukerzzv.json"
+                        trigger="loop"
+                        colors="primary:#121331,secondary:#d53833"
+                        style={{ width: 55, height: 50, marginTop: '-2px' }}>
+                    </lord-icon>
+                    <Typography variant="h5">Preference Matches</Typography>
+                </span>
+                <Button onClick={() => navigateToTable()} variant="contained">Show More</Button>
             </span>
+
             {corousel}
         </Box>
     )

@@ -4,7 +4,7 @@ import {
     Select, InputLabel,
     FormControl, Typography,
     List, ListItem,
-    MenuItem, InputAdornment, Card,
+    MenuItem, InputAdornment, Card, Button,
     Fab, Autocomplete, IconButton
 } from '@mui/material';
 import {
@@ -28,11 +28,12 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import SaveIcon from '@mui/icons-material/Save';
 import { Formik } from "formik";
 import { useEffect, useState } from 'react';
-import { getProfileData, updateProfileData } from '../../api/api'
+import { getProfileData, updateProfileData, uploadImages } from '../../api/api'
 import Loading from '../../ui-components/Loding/Loading';
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useDropzone } from 'react-dropzone';
 import ClearIcon from '@mui/icons-material/Clear';
+
 
 
 const EditProfile = () => {
@@ -85,6 +86,15 @@ const EditProfile = () => {
     const filterCasteByReligion = (religion) => {
         const filteredList = religionsList.filter(e => e.name === religion)[0].castes.map(e => ({ label: e.name, value: e.name }))
         setCasteList([...filteredList]);
+    }
+
+    const upload = async () => {
+        console.log(acceptedFiles,"array")
+        const formData = new FormData();
+        formData.append("images", acceptedFiles);
+        console.log(formData,"formData")
+        const response = await uploadImages(formData)
+        console.log(response, "response")
     }
 
     const files = acceptedFiles.map(file => {
@@ -1006,6 +1016,11 @@ const EditProfile = () => {
                                     <div className='image-list'>
                                         {files}
                                     </div>
+                                    {
+                                        acceptedFiles.length ?
+                                            <Button onClick={() => upload()} style={{ width: '100%' }} variant="contained">Upload</Button> : null
+                                    }
+
                                 </div>
                             </div>
                             <br />
