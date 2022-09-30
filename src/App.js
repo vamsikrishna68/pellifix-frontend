@@ -21,6 +21,7 @@ import SubOrdinates from './pages/SubOrdinates/SubOrdinates';
 import Associates from './pages/Associates/Associates'
 import AdminDashboard from './pages/AdminDashboard/AdminDashboard';
 import TableComponent from './ui-components/Table/Table';
+import ProfileView from './pages/ProfileView/ProfileView';
 
 let theme = createTheme({
   palette: {
@@ -60,6 +61,7 @@ function App() {
               <Route path="edit-profile" element={<EditProfile />} />
               <Route path="view-profile" element={<ViewProfile />} />
               <Route path="edit-preference" element={<EditPreferences />} />
+              <Route path="profile-view" element={<ProfileView />} />
               <Route path="sub-ordinates" element={<SubOrdinates />} />
               <Route path='associates' element={<Associates/>} />
               <Route path='admin-dashboard' element={<AdminDashboard/>} />

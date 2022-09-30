@@ -157,7 +157,7 @@ const Layout = () => {
         { title: 'Edit Profile', icon: 'https://cdn.lordicon.com/wloilxuq.json', path: 'edit-profile',role:'USER'  },
         { title: 'Edit Preference', icon: 'https://cdn.lordicon.com/sbiheqdr.json', path: 'edit-preference',role:'USER'  },
         { title: 'Compare Profiles', icon: 'https://cdn.lordicon.com/soseozvi.json', path: 'compare-profiles',role:'USER'  },
-        { title: 'Profile Viewed', icon: 'https://cdn.lordicon.com/tyounuzx.json', path: 'profile-viewed',role:'USER'  },
+        { title: 'Profile Viewed', icon: 'https://cdn.lordicon.com/tyounuzx.json', path: 'profile-view',role:'USER'  },
         { title: 'Admin Dashboard', icon: 'https://cdn.lordicon.com/imamsnbq.json', path: 'admin-dashboard',role:'SUPER_ADMIN'  },
         { title: 'Sub-Ordinates', icon: 'https://cdn.lordicon.com/eszyyflr.json', path: 'sub-ordinates',role:'SUPER_ADMIN' },
         { title: 'Associates', icon: 'https://cdn.lordicon.com/imamsnbq.json', path: 'associates',role:'SUPER_ADMIN'  },
