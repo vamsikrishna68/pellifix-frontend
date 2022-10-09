@@ -62,3 +62,9 @@ export const uploadImages = (payload) => {
     body: payload
   });
 }
+export const getDropwdownValues = () => {
+  return apiService({
+    url: "/reference/drop-down",
+    method: "GET"
+  });
+}
