@@ -94,7 +94,7 @@ const Welcome = () => {
                                     Life is the greatest gift humanity has been given, and surviving it is the ultimate test. Having a great partner by your side can make this journey much easier and more enjoyable. Here at Pelli fix, we take great pleasure in helping you find the perfect partner to make your life more glorious.
                                 </h2>
                                 <span onClick={() => navigate('/login')} className="download-btn"> Login</span>
-                                <span onClick={() => navigate('/login')} className="download-btn"> Register</span>
+                                <span onClick={() => navigate('/register')} className="download-btn"> Register</span>
                             </div>
                         </div>
                         <div className="col-lg-6 d-lg-flex flex-lg-column align-items-stretch order-1 order-lg-2 hero-img" data-aos="fade-up">

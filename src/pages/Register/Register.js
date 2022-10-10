@@ -142,7 +142,7 @@ const Register = () => {
         <div className="register-bg-image"></div>
       </div>
       {otpSent ? (
-        <div  data-aos="fade-up" className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center">
+        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center">
           <h3 className="primaryColor heading1">Verify Your Mobile Number</h3>
           <br />
           <h5 className="heading2">
@@ -219,7 +219,7 @@ const Register = () => {
           </Formik>
         </div>
       ) : (
-        <div  data-aos="fade-up" className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center">
+        <div  className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center">
           <h3 className="primaryColor heading1">Register</h3>
           <br />
           <h5 className="heading2">Manage all your matchings</h5>
