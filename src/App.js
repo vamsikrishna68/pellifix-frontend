@@ -1,26 +1,10 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login/Login";
-import Welcome from "./pages/Welcome/Welcome";
+import { BrowserRouter, Routes, Route, useRoutes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./App.css";
-import Register from "./pages/Register/Register";
-import PageNotFound from "./pages/PageNotFound/PageNotFound";
-import Layout from "./pages/Layout/Layout";
-import Home from "./pages/Home/Home";
-import WishList from "./pages/WishList";
-import Profile from "./pages/Profile/Profile";
-import { setRoutes } from "./rotues/config";
-import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword/ResetPassword";
-import ViewProfile from "./pages/ViewProfile/ViewProfile";
-import EditProfile from "./pages/EditProfile/EditProfile";
-import EditPreferences from "./pages/EditPreferences/EditPreferences";
-import AdminLogin from "./pages/AdminLogin/AdminLogin";
-import SubOrdinates from "./pages/SubOrdinates/SubOrdinates";
-import Associates from "./pages/Associates/Associates";
-import AdminDashboard from "./pages/AdminDashboard/AdminDashboard";
 import Authorization from "./utils/authorization";
+import routes from './rotues/config';
+
 
 let theme = createTheme({
   palette: {
@@ -33,44 +17,20 @@ let theme = createTheme({
   },
 });
 
+function AppRoutes() {
+  const isLoggedIn = Authorization.isLoggedIn();
+  const routing = useRoutes(routes(isLoggedIn));
+  return routing;
+}
+
 function App() {
+
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Routes>
-            {setRoutes("private")}
-            <Route exact path="auth" element={<Layout />}>
-              {setRoutes()}
-            </Route>
-            {/* <Route path="/" element={<Welcome />}></Route>
-            <Route path="login" element={<Login />}></Route>
-            <Route path="admin-login" element={<AdminLogin />}></Route>
-            <Route path="register" element={<Register />}></Route>
-            <Route path="forgot-password" element={<ForgotPassword />}></Route>
-            <Route path="reset-password" element={<ResetPassword />}></Route>
-            <Route
-              exact
-              path="auth"
-              element={
-                // <PrivateRoute>
-                <Layout />
-                // </PrivateRoute>
-              }
-            >
-              <Route path="home" element={<Home />} />
-              <Route path="wishList" element={<WishList />} />
-              <Route path="profile" element={<Profile />} />
-              <Route path="edit-profile" element={<EditProfile />} />
-              <Route path="view-profile" element={<ViewProfile />} />
-              <Route path="edit-preference" element={<EditPreferences />} />
-              <Route path="sub-ordinates" element={<SubOrdinates />} />
-              <Route path="associates" element={<Associates />} />
-              <Route path="admin-dashboard" element={<AdminDashboard />} />
-            </Route>
-            <Route path="*" element={<PageNotFound />}></Route> */}
-          </Routes>
-        </BrowserRouter>
+      <BrowserRouter>
+        <AppRoutes/>
+      </BrowserRouter>
       </ThemeProvider>
     </React.StrictMode>
   );

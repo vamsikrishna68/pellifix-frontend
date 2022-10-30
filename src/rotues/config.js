@@ -1,6 +1,4 @@
 import React from "react";
-import PublicRoute from "./PublicRoute";
-import PrivateRoute from "./PrivateRoute";
 import Login from "../pages/Login/Login";
 import Welcome from "../pages/Welcome/Welcome";
 import Register from "../pages/Register/Register";
@@ -18,50 +16,52 @@ import AdminLogin from "../pages/AdminLogin/AdminLogin";
 import SubOrdinates from "../pages/SubOrdinates/SubOrdinates";
 import Associates from "../pages/Associates/Associates";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
+import { Navigate, Outlet } from "react-router-dom";
 
-/**
- * List of routes for the page
- */
-export const ROUTE = {
-  public: [
-    {
-      exact: true,
-      path: "/",
-      meta: {},
-      name: "Welcome",
-      element: <Welcome/>,
-    },
-    {
-      exact: true,
-      path: "/login",
-      meta: {},
-      element: <Login/>,
-    },
-  ],
-  private: [
-    {
-      exact: true,
-      path: "/home",
-      meta: {},
-      name: "Home",
-      element: <Home/>,
-    },
-  ],
-};
+const routes = (isLoggedIn) => [
+  {
+    path: "/",
+    element: !isLoggedIn ? <Welcome /> : <Navigate to="/home" />, 
+  },
+  {
+    path: "login",
+    element: !isLoggedIn ? <Login /> : <Navigate to="/home" />,
+  },
+  {
+    path: "admin-login",
+    element: !isLoggedIn ? <AdminLogin /> : <Navigate to="/home" />,
+  },
+  {
+    path: "register",
+    element: !isLoggedIn ? <Register /> : <Navigate to="/home" />,
+  },
+  {
+    path: "forgot-password",
+    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/home" />,
+  },
+  {
+    path: "reset-password",
+    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/home" />,
+  },
+  {
+    path: "auth",
+    element: isLoggedIn ? <Layout /> : <Navigate to="/" />,
+    children: [
+      { path:"home", element:<Home /> },
+      { path:"wishList", element:<WishList /> },
+      { path:"profile", element:<Profile /> },
+      { path:"edit-profile", element:<EditProfile /> },
+      { path:"view-profile", element:<ViewProfile /> },
+      { path:"edit-preference", element:<EditPreferences /> },
+      { path:"sub-ordinates", element:<SubOrdinates /> },
+      { path:"associates", element:<Associates /> },
+      { path:"admin-dashboard", element:<AdminDashboard /> },
+    ],
+  },
+  {
+    path: "*",
+    element: <PageNotFound /> ,
+  },
+];
 
-/**
- * Function to set route info
- * @param {routeName} routeName
- */
-export const setRoutes = (routeName) => {
-  routeName = routeName || "public";
-  const route = ROUTE[routeName];
-  console.log({route,routeName});
-  return route.map((eachRoute, index) => {
-    if (routeName === "private") {
-      return <PrivateRoute key={index} {...eachRoute} />;
-    } else {
-      return <PublicRoute key={index} {...eachRoute} />;
-    }
-  });
-};
+export default routes;
