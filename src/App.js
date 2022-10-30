@@ -8,7 +8,7 @@ import Register from './pages/Register/Register';
 import PageNotFound from './pages/PageNotFound/PageNotFound';
 import Layout from './pages/Layout/Layout';
 import Home from './pages/Home/Home';
-import WhistList from './pages/Whistlist/Whistlist'
+import WishList from './pages/WishList'
 import Profile from './pages/Profile/Profile'
 import { PrivateRoute } from './utils/privateRoute';
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword';
@@ -54,7 +54,7 @@ function App() {
               }
             >
               <Route path="home" element={<Home />} />
-              <Route path="wishList" element={<WhistList />} />
+              <Route path="wishList" element={<WishList />} />
               <Route path="profile" element={<Profile />} />
               <Route path="edit-profile" element={<EditProfile />} />
               <Route path="view-profile" element={<ViewProfile />} />

@@ -124,6 +124,7 @@ const Register = () => {
     setLoading(true);
     let payload = {
       ...values,
+      mobileno: "+917010167627",
       age: moment().diff(values.dob, "years"),
       referral_code: "",
       dob: moment(values.dob).format("yyyy-MM-DD"),
@@ -308,7 +309,7 @@ const Register = () => {
               mobileno: "",
               confirmPwd: "",
               gender: "",
-              referalCode: "",
+              referral_code: "",
               dob: moment().subtract(18, "years").calendar(),
             }}
             validationSchema={SignupSchema}
@@ -594,14 +595,14 @@ const Register = () => {
                   <div className="col-sm-6">
                     <TextField
                       className="formField"
-                      type="referalCode"
-                      name="referalCode"
+                      type="referral_code"
+                      name="referral_code"
                       variant="outlined"
                       fullWidth
                       label="Referal Code?"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={values.referalCode}
+                      value={values.referral_code}
                       size="small"
                       InputProps={{
                         endAdornment: (

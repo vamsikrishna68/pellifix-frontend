@@ -6,6 +6,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import Loading from "../../ui-components/Loding/Loading";
+import Authorization from "../../utils/authorization";
 import AOS from 'aos';
 import './style.scss'
 import "aos/dist/aos.css";
@@ -30,7 +31,7 @@ const Login = () => {
       .then((response) => {
         console.log(response);
         if(response && response.status==200){
-          localStorage.setItem('pfToken',response.data.token)
+          Authorization.login(response.data)
           setLoading(false);
           toast.success("Login Successfully!", {
             position: "top-right",

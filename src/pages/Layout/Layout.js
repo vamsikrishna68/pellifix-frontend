@@ -152,7 +152,7 @@ const Layout = () => {
 
     const sideMenu = [
         { title: 'Home', icon: 'https://cdn.lordicon.com/gmzxduhd.json', path: 'home',role:'USER' },
-        { title: 'Whist List', icon: 'https://cdn.lordicon.com/rjzlnunf.json', path: 'wishlist',role:'USER'  },
+        { title: 'Wish List', icon: 'https://cdn.lordicon.com/rjzlnunf.json', path: 'wishlist',role:'USER'  },
         { title: 'Chat', icon: 'https://cdn.lordicon.com/zpxybbhl.json', path: 'chat',role:'USER'  },
         { title: 'Edit Profile', icon: 'https://cdn.lordicon.com/wloilxuq.json', path: 'edit-profile',role:'USER'  },
         { title: 'Edit Preference', icon: 'https://cdn.lordicon.com/sbiheqdr.json', path: 'edit-preference',role:'USER'  },
