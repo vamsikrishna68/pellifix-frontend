@@ -58,3 +58,20 @@ export const getWishList = () => {
     method: "GET",
   });
 };
+
+
+export const verifyPhone = (payload) => {
+  return apiService({
+    url: "/customer/otp/verify",
+    method: "PATCH",
+    body: payload,
+  });
+};
+
+export const generateOtp = (payload) => {
+  return apiService({
+    url: "/customer/otp/generate",
+    method: "PATCH",
+    body: payload,
+  });
+};

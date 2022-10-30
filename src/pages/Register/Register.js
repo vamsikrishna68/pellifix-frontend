@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Zoom } from "react-toastify";
@@ -20,15 +20,17 @@ import Loading from "../../ui-components/Loding/Loading";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
-import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import axios from "axios";
 import moment from "moment";
 import * as Yup from "yup";
-import AOS from 'aos';
-import './style.scss'
+import AOS from "aos";
+import "./style.scss";
 import "aos/dist/aos.css";
 import "react-toastify/dist/ReactToastify.css";
 import "yup-phone";
+import { generateOtp } from "../../api/api";
+import Authorization from "../../utils/authorization"
 
 const Register = () => {
   const [formData, setFormData] = useState({});
@@ -37,14 +39,13 @@ const Register = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
-
     AOS.init({
-        duration: 1000,
-        easing: "ease-in-out",
-        once: false,
-        mirror: true
+      duration: 1000,
+      easing: "ease-in-out",
+      once: false,
+      mirror: true,
     });
-})
+  });
   const configureCaptcha = () => {
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
       "sign-in-button",
@@ -60,17 +61,12 @@ const Register = () => {
     );
   };
 
-  const verifyMobileNumber = (mobileNo) => {
+  const verifyMobileNumber = async (mobileNo) => {
     setLoading(true);
-    configureCaptcha();
-    const phoneNumber = "+91" + mobileNo;
-    const appVerifier = window.recaptchaVerifier;
-    firebase
-      .auth()
-      .signInWithPhoneNumber(phoneNumber, appVerifier)
-      .then((confirmationResult) => {
-        console.log(confirmationResult, "confirmationResult");
-        window.confirmationResult = confirmationResult;
+    try {
+      const phoneNumber = "+91" + mobileNo;
+      const response = await generateOtp(phoneNumber);
+      if (response) {
         toast.success(`OTP has been sent to your mobile number.`, {
           position: "top-right",
           autoClose: 3000,
@@ -79,44 +75,45 @@ const Register = () => {
         });
         setLoading(false);
         setOtpSent(true);
-      })
-      .catch((error) => {
-        console.log(error, "error");
-        setLoading(false);
-        toast.error("Something Went Wrong, Please try again", {
-          position: "top-right",
-          autoClose: 3000,
-          theme: "colored",
-          transition: Zoom,
-        });
+      }
+      console.log(response, "response");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      toast.error("Something Went Wrong, Please try again", {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "colored",
+        transition: Zoom,
       });
+    }
   };
 
   const onSubmitOTP = (values) => {
     setLoading(true);
     const code = values.otp;
-    window.confirmationResult
-      .confirm(code)
-      .then((result) => {
-        // User signed in successfully.
-        const user = result.user;
-        console.log(JSON.stringify(user));
+    axios
+      .patch("https://api.pellifix.com/v1/customer/otp/verify", { ...code })
+      .then((response) => {
+        console.log(response);
+        Authorization.login(response);
         setLoading(false);
-
-        register();
-        // ...
+        toast.success("Otp verified successfully", {
+          position: "top-right",
+          autoClose: 3000,
+          theme: "colored",
+          transition: Zoom,
+        });
       })
-      .catch((error) => {
-        consoe.log(error);
-        toast.error("Something Went Wrong, Please try again", {
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data.error.message, {
           position: "top-right",
           autoClose: 3000,
           theme: "colored",
           transition: Zoom,
         });
         setLoading(false);
-        // User couldn't sign in (bad verification code?)
-        // ...
       });
   };
 
@@ -124,7 +121,7 @@ const Register = () => {
     setLoading(true);
     let payload = {
       ...values,
-      mobileno: "+917010167627",
+      mobileno: "+91" + values.mobileno,
       age: moment().diff(values.dob, "years"),
       referral_code: "",
       dob: moment(values.dob).format("yyyy-MM-DD"),
@@ -211,11 +208,17 @@ const Register = () => {
 
   return (
     <div className="container-fluid register-container">
-      <div  data-aos="fade-down" className="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+      <div
+        data-aos="fade-down"
+        className="col-xs-12 col-sm-12 col-md-12 col-lg-5"
+      >
         <div className="register-bg-image"></div>
       </div>
       {otpSent ? (
-        <div  data-aos="fade-up" className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center">
+        <div
+          data-aos="fade-up"
+          className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center"
+        >
           <h3 className="primaryColor heading1">Verify Your Mobile Number</h3>
           <br />
           <h5 className="heading2">
@@ -292,9 +295,11 @@ const Register = () => {
           </Formik>
         </div>
       ) : (
-        <div  data-aos="fade-up" className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center">
+        <div
+          data-aos="fade-up"
+          className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center"
+        >
           <h3 className="primaryColor heading1">Register</h3>
-          <br />
           <h5 className="heading2">Manage all your matchings</h5>
           <span className="para">
             Let's get you all set up so you can verify your personal account and
@@ -460,8 +465,8 @@ const Register = () => {
                       size="small"
                       error={
                         errors.profile_creater &&
-                          touched.profile_creater &&
-                          errors.profile_creater
+                        touched.profile_creater &&
+                        errors.profile_creater
                           ? true
                           : false
                       }
@@ -565,8 +570,8 @@ const Register = () => {
                       variant="outlined"
                       error={
                         errors.confirmPwd &&
-                          touched.confirmPwd &&
-                          errors.confirmPwd
+                        touched.confirmPwd &&
+                        errors.confirmPwd
                           ? true
                           : false
                       }
