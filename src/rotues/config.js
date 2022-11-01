@@ -21,27 +21,27 @@ import { Navigate, Outlet } from "react-router-dom";
 const routes = (isLoggedIn) => [
   {
     path: "/",
-    element: !isLoggedIn ? <Welcome /> : <Navigate to="/home" />, 
+    element: !isLoggedIn ? <Welcome /> : <Navigate to="/auth/home" />, 
   },
   {
     path: "login",
-    element: !isLoggedIn ? <Login /> : <Navigate to="/home" />,
+    element: !isLoggedIn ? <Login /> : <Navigate to="/auth/home" />,
   },
   {
     path: "admin-login",
-    element: !isLoggedIn ? <AdminLogin /> : <Navigate to="/home" />,
+    element: !isLoggedIn ? <AdminLogin /> : <Navigate to="/auth/home" />,
   },
   {
     path: "register",
-    element: !isLoggedIn ? <Register /> : <Navigate to="/home" />,
+    element: !isLoggedIn ? <Register /> : <Navigate to="/auth/home" />,
   },
   {
     path: "forgot-password",
-    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/home" />,
+    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/home" />,
   },
   {
     path: "reset-password",
-    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/home" />,
+    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
   },
   {
     path: "auth",

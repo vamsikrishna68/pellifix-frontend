@@ -12,6 +12,9 @@ import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { loadAnimation } from "lottie-web";
 import { defineLordIconElement } from "lord-icon-element";
+import { useEffect, useState, useCallback } from "react";
+import { getDropwdownValues } from "../../api/api";
+import { ls } from "../../utils/localStorage";
 import { useNavigate } from "react-router-dom";
 
 // register lottie and define custom element
@@ -36,6 +39,19 @@ const responsive = {
 };
 
 const Home = () => {
+  useEffect(() => {
+    fetchDropdownsValues();
+    // const interval = setInterval(() => fetchDropdownsValues(), 7200000);
+    // return () => {
+    //   clearInterval(interval);
+    // };
+  }, []);
+
+  const fetchDropdownsValues = async () => {
+    const response = await getDropwdownValues();
+    ls.setItem("dropdown_values_for_reference", JSON.stringify(response.data));
+  };
+
   const profiles = [
     {
       id: 1,
