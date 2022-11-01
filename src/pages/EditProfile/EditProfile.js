@@ -4,7 +4,7 @@ import {
     Select, InputLabel,
     FormControl, Typography,
     List, ListItem,
-    MenuItem, InputAdornment, Card,
+    MenuItem, InputAdornment, Card, Button,
     Fab, Autocomplete, IconButton
 } from '@mui/material';
 import {
@@ -27,71 +27,114 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import SaveIcon from '@mui/icons-material/Save';
 import { Formik } from "formik";
-import { useEffect, useState } from 'react';
-import { getProfileData, updateProfileData } from '../../api/api'
+import { useEffect, useState, useCallback } from 'react';
+import { getDropwdownValues, getProfileData, updateProfileData, uploadImages } from '../../api/api'
 import Loading from '../../ui-components/Loding/Loading';
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useDropzone } from 'react-dropzone';
 import ClearIcon from '@mui/icons-material/Clear';
+import { parse } from 'date-fns';
+
 
 
 const EditProfile = () => {
     const religionList = religionsList.map(e => ({ label: e.name, value: e.name }))
     const [loading, setLoading] = useState(true)
-    const { acceptedFiles, getRootProps, getInputProps } = useDropzone();
-    const [casteList, setCasteList] = useState(religionsList.map(e => [...e.castes]).flat().map(e => ({ label: e.name, value: e.name })))
-    const [formData, setFormData] = useState({
-        name: '',
-        surname: '',
-        gender: null,
-        dob: null,
-        physicalStatus: null,
-        bodyType: null,
-        height: null,
-        weight: null,
-        maritalStatus: null,
-        motherTounge: null,
-        smokingHabit: null,
-        eatingHabit: null,
-        drinkingHabit: null,
-        religion: null,
-        nakshtram: null,
-        caste: null,
-        raasi: null,
-        dot: null,
-        country: null,
-        citizen: null,
-        state: null,
-        district: null,
-        city: null,
-        higherQualification: null,
-        employedIn: null,
-        occupation: null,
-        annualIncome: null,
-        familyType: null,
-        familyStatus: null,
-        fathersOccupation: null,
-        mothersOccupation: null,
-        noOfBrothers: null,
-        noOfBrothersMarried: null,
-        noOfSisters: null,
-        noOfSistersMarried: null,
-        hobbies: null,
-        interests: null,
-        aboutMe: null
+    const [dropdownOptions, setDropdownOptions] = useState(null)
 
-    })
+
+    const [casteList, setCasteList] = useState(religionsList.map(e => [...e.castes]).flat().map(e => ({ label: e.name, value: e.name })))
+    const [formData, setFormData] = useState(
+        {
+            profile_creater: '',
+            name: '',
+            surname: '',
+            marital_status: '',
+            body_type: '',
+            dob: new Date(),
+            time_of_birth: new Date(),
+            age: '',
+            physical_status: '',
+            height: 0,
+            weight: 0,
+            religion: '',
+            caste: '',
+            sub_caste: '',
+            zodiac: '',
+            star: '',
+            eating_habit: '',
+            drinking_habit: '',
+            smoking_habit: '',
+            country: '',
+            city: '',
+            state: '',
+            education: '',
+            occupation: '',
+            employeed_in: '',
+            salary: '',
+            image: '',
+            about_me: '',
+            require_details: '',
+            gender: '',
+            profession: '',
+            address: '',
+            pincode: '',
+            interests: '',
+            hobbies: '',
+            no_of_sisters_married: '',
+            no_of_sisters: '',
+            no_of_brothers_married: '',
+            no_of_brothers: '',
+            mothers_occupation: '',
+            fathers_occupation: '',
+            family_status: '',
+            family_type: ''
+        }
+    )
+    const [myFiles, setMyFiles] = useState([])
+    const onDrop = useCallback(acceptedFiles => {
+        setMyFiles([...myFiles, ...acceptedFiles])
+    }, [myFiles])
+    const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+        onDrop,
+    });
+
+
+    const removeFile = file => () => {
+        const newFiles = [...myFiles]
+        newFiles.splice(newFiles.indexOf(file), 1)
+        setMyFiles(newFiles)
+    }
+
+
 
     const filterCasteByReligion = (religion) => {
         const filteredList = religionsList.filter(e => e.name === religion)[0].castes.map(e => ({ label: e.name, value: e.name }))
         setCasteList([...filteredList]);
     }
 
-    const files = acceptedFiles.map(file => {
+    const upload = async () => {
+        const formData = new FormData();
+        myFiles.forEach(e => {
+            formData.append("images", e);
+        })
+
+        const response = await uploadImages(formData)
+        console.log(response, "response")
+    }
+
+    const fetchDropdownsValues = async () => {
+        const response = await getDropwdownValues(formData)
+        setDropdownOptions(response.data)
+    }
+
+
+
+    const files = myFiles.map((file, index) => {
         const objectUrl = URL.createObjectURL(file)
         return (
-            <div className='uploaded-image'>
-                <IconButton size='small' className="clear-btn" color="primary" component="span">
+            <div key={index} className='uploaded-image'>
+                <IconButton onClick={removeFile(file)} size='small' className="clear-btn" color="primary" component="span">
                     <ClearIcon />
                 </IconButton>
                 <img src={objectUrl} />
@@ -101,6 +144,7 @@ const EditProfile = () => {
 
 
     useEffect(() => {
+        fetchDropdownsValues()
         fetchProfileData();
 
     }, [])
@@ -124,6 +168,7 @@ const EditProfile = () => {
             console.log(error)
         }
     }
+
     const updateProfile = async (data) => {
         try {
             const response = await updateProfileData(data)
@@ -132,6 +177,7 @@ const EditProfile = () => {
             console.log(error)
         }
     }
+
     return (
         <div className="container-fluid edit-profile">
             <div>
@@ -146,7 +192,36 @@ const EditProfile = () => {
                         return errors;
                     }}
                     onSubmit={(values, { setSubmitting }) => {
-                        updateProfile({ ...formData, ...values })
+                        const data = { ...values }
+                        console.log(data, formData, "data")
+                        Object.keys(data).forEach(e => {
+                            if (data[e] == null) {
+                                data[e] = ''
+                            }
+                        })
+                        let payload = { ...formData, ...data }
+                        payload.height = parseFloat(payload.height)
+                        payload.weight = parseFloat(payload.weight)
+                        payload.no_of_sisters_married = parseFloat(payload.no_of_sisters_married ? payload.no_of_sisters_married : 0)
+                        payload.no_of_brothers_married = parseFloat(payload.no_of_brothers_married ? payload.no_of_brothers_married : 0)
+                        payload.no_of_brothers = parseFloat(payload.no_of_brothers ? payload.no_of_brothers : 0)
+                        payload.no_of_sisters = parseFloat(payload.no_of_sisters ? payload.no_of_sisters : 0)
+                        payload.gender = payload.gender.toString()
+                        delete payload.id
+                        delete payload.created_by
+                        delete payload.updated_by
+                        delete payload.created_at
+                        delete payload.updated_at
+                        delete payload.images
+                        delete payload.is_membership
+                        delete payload.paid_status
+                        delete payload.paid_date
+                        delete payload.start_date
+                        delete payload.end_date
+
+
+                        console.log(payload, "payload")
+                        updateProfile(payload)
                     }}
                 >
                     {({
@@ -206,9 +281,9 @@ const EditProfile = () => {
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
-                                                        {genderList.map((option) => (
-                                                            <MenuItem key={option.value} value={option.value}>
-                                                                {option.label}
+                                                        {dropdownOptions?.GENDER.map((option) => (
+                                                            <MenuItem key={option.id} value={option.id}>
+                                                                {option.name}
                                                             </MenuItem>
                                                         ))}
                                                     </Select>
@@ -225,15 +300,15 @@ const EditProfile = () => {
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel >Physical Status</InputLabel>
                                                     <Select
-                                                        name='physicalStatus'
+                                                        name='physical_status'
                                                         label="Physical Status"
-                                                        value={values.physicalStatus || ''}
+                                                        value={values.physical_status || ''}
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
-                                                        {physicalStatusList.map((option) => (
-                                                            <MenuItem key={option.value} value={option.value}>
-                                                                {option.label}
+                                                        {dropdownOptions?.PHYSICAL_STATUS.map((option) => (
+                                                            <MenuItem key={option.id} value={option.id}>
+                                                                {option.name}
                                                             </MenuItem>
                                                         ))}
                                                     </Select>
@@ -254,7 +329,7 @@ const EditProfile = () => {
                                                     size="small"
                                                     fullWidth
                                                     name='height'
-                                                    value={values.height || ''}
+                                                    value={values.height || 0}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                     label="Height"
@@ -271,15 +346,15 @@ const EditProfile = () => {
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel > Marital Status</InputLabel>
                                                     <Select
-                                                        name='maritalStatus'
+                                                        name='marital_status'
                                                         label="Marital Status"
-                                                        value={values.maritalStatus || ''}
+                                                        value={values.marital_status || ''}
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
-                                                        {maritalStatusList.map((option) => (
-                                                            <MenuItem key={option.value} value={option.value}>
-                                                                {option.label}
+                                                        {dropdownOptions?.MARITAL_STATUS.map((option) => (
+                                                            <MenuItem key={option.id} value={option.id}>
+                                                                {option.name}
                                                             </MenuItem>
                                                         ))}
                                                     </Select>
@@ -296,15 +371,15 @@ const EditProfile = () => {
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel > Smoking Habit</InputLabel>
                                                     <Select
-                                                        name='smokingHabit'
+                                                        name='smoking_habit'
                                                         label="Smoking Habit"
-                                                        value={values.smokingHabit || ''}
+                                                        value={values.smoking_habit || ''}
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
-                                                        {smokingHabitsList.map((option) => (
-                                                            <MenuItem key={option.value} value={option.value}>
-                                                                {option.label}
+                                                        {dropdownOptions?.SMOKING.map((option) => (
+                                                            <MenuItem key={option.id} value={option.id}>
+                                                                {option.name}
                                                             </MenuItem>
                                                         ))}
                                                     </Select>
@@ -321,15 +396,15 @@ const EditProfile = () => {
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel > Drinking Habit</InputLabel>
                                                     <Select
-                                                        name='drinkingHabit'
+                                                        name='drinking_habit'
                                                         label="Drinking Habit"
-                                                        value={values.drinkingHabit || ''}
+                                                        value={values.drinking_habit || ''}
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
-                                                        {drinkingHabitsList.map((option) => (
-                                                            <MenuItem key={option.value} value={option.value}>
-                                                                {option.label}
+                                                        {dropdownOptions?.DRINKING.map((option) => (
+                                                            <MenuItem key={option.id} value={option.id}>
+                                                                {option.name}
                                                             </MenuItem>
                                                         ))}
                                                     </Select>
@@ -384,15 +459,15 @@ const EditProfile = () => {
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel > Body Type</InputLabel>
                                                     <Select
-                                                        name='bodyType'
+                                                        name='body_type'
                                                         label="Body Type"
-                                                        value={values.bodyType || ''}
+                                                        value={values.body_type || ''}
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
-                                                        {bodyTypeList.map((option) => (
-                                                            <MenuItem key={option.value} value={option.value}>
-                                                                {option.label}
+                                                        {dropdownOptions?.BODY_TYPES.map((option) => (
+                                                            <MenuItem key={option.id} value={option.id}>
+                                                                {option.name}
                                                             </MenuItem>
                                                         ))}
                                                     </Select>
@@ -414,7 +489,7 @@ const EditProfile = () => {
                                                     size="small"
                                                     fullWidth
                                                     name='weight'
-                                                    value={values.weight || ''}
+                                                    value={values.weight || 0}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                     label="Weight"
@@ -428,34 +503,18 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                {/* <FormControl size="small" fullWidth>
-                                                    <InputLabel > Mother Tounge</InputLabel>
-                                                    <Select
-                                                        name='motherTounge'
-                                                        label="Mother Tounge"
-                                                        value={values.motherTounge || ''}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                    >
-                                                        {motherToungeList.map((option) => (
-                                                            <MenuItem key={option.value} value={option.value}>
-                                                                {option.label}
-                                                            </MenuItem>
-                                                        ))}
-                                                    </Select>
-                                                </FormControl> */}
+
 
                                                 <Autocomplete
                                                     disablePortal
                                                     id="language"
-
-                                                    options={motherToungeList}
+                                                    options={dropdownOptions?.MOTHER_TOUNGE_LIST ? dropdownOptions?.MOTHER_TOUNGE_LIST : []}
                                                     size="small"
                                                     fullWidth
                                                     onChange={(e, v) => {
                                                         console.log(v)
-                                                        filterCasteByReligion(v.value)
-                                                        handleChange(v.value)
+                                                        filterCasteByReligion(v.id)
+                                                        handleChange(v.id)
                                                     }}
                                                     onBlur={handleBlur}
                                                     value={values.language || ''}
@@ -473,15 +532,15 @@ const EditProfile = () => {
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel > Eating Habit</InputLabel>
                                                     <Select
-                                                        name='eatingHabit'
+                                                        name='eating_habit'
                                                         label="Eating Habit"
-                                                        value={values.eatingHabit || ''}
+                                                        value={values.eating_habit || ''}
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
-                                                        {eatingHabitsList.map((option) => (
-                                                            <MenuItem key={option.value} value={option.value}>
-                                                                {option.label}
+                                                        {dropdownOptions?.FOOD.map((option) => (
+                                                            <MenuItem key={option.id} value={option.id}>
+                                                                {option.name}
                                                             </MenuItem>
                                                         ))}
                                                     </Select>
@@ -514,13 +573,13 @@ const EditProfile = () => {
                                                     disablePortal
                                                     id="religion"
 
-                                                    options={religionList}
+                                                    options={dropdownOptions?.RELIGION ? dropdownOptions?.RELIGION : []}
                                                     size="small"
                                                     fullWidth
                                                     onChange={(e, v) => {
                                                         console.log(v)
-                                                        filterCasteByReligion(v.value)
-                                                        handleChange(v.value)
+                                                        filterCasteByReligion(v.id)
+                                                        handleChange(v.id)
                                                     }}
                                                     onBlur={handleBlur}
                                                     value={values.religion || ''}
@@ -535,22 +594,7 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                {/* <Autocomplete
-                                                    disablePortal
-                                                    id="caste"
 
-                                                    options={casteList}
-                                                    size="small"
-                                                    fullWidth
-                                                    onChange={(e, v) => {
-                                                        console.log(v)
-                                                        filterCasteByReligion(v.value)
-                                                        handleChange(v.value)
-                                                    }}
-                                                    onBlur={handleBlur}
-                                                    value={values.caste || ''}
-                                                    renderInput={(params) => <TextField {...params} label="Caste" />}
-                                                /> */}
                                                 <FormControl size="small" fullWidth>
                                                     <InputLabel > Caste</InputLabel>
                                                     <Select
@@ -560,9 +604,9 @@ const EditProfile = () => {
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                     >
-                                                        {casteList.map((option) => (
-                                                            <MenuItem key={option.value} value={option.value}>
-                                                                {option.label}
+                                                        {dropdownOptions?.CASTE.map((option) => (
+                                                            <MenuItem key={option.id} value={option.id}>
+                                                                {option.name}
                                                             </MenuItem>
                                                         ))}
                                                     </Select>
@@ -591,32 +635,19 @@ const EditProfile = () => {
                                                     disablePortal
                                                     id="Nakshtram"
 
-                                                    options={nakshtramList}
+                                                    options={dropdownOptions?.STAR_LIST ? dropdownOptions?.STAR_LIST : []}
                                                     size="small"
                                                     fullWidth
                                                     onChange={(e, v) => {
                                                         console.log(v)
-                                                        filterCasteByReligion(v.value)
-                                                        handleChange(v.value)
+                                                        filterCasteByReligion(v.id)
+                                                        handleChange(v.id)
                                                     }}
                                                     onBlur={handleBlur}
-                                                    value={values.nakshtram || ''}
+                                                    value={values.star || ''}
                                                     renderInput={(params) => <TextField {...params} label="Nakshtram" />}
                                                 />
-                                                {/* <TextField
-                                                    select
-                                                    label="Nakshtram"
-                                                    size="small"
-                                                    id='Nakshtram'
-                                                    variant="outlined"
-                                                    fullWidth
-                                                >
-                                                    {nakshtramList.map((option) => (
-                                                        <MenuItem key={option.value} value={option.value}>
-                                                            {option.label}
-                                                        </MenuItem>
-                                                    ))}
-                                                </TextField> */}
+
                                             </div>
                                         </ListItem>
                                         <ListItem className="row">
@@ -630,7 +661,7 @@ const EditProfile = () => {
                                                     disablePortal
                                                     id="Raasi"
 
-                                                    options={raasilist}
+                                                    options={dropdownOptions?.ZODIAC_LIST ? dropdownOptions?.ZODIAC_LIST : []}
                                                     size="small"
                                                     fullWidth
                                                     onChange={(e, v) => {
@@ -639,24 +670,11 @@ const EditProfile = () => {
                                                         handleChange(v.value)
                                                     }}
                                                     onBlur={handleBlur}
-                                                    value={values.raasi || ''}
+                                                    value={values.zodiac || ''}
                                                     renderInput={(params) => <TextField {...params} label="Raasi" />}
                                                 />
 
-                                                {/* <TextField
-                                                    select
-                                                    label="Raasi"
-                                                    size="small"
-                                                    id='Raasi'
-                                                    variant="outlined"
-                                                    fullWidth
-                                                >
-                                                    {raasilist.map((option) => (
-                                                        <MenuItem key={option.value} value={option.value}>
-                                                            {option.label}
-                                                        </MenuItem>
-                                                    ))}
-                                                </TextField> */}
+
                                             </div>
                                         </ListItem>
                                         <ListItem className="row">
@@ -670,6 +688,7 @@ const EditProfile = () => {
                                                     <TimePicker
                                                         label="Time of Birth"
                                                         onChange={handleChange}
+                                                        value={values.time_of_birth}
                                                         renderInput={(params) => <TextField size="small" fullWidth {...params} />}
                                                     />
                                                 </LocalizationProvider>
@@ -701,7 +720,7 @@ const EditProfile = () => {
                                                     disablePortal
                                                     id="country"
 
-                                                    options={countries}
+                                                    options={dropdownOptions?.COUNTRYS ? dropdownOptions?.COUNTRYS : []}
                                                     size="small"
                                                     fullWidth
                                                     onChange={(e, v) => {
@@ -723,7 +742,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Citizenship" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} size="small" fullWidth label="Citizenship" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -734,7 +754,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="State" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.state} size="small" fullWidth label="State" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -745,7 +766,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="District" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} size="small" fullWidth label="District" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -756,7 +778,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Town/City" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.city} size="small" fullWidth label="Town/City" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -779,7 +802,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Higher Qualification" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.education} size="small" fullWidth label="Higher Qualification" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -790,7 +814,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Employed In" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.employeed_in} size="small" fullWidth label="Employed In" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -801,7 +826,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Occuption" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.occupation} size="small" fullWidth label="Occuption" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -812,7 +838,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Annual Income" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.salary} size="small" fullWidth label="Annual Income" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -837,7 +864,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Family Type" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.family_type} size="small" fullWidth label="Family Type" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -849,7 +877,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Fathers Occupation" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.fathers_occupation} size="small" fullWidth label="Fathers Occupation" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -861,7 +890,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Number of Brothers" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.no_of_brothers || 0} size="small" fullWidth label="Number of Brothers" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -872,7 +902,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Number of Brothers Married" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.no_of_brothers_married} size="small" fullWidth label="Number of Brothers Married" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -889,7 +920,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Family Status" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.family_status} size="small" fullWidth label="Family Status" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -900,7 +932,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Mothers Occupation" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.mothers_occupation} size="small" fullWidth label="Mothers Occupation" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -911,7 +944,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Number of Sisters" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.no_of_sisters || 0} size="small" fullWidth label="Number of Sisters" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -922,7 +956,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Number of Sisters Married" variant="outlined" />
+                                                <TextField onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.no_of_sisters_married || 0} size="small" fullWidth label="Number of Sisters Married" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -948,7 +983,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Hobbies" variant="outlined" />
+                                                <TextField size="small" onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.hobbies} fullWidth label="Hobbies" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -964,7 +1000,8 @@ const EditProfile = () => {
                                                 </Typography>
                                             </div>
                                             <div className="col-sm-6">
-                                                <TextField size="small" fullWidth label="Interests" variant="outlined" />
+                                                <TextField size="small" onChange={handleChange}
+                                                    onBlur={handleBlur} value={values.interests} fullWidth label="Interests" variant="outlined" />
 
                                             </div>
                                         </ListItem>
@@ -980,12 +1017,15 @@ const EditProfile = () => {
                                 </div>
                                 <div className='col-sm-12'>
                                     <TextField
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
                                         size="small" fullWidth
                                         rows={4}
-                                        id="outlined-textarea"
+                                        value={values.about_me}
                                         label="About me"
                                         placeholder="Describe yourself"
                                         multiline
+
                                     />
                                 </div>
                             </div>
@@ -1006,6 +1046,11 @@ const EditProfile = () => {
                                     <div className='image-list'>
                                         {files}
                                     </div>
+                                    {
+                                        acceptedFiles.length ?
+                                            <Button onClick={() => upload()} style={{ width: '100%' }} variant="contained">Upload</Button> : ''
+                                    }
+
                                 </div>
                             </div>
                             <br />

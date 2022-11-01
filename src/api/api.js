@@ -52,6 +52,20 @@ export const updateProfileData = (payload) => {
   });
 };
 
+export const uploadImages = (payload) => {
+  return apiService({
+    url: "/profiles/images/uploads",
+    method: "POST",
+    body: payload
+  });
+}
+export const getDropwdownValues = () => {
+  return apiService({
+    url: "/reference/drop-down",
+    method: "GET"
+  });
+}
+
 export const getWishList = () => {
   return apiService({
     url: "/users/shortlist",

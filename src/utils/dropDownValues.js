@@ -42,7 +42,6 @@ export const eatingHabitsList = [
 ]
 
 export const motherToungeList = [
-
     { value: "54", label: 'Angika' },
     { value: "1", label: 'Arunachali' },
     { value: "2", label: 'Assamese' },

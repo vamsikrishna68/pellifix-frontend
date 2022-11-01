@@ -15,7 +15,6 @@ import EmailIcon from "@mui/icons-material/Email";
 import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
 import LockIcon from "@mui/icons-material/Lock";
 import MobileFriendlyIcon from "@mui/icons-material/MobileFriendly";
-import firebase from "../../utils/firebase";
 import Loading from "../../ui-components/Loding/Loading";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
@@ -46,48 +45,6 @@ const Register = () => {
       mirror: true,
     });
   });
-  const configureCaptcha = () => {
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier(
-      "sign-in-button",
-      {
-        size: "invisible",
-        callback: (response) => {
-          // reCAPTCHA solved, allow signInWithPhoneNumber.
-
-          console.log("Recaptca varified");
-        },
-        defaultCountry: "IN",
-      }
-    );
-  };
-
-  const verifyMobileNumber = async (mobileNo) => {
-    setLoading(true);
-    try {
-      const phoneNumber = "+91" + mobileNo;
-      const response = await generateOtp(phoneNumber);
-      if (response) {
-        toast.success(`OTP has been sent to your mobile number.`, {
-          position: "top-right",
-          autoClose: 3000,
-          theme: "colored",
-          transition: Zoom,
-        });
-        setLoading(false);
-        setOtpSent(true);
-      }
-      console.log(response, "response");
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      toast.error("Something Went Wrong, Please try again", {
-        position: "top-right",
-        autoClose: 3000,
-        theme: "colored",
-        transition: Zoom,
-      });
-    }
-  };
 
   const onSubmitOTP = (values) => {
     setLoading(true);
@@ -116,14 +73,15 @@ const Register = () => {
         setLoading(false);
       });
   };
-
+  
   const register = (values) => {
+    console.log('called')
     setLoading(true);
     let payload = {
       ...values,
-      mobileno: "+91" + values.mobileno,
       age: moment().diff(values.dob, "years"),
-      referral_code: "",
+      // referral_code: "",
+      mobileno:`+91${values.mobileno}`,
       dob: moment(values.dob).format("yyyy-MM-DD"),
     };
     delete payload.confirmPwd;
@@ -133,13 +91,13 @@ const Register = () => {
       .then((response) => {
         console.log(response);
         setLoading(false);
-        toast.success("Registration successfully completed!", {
+        toast.success(`OTP has been sent to your mobile number.`, {
           position: "top-right",
           autoClose: 3000,
           theme: "colored",
           transition: Zoom,
         });
-        verifyMobileNumber(values.mobileno);
+        setOtpSent(true);
       })
       .catch((err) => {
         console.log(err);
@@ -153,40 +111,7 @@ const Register = () => {
       });
   };
 
-  const moileVerify = () => {
-    setLoading(true);
-    let payload = {
-      ...values,
-      age: moment().diff(values.dob, "years"),
-      referral_code: "",
-      dob: moment(values.dob).format("yyyy-MM-DD"),
-    };
-    delete payload.confirmPwd;
-    console.log(payload);
-    axios
-      .post("https://api.pellifix.com/v1/customer/register", { ...payload })
-      .then((response) => {
-        console.log(response);
-        setLoading(false);
-        toast.success("Registration successfully completed!", {
-          position: "top-right",
-          autoClose: 3000,
-          theme: "colored",
-          transition: Zoom,
-        });
-        verifyMobileNumber(values.mobileno);
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error(err.response.data.error.message, {
-          position: "top-right",
-          autoClose: 3000,
-          theme: "colored",
-          transition: Zoom,
-        });
-        setLoading(false);
-      });
-  };
+ 
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string().required("Name is Required"),
@@ -320,6 +245,7 @@ const Register = () => {
             validationSchema={SignupSchema}
             onSubmit={(values) => {
               setTimeout(() => {
+                setFormData({...values})
                 register(values);
               }, 400);
             }}
