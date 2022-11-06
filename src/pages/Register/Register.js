@@ -29,7 +29,7 @@ import "aos/dist/aos.css";
 import "react-toastify/dist/ReactToastify.css";
 import "yup-phone";
 import { generateOtp } from "../../api/api";
-import Authorization from "../../utils/authorization"
+import Authorization from "../../utils/authorization";
 
 const Register = () => {
   const [formData, setFormData] = useState({});
@@ -48,9 +48,11 @@ const Register = () => {
 
   const onSubmitOTP = (values) => {
     setLoading(true);
-    const code = values.otp;
     axios
-      .patch("https://api.pellifix.com/v1/customer/otp/verify", { ...code })
+      .patch("https://api.pellifix.com/v1/customer/otp/verify", {
+        otp: values.otp,
+        mobileno: `+91${formData.mobileno}`,
+      })
       .then((response) => {
         console.log(response);
         Authorization.login(response);
@@ -73,15 +75,15 @@ const Register = () => {
         setLoading(false);
       });
   };
-  
+
   const register = (values) => {
-    console.log('called')
+    console.log("called");
     setLoading(true);
     let payload = {
       ...values,
       age: moment().diff(values.dob, "years"),
       // referral_code: "",
-      mobileno:`+91${values.mobileno}`,
+      mobileno: `+91${values.mobileno}`,
       dob: moment(values.dob).format("yyyy-MM-DD"),
     };
     delete payload.confirmPwd;
@@ -110,8 +112,6 @@ const Register = () => {
         setLoading(false);
       });
   };
-
- 
 
   const SignupSchema = Yup.object().shape({
     name: Yup.string().required("Name is Required"),
@@ -245,7 +245,7 @@ const Register = () => {
             validationSchema={SignupSchema}
             onSubmit={(values) => {
               setTimeout(() => {
-                setFormData({...values})
+                setFormData({ ...values });
                 register(values);
               }, 400);
             }}

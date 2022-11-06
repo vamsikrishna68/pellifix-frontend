@@ -40,24 +40,13 @@ import { getProfileData, updateProfileData, uploadImages } from "../../api/api";
 import Loading from "../../ui-components/Loding/Loading";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useDropzone } from "react-dropzone";
-import ClearIcon from "@mui/icons-material/Clear";
 import { ls } from "../../utils/localStorage";
 import { parse } from "date-fns";
 
 const EditProfile = () => {
-  const religionList = religionsList.map((e) => ({
-    label: e.name,
-    value: e.name,
-  }));
   const [loading, setLoading] = useState(true);
   const [dropdownOptions, setDropdownOptions] = useState(null);
 
-  const [casteList, setCasteList] = useState(
-    religionsList
-      .map((e) => [...e.castes])
-      .flat()
-      .map((e) => ({ label: e.name, value: e.name }))
-  );
   const [formData, setFormData] = useState({
     profile_creater: "",
     name: "",
@@ -99,67 +88,16 @@ const EditProfile = () => {
     no_of_brothers_married: "",
     no_of_brothers: "",
     mothers_occupation: "",
+    mother_tongue: "",
     fathers_occupation: "",
     family_status: "",
     family_type: "",
   });
-  const [myFiles, setMyFiles] = useState([]);
-  const onDrop = useCallback(
-    (acceptedFiles) => {
-      setMyFiles([...myFiles, ...acceptedFiles]);
-    },
-    [myFiles]
-  );
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    onDrop,
-  });
-
-  const removeFile = (file) => () => {
-    const newFiles = [...myFiles];
-    newFiles.splice(newFiles.indexOf(file), 1);
-    setMyFiles(newFiles);
-  };
-
-  const filterCasteByReligion = (religion) => {
-    const filteredList = religionsList
-      .filter((e) => e.name === religion)[0]
-      .castes.map((e) => ({ label: e.name, value: e.name }));
-    setCasteList([...filteredList]);
-  };
-
-  const upload = async () => {
-    const formData = new FormData();
-    myFiles.forEach((e) => {
-      formData.append("images", e);
-    });
-
-    const response = await uploadImages(formData);
-    console.log(response, "response");
-  };
 
   const fetchDropdownsValues = async () => {
     const data = JSON.parse(ls.getItem("dropdown_values_for_reference"));
     setDropdownOptions(data);
   };
-
-  console.log({ dropdownOptions });
-  const files = myFiles.map((file, index) => {
-    const objectUrl = URL.createObjectURL(file);
-    return (
-      <div key={index} className="uploaded-image">
-        <IconButton
-          onClick={removeFile(file)}
-          size="small"
-          className="clear-btn"
-          color="primary"
-          component="span"
-        >
-          <ClearIcon />
-        </IconButton>
-        <img src={objectUrl} />
-      </div>
-    );
-  });
 
   useEffect(() => {
     fetchDropdownsValues();
@@ -171,16 +109,13 @@ const EditProfile = () => {
       setLoading(true);
       const response = await getProfileData();
       if (response && response.data) {
-        setFormData({ ...formData, ...response.data });
-        if (formData.religion) {
-          filterCasteByReligion(formData.religion);
-        }
-
-        // setLoading(false)
+        setFormData({
+          ...formData,
+          ...response.data,
+        });
       }
     } catch (error) {
       setLoading(false);
-      console.log(error);
     }
   };
 
@@ -200,7 +135,7 @@ const EditProfile = () => {
         <br />
         {dropdownOptions ? (
           <Formik
-            enableReinitialize
+            enableReinitialize={true}
             initialValues={formData}
             validate={(values) => {
               const errors = {};
@@ -258,7 +193,6 @@ const EditProfile = () => {
               handleBlur,
               setFieldValue,
               handleSubmit,
-              isSubmitting,
             }) => (
               <form onSubmit={handleSubmit}>
                 <Fab
@@ -291,6 +225,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="name"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.name}
@@ -383,7 +318,7 @@ const EditProfile = () => {
                             size="small"
                             fullWidth
                             name="height"
-                            // value={values.height}
+                            value={values.height}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             label="Height"
@@ -518,6 +453,7 @@ const EditProfile = () => {
                         <div className="col-sm-6">
                           <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <DatePicker
+                              name="dob"
                               label="Date Of Birth"
                               value={values.dob}
                               onChange={handleChange}
@@ -600,23 +536,28 @@ const EditProfile = () => {
                         <div className="col-sm-6">
                           <Autocomplete
                             disablePortal
-                            id="language"
-                            name="language"
+                            id="mother_tongue"
+                            name="mother_tongue"
                             options={
                               dropdownOptions?.MOTHER_TOUNGE_LIST
                                 ? dropdownOptions?.MOTHER_TOUNGE_LIST
                                 : []
                             }
+                            value={values.mother_tongue}
                             size="small"
                             getOptionLabel={(option) =>
                               option.name ? option.name : ""
                             }
                             fullWidth
                             onChange={(e, v) => {
-                              setFieldValue("language", v.id);
+                              setFieldValue("mother_tongue", v.id);
                             }}
                             renderInput={(params) => (
-                              <TextField {...params} label="Language" />
+                              <TextField
+                                {...params}
+                                name="mother_tongue"
+                                label="Language"
+                              />
                             )}
                           />
                         </div>
@@ -684,6 +625,7 @@ const EditProfile = () => {
                                 ? dropdownOptions?.RELIGION
                                 : []
                             }
+                            value={values.religion}
                             size="small"
                             getOptionLabel={(option) =>
                               option.name ? option.name : ""
@@ -693,7 +635,11 @@ const EditProfile = () => {
                               setFieldValue("religion", v.id);
                             }}
                             renderInput={(params) => (
-                              <TextField {...params} label="Religion" />
+                              <TextField
+                                {...params}
+                                name="religion"
+                                label="Religion"
+                              />
                             )}
                           />
                         </div>
@@ -767,7 +713,11 @@ const EditProfile = () => {
                               setFieldValue("star", v.id);
                             }}
                             renderInput={(params) => (
-                              <TextField {...params} label="Nakshtram" />
+                              <TextField
+                                {...params}
+                                name="star"
+                                label="Nakshtram"
+                              />
                             )}
                           />
                         </div>
@@ -801,7 +751,11 @@ const EditProfile = () => {
                               setFieldValue("zodiac", v.id);
                             }}
                             renderInput={(params) => (
-                              <TextField {...params} label="Raasi" />
+                              <TextField
+                                {...params}
+                                name="zodiac"
+                                label="Raasi"
+                              />
                             )}
                           />
                         </div>
@@ -819,11 +773,17 @@ const EditProfile = () => {
                         <div className="col-sm-6">
                           <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <TimePicker
+                              name="time_of_birth"
                               label="Time of Birth"
                               onChange={handleChange}
                               value={values.time_of_birth}
                               renderInput={(params) => (
-                                <TextField size="small" fullWidth {...params} />
+                                <TextField
+                                  size="small"
+                                  name="time_of_birth"
+                                  fullWidth
+                                  {...params}
+                                />
                               )}
                             />
                           </LocalizationProvider>
@@ -872,7 +832,11 @@ const EditProfile = () => {
                               setFieldValue("countries", v.id);
                             }}
                             renderInput={(params) => (
-                              <TextField {...params} label="Country" />
+                              <TextField
+                                {...params}
+                                name="countries"
+                                label="Country"
+                              />
                             )}
                           />
                           {/* <TextField size="small" fullWidth label="Country" variant="outlined" /> */}
@@ -890,6 +854,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="citizenship"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             size="small"
@@ -911,6 +876,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="state"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.state}
@@ -933,6 +899,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="district"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             size="small"
@@ -954,6 +921,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="city"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.city}
@@ -987,6 +955,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="education"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.education}
@@ -1009,6 +978,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="employeed_in"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.employeed_in}
@@ -1031,6 +1001,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="occupation"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.occupation}
@@ -1053,6 +1024,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="salary"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.salary}
@@ -1087,6 +1059,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="family_type"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.family_type}
@@ -1110,6 +1083,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="fathers_occupation"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.fathers_occupation}
@@ -1133,6 +1107,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="no_of_brothers"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.no_of_brothers || 0}
@@ -1155,6 +1130,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="no_of_brothers_married"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.no_of_brothers_married}
@@ -1181,6 +1157,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="family_status"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.family_status}
@@ -1203,6 +1180,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="mothers_occupation"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.mothers_occupation}
@@ -1225,6 +1203,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="no_of_sisters"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.no_of_sisters || 0}
@@ -1247,6 +1226,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="no_of_sisters_married"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             value={values.no_of_sisters_married || 0}
@@ -1281,6 +1261,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="hobbies"
                             size="small"
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -1307,6 +1288,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
+                            name="interests"
                             size="small"
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -1329,6 +1311,7 @@ const EditProfile = () => {
                   </div>
                   <div className="col-sm-12">
                     <TextField
+                      name="about_me"
                       onChange={handleChange}
                       onBlur={handleBlur}
                       size="small"
@@ -1339,36 +1322,6 @@ const EditProfile = () => {
                       placeholder="Describe yourself"
                       multiline
                     />
-                  </div>
-                </div>
-                <br />
-                <div className="row">
-                  <div className="col-sm-12">
-                    <Typography gutterBottom variant="h5" component="div">
-                      Images
-                    </Typography>
-                  </div>
-                  <div className="col-sm-12">
-                    <section className="image-container">
-                      <div {...getRootProps({ className: "dropzone" })}>
-                        <input {...getInputProps()} />
-                        <p>
-                          Drag 'n' drop Images here, or click to select Images
-                        </p>
-                      </div>
-                    </section>
-                    <div className="image-list">{files}</div>
-                    {acceptedFiles.length ? (
-                      <Button
-                        onClick={() => upload()}
-                        style={{ width: "100%" }}
-                        variant="contained"
-                      >
-                        Upload
-                      </Button>
-                    ) : (
-                      ""
-                    )}
                   </div>
                 </div>
                 <br />
