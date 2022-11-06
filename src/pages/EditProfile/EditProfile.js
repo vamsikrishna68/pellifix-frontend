@@ -48,50 +48,56 @@ const EditProfile = () => {
   const [dropdownOptions, setDropdownOptions] = useState(null);
 
   const [formData, setFormData] = useState({
-    profile_creater: "",
-    name: "",
-    surname: "",
-    marital_status: "",
-    body_type: "",
-    dob: new Date(),
-    time_of_birth: new Date(),
-    age: "",
-    physical_status: "",
-    height: 0,
-    weight: 0,
-    religion: "",
-    caste: "",
-    sub_caste: "",
-    zodiac: "",
-    star: "",
-    eating_habit: "",
-    drinking_habit: "",
-    smoking_habit: "",
-    country: "",
-    city: "",
-    state: "",
-    education: "",
-    occupation: "",
-    employeed_in: "",
-    salary: "",
-    image: "",
     about_me: "",
-    require_details: "",
-    gender: "",
-    profession: "",
     address: "",
-    pincode: "",
-    interests: "",
-    hobbies: "",
-    no_of_sisters_married: "",
-    no_of_sisters: "",
-    no_of_brothers_married: "",
-    no_of_brothers: "",
-    mothers_occupation: "",
-    mother_tongue: "",
-    fathers_occupation: "",
+    age: "",
+    body_type: "",
+    caste: "",
+    citizen: "",
+    city: "",
+    country: "",
+    dob: new Date(),
+    drinking_habit: "",
+    eating_habit: "",
+    education: "",
+    email_id: "",
+    employeed_in: "",
+    end_date: new Date(),
     family_status: "",
     family_type: "",
+    fathers_occupation: "",
+    gender: "",
+    height: 0,
+    hobbies: "",
+    interests: "",
+    marital_status: "",
+    mobileno: "",
+    mother_tongue: "",
+    mothers_occupation: "",
+    name: "",
+    no_of_brothers: "",
+    no_of_brothers_married: "",
+    no_of_sisters: "",
+    no_of_sisters_married: "",
+    occupation: "",
+    physical_status: "",
+    pincode: "",
+    profession: "",
+    profile_creater: "",
+    profile_id: "",
+    referral_code: "",
+    religion: "",
+    require_details: "",
+    salary: "",
+    smoking_habit: "",
+    star: "",
+    start_date: new Date(),
+    state: "",
+    sub_caste: "",
+    surname: "",
+    time_of_birth: new Date(),
+    weight: 0,
+    zodiac: "",
   });
 
   const fetchDropdownsValues = async () => {
@@ -123,8 +129,23 @@ const EditProfile = () => {
     try {
       const response = await updateProfileData(data);
       console.log(response, "response");
+      if (response.status === 204) {
+        toast.success('Profile updated successfully', {
+            position: "top-right",
+            autoClose: 1500,
+            theme: "colored",
+            transition: Zoom,
+        });
+        fetchProfileData();
+      }
     } catch (error) {
       console.log(error);
+      toast.error('Something wend wrong', {
+        position: "top-right",
+        autoClose: 1500,
+        theme: "colored",
+        transition: Zoom,
+    });
     }
   };
 
@@ -310,7 +331,7 @@ const EditProfile = () => {
                           <TextField
                             InputProps={{
                               endAdornment: (
-                                <InputAdornment position="start">
+                                <InputAdornment name="height" position="start">
                                   cms
                                 </InputAdornment>
                               ),
@@ -456,9 +477,14 @@ const EditProfile = () => {
                               name="dob"
                               label="Date Of Birth"
                               value={values.dob}
-                              onChange={handleChange}
+                              onChange={(value) => setFieldValue("dob", value, true)}
                               renderInput={(params) => (
-                                <TextField size="small" fullWidth {...params} />
+                                <TextField
+                                  name="dob"
+                                  size="small"
+                                  fullWidth
+                                  {...params}
+                                />
                               )}
                             />
                           </LocalizationProvider>
@@ -533,7 +559,7 @@ const EditProfile = () => {
                             Mother Tounge:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        {/* <div className="col-sm-6">
                           <Autocomplete
                             disablePortal
                             id="mother_tongue"
@@ -560,6 +586,26 @@ const EditProfile = () => {
                               />
                             )}
                           />
+                        </div> */}
+                        <div className="col-sm-6">
+                          <FormControl size="small" fullWidth>
+                            <InputLabel>Language</InputLabel>
+                            <Select
+                              name="mother_tongue"
+                              label="Language"
+                              value={values.mother_tongue || ""}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              {dropdownOptions?.MOTHER_TOUNGE_LIST.map(
+                                (option) => (
+                                  <MenuItem key={option.id} value={option.id}>
+                                    {option.name}
+                                  </MenuItem>
+                                )
+                              )}
+                            </Select>
+                          </FormControl>
                         </div>
                       </ListItem>
                       <ListItem className="row">
@@ -615,7 +661,7 @@ const EditProfile = () => {
                             Religion:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        {/* <div className="col-sm-6">
                           <Autocomplete
                             disablePortal
                             id="religion"
@@ -642,6 +688,24 @@ const EditProfile = () => {
                               />
                             )}
                           />
+                        </div> */}
+                        <div className="col-sm-6">
+                          <FormControl size="small" fullWidth>
+                            <InputLabel>Religion</InputLabel>
+                            <Select
+                              name="religion"
+                              label="Religion"
+                              value={values.religion || ""}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              {dropdownOptions?.RELIGION.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </ListItem>
                       <ListItem className="row">
@@ -656,7 +720,7 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <FormControl size="small" fullWidth>
-                            <InputLabel> Caste</InputLabel>
+                            <InputLabel>Caste</InputLabel>
                             <Select
                               name="caste"
                               label="Caste"
@@ -694,7 +758,7 @@ const EditProfile = () => {
                             Nakshtram:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        {/* <div className="col-sm-6">
                           <Autocomplete
                             disablePortal
                             id="star"
@@ -720,6 +784,24 @@ const EditProfile = () => {
                               />
                             )}
                           />
+                        </div> */}
+                        <div className="col-sm-6">
+                          <FormControl size="small" fullWidth>
+                            <InputLabel>Nakshtram</InputLabel>
+                            <Select
+                              name="star"
+                              label="Nakshtram"
+                              value={values.star || ""}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              {dropdownOptions?.STAR_LIST.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </ListItem>
                       <ListItem className="row">
@@ -732,7 +814,7 @@ const EditProfile = () => {
                             Raasi:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        {/* <div className="col-sm-6">
                           <Autocomplete
                             disablePortal
                             id="zodiac"
@@ -758,6 +840,24 @@ const EditProfile = () => {
                               />
                             )}
                           />
+                        </div> */}
+                        <div className="col-sm-6">
+                          <FormControl size="small" fullWidth>
+                            <InputLabel>Raasi</InputLabel>
+                            <Select
+                              name="zodiac"
+                              label="Raasi"
+                              value={values.zodiac || ""}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              {dropdownOptions?.ZODIAC_LIST.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </ListItem>
                       <ListItem className="row">
@@ -773,9 +873,8 @@ const EditProfile = () => {
                         <div className="col-sm-6">
                           <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <TimePicker
-                              name="time_of_birth"
                               label="Time of Birth"
-                              onChange={handleChange}
+                              onChange={(value) => setFieldValue("time_of_birth", value, true)}
                               value={values.time_of_birth}
                               renderInput={(params) => (
                                 <TextField
@@ -813,7 +912,7 @@ const EditProfile = () => {
                             Country:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        {/* <div className="col-sm-6">
                           <Autocomplete
                             disablePortal
                             id="countries"
@@ -839,7 +938,24 @@ const EditProfile = () => {
                               />
                             )}
                           />
-                          {/* <TextField size="small" fullWidth label="Country" variant="outlined" /> */}
+                        </div>                        */}
+                        <div className="col-sm-6">
+                          <FormControl size="small" fullWidth>
+                            <InputLabel>Country</InputLabel>
+                            <Select
+                              name="country"
+                              label="Country"
+                              value={values.country || ""}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              {dropdownOptions?.COUNTRYS.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </ListItem>
                       <ListItem className="row">
@@ -854,11 +970,12 @@ const EditProfile = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
-                            name="citizenship"
+                            name="citizen"
                             onChange={handleChange}
                             onBlur={handleBlur}
                             size="small"
                             fullWidth
+                            value={values.citizen}
                             label="Citizenship"
                             variant="outlined"
                           />
@@ -954,16 +1071,22 @@ const EditProfile = () => {
                           </Typography>
                         </div>
                         <div className="col-sm-6">
-                          <TextField
-                            name="education"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.education}
-                            size="small"
-                            fullWidth
-                            label="Higher Qualification"
-                            variant="outlined"
-                          />
+                          <FormControl size="small" fullWidth>
+                            <InputLabel>Higher Qualification</InputLabel>
+                            <Select
+                              name="education"
+                              label="Higher Qualification"
+                              value={values.education || ""}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              {dropdownOptions?.EDUCATION.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </ListItem>
                       <ListItem className="row">
@@ -996,20 +1119,26 @@ const EditProfile = () => {
                             color="text.secondary"
                             component="div"
                           >
-                            Occuption:
+                            Occupation:
                           </Typography>
                         </div>
                         <div className="col-sm-6">
-                          <TextField
-                            name="occupation"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.occupation}
-                            size="small"
-                            fullWidth
-                            label="Occuption"
-                            variant="outlined"
-                          />
+                          <FormControl size="small" fullWidth>
+                            <InputLabel>Occupation</InputLabel>
+                            <Select
+                              name="occupation"
+                              label="Occuption"
+                              value={values.occupation || ""}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              {dropdownOptions?.OCCUPATION.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </ListItem>
                       <ListItem className="row">
@@ -1023,16 +1152,22 @@ const EditProfile = () => {
                           </Typography>
                         </div>
                         <div className="col-sm-6">
-                          <TextField
-                            name="salary"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.salary}
-                            size="small"
-                            fullWidth
-                            label="Annual Income"
-                            variant="outlined"
-                          />
+                          <FormControl size="small" fullWidth>
+                            <InputLabel>Annual Income</InputLabel>
+                            <Select
+                              name="salary"
+                              label="Annual Income"
+                              value={values.salary || ""}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              {dropdownOptions?.SALARY.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </ListItem>
                     </List>
@@ -1058,16 +1193,22 @@ const EditProfile = () => {
                           </Typography>
                         </div>
                         <div className="col-sm-6">
-                          <TextField
-                            name="family_type"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.family_type}
-                            size="small"
-                            fullWidth
-                            label="Family Type"
-                            variant="outlined"
-                          />
+                          <FormControl size="small" fullWidth>
+                            <InputLabel>Family Type</InputLabel>
+                            <Select
+                              name="family_type"
+                              label="Family Type"
+                              value={values.family_type || ""}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              {dropdownOptions?.FAMILY_TYPE.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </ListItem>
 
@@ -1156,16 +1297,22 @@ const EditProfile = () => {
                           </Typography>
                         </div>
                         <div className="col-sm-6">
-                          <TextField
-                            name="family_status"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.family_status}
-                            size="small"
-                            fullWidth
-                            label="Family Status"
-                            variant="outlined"
-                          />
+                          <FormControl size="small" fullWidth>
+                            <InputLabel>Family Status</InputLabel>
+                            <Select
+                              name="family_status"
+                              label="Family Status"
+                              value={values.family_status || ""}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              {dropdownOptions?.FAMILY_STATUS.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </ListItem>
                       <ListItem className="row">
@@ -1329,7 +1476,7 @@ const EditProfile = () => {
             )}
           </Formik>
         ) : (
-          <Loading loading={loading} />
+          "Loading..."
         )}
       </div>
       <ToastContainer />
