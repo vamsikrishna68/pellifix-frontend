@@ -54,8 +54,6 @@ const Register = () => {
         mobileno: `+91${formData.mobileno}`,
       })
       .then((response) => {
-        console.log(response);
-        Authorization.login(response);
         setLoading(false);
         toast.success("Otp verified successfully", {
           position: "top-right",
@@ -63,6 +61,9 @@ const Register = () => {
           theme: "colored",
           transition: Zoom,
         });
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);

@@ -969,16 +969,22 @@ const EditProfile = () => {
                           </Typography>
                         </div>
                         <div className="col-sm-6">
-                          <TextField
-                            name="citizen"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            size="small"
-                            fullWidth
-                            value={values.citizen}
-                            label="Citizenship"
-                            variant="outlined"
-                          />
+                          <FormControl size="small" fullWidth>
+                            <InputLabel>Citizenship</InputLabel>
+                            <Select
+                              name="citizen"
+                              label="Citizenship"
+                              value={values.citizen || ""}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              {dropdownOptions?.COUNTRYS.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </ListItem>
                       <ListItem className="row">
