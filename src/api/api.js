@@ -1,16 +1,14 @@
 import axios from "axios";
 axios.defaults.baseURL = "https://api.pellifix.com/v1/";
-import { getToken } from '../utils/helper'
-
+import Authorization from "../utils/authorization";
 
 axios.interceptors.response.use(
   function (response) {
     return response;
   },
   function (error) {
-    console.log(error)
-    if (error.response &&
-      error.response.status === 401) {
+    console.log(error);
+    if (error.response && error.response.status === 401) {
       // window.localStorage.removeItem("pfToken");
     }
     return Promise.reject(error);
@@ -21,7 +19,7 @@ const apiService = ({
   url = "",
   method = "GET",
   body = null,
-  authToken = getToken(),
+  authToken = Authorization.getAccessToken(),
   headers = {},
 }) => {
   const dataOrParams = ["GET", "DELETE"].includes(method) ? "params" : "data";
@@ -29,16 +27,15 @@ const apiService = ({
     headers["Content-Type"] = "application/json";
   }
   if (authToken) {
-    headers['Authorization'] = `Bearer ${authToken}`
-  }
+    headers["Authorization"] = `Bearer ${authToken}`;
+  } else delete headers.Authorization;
   return axios.request({
     url,
     method,
     headers,
     [dataOrParams]: body,
   });
-}
-
+};
 
 export const getProfileData = () => {
   return apiService({
@@ -51,9 +48,9 @@ export const updateProfileData = (payload) => {
   return apiService({
     url: "/profiles",
     method: "PATCH",
-    body: payload
+    body: payload,
   });
-}
+};
 
 export const uploadImages = (payload) => {
   return apiService({
@@ -68,3 +65,27 @@ export const getDropwdownValues = () => {
     method: "GET"
   });
 }
+
+export const getWishList = () => {
+  return apiService({
+    url: "/users/shortlist",
+    method: "GET",
+  });
+};
+
+
+export const verifyPhone = (payload) => {
+  return apiService({
+    url: "/customer/otp/verify",
+    method: "PATCH",
+    body: payload,
+  });
+};
+
+export const generateOtp = (payload) => {
+  return apiService({
+    url: "/customer/otp/generate",
+    method: "PATCH",
+    body: payload,
+  });
+};

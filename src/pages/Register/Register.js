@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Zoom } from "react-toastify";
@@ -19,15 +19,17 @@ import Loading from "../../ui-components/Loding/Loading";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
-import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
+import ConfirmationNumberIcon from "@mui/icons-material/ConfirmationNumber";
 import axios from "axios";
 import moment from "moment";
 import * as Yup from "yup";
-import AOS from 'aos';
-import './style.scss'
+import AOS from "aos";
+import "./style.scss";
 import "aos/dist/aos.css";
 import "react-toastify/dist/ReactToastify.css";
 import "yup-phone";
+import { generateOtp } from "../../api/api";
+import Authorization from "../../utils/authorization";
 
 const Register = () => {
   const [formData, setFormData] = useState({});
@@ -36,36 +38,32 @@ const Register = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
-
     AOS.init({
-        duration: 1000,
-        easing: "ease-in-out",
-        once: false,
-        mirror: true
+      duration: 1000,
+      easing: "ease-in-out",
+      once: false,
+      mirror: true,
     });
-})
-
+  });
 
   const onSubmitOTP = (values) => {
     setLoading(true);
-    console.log(formData)
-    const payload={
-      mobileno: `+91${formData.mobileno}`,
-      otp: values.otp
-    }
-    console.log(payload,"payload")
     axios
-      .patch("https://api.pellifix.com/v1/customer/otp/verify", { ...payload })
+      .patch("https://api.pellifix.com/v1/customer/otp/verify", {
+        otp: values.otp,
+        mobileno: `+91${formData.mobileno}`,
+      })
       .then((response) => {
-        console.log(response);
         setLoading(false);
-        toast.success("Registration successfully completed!", {
+        toast.success("Otp verified successfully", {
           position: "top-right",
           autoClose: 3000,
           theme: "colored",
           transition: Zoom,
         });
-        navigate("/login")
+        setTimeout(() => {
+          navigate("/login");
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);
@@ -80,13 +78,13 @@ const Register = () => {
   };
 
   const register = (values) => {
-    console.log('called')
+    console.log("called");
     setLoading(true);
     let payload = {
       ...values,
       age: moment().diff(values.dob, "years"),
       // referral_code: "",
-      mobileno:`+91${values.mobileno}`,
+      mobileno: `+91${values.mobileno}`,
       dob: moment(values.dob).format("yyyy-MM-DD"),
     };
     delete payload.confirmPwd;
@@ -116,8 +114,6 @@ const Register = () => {
       });
   };
 
- 
-
   const SignupSchema = Yup.object().shape({
     name: Yup.string().required("Name is Required"),
     email_id: Yup.string()
@@ -138,11 +134,17 @@ const Register = () => {
 
   return (
     <div className="container-fluid register-container">
-      <div  data-aos="fade-down" className="col-xs-12 col-sm-12 col-md-12 col-lg-5">
+      <div
+        data-aos="fade-down"
+        className="col-xs-12 col-sm-12 col-md-12 col-lg-5"
+      >
         <div className="register-bg-image"></div>
       </div>
       {otpSent ? (
-        <div className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center">
+        <div
+          data-aos="fade-up"
+          className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center"
+        >
           <h3 className="primaryColor heading1">Verify Your Mobile Number</h3>
           <br />
           <h5 className="heading2">
@@ -219,9 +221,11 @@ const Register = () => {
           </Formik>
         </div>
       ) : (
-        <div  className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center">
+        <div
+          data-aos="fade-up"
+          className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center"
+        >
           <h3 className="primaryColor heading1">Register</h3>
-          <br />
           <h5 className="heading2">Manage all your matchings</h5>
           <span className="para">
             Let's get you all set up so you can verify your personal account and
@@ -242,7 +246,7 @@ const Register = () => {
             validationSchema={SignupSchema}
             onSubmit={(values) => {
               setTimeout(() => {
-                setFormData({...values})
+                setFormData({ ...values });
                 register(values);
               }, 400);
             }}
@@ -388,8 +392,8 @@ const Register = () => {
                       size="small"
                       error={
                         errors.profile_creater &&
-                          touched.profile_creater &&
-                          errors.profile_creater
+                        touched.profile_creater &&
+                        errors.profile_creater
                           ? true
                           : false
                       }
@@ -493,8 +497,8 @@ const Register = () => {
                       variant="outlined"
                       error={
                         errors.confirmPwd &&
-                          touched.confirmPwd &&
-                          errors.confirmPwd
+                        touched.confirmPwd &&
+                        errors.confirmPwd
                           ? true
                           : false
                       }
@@ -523,6 +527,7 @@ const Register = () => {
                   <div className="col-sm-6">
                     <TextField
                       className="formField"
+                      type="referral_code"
                       name="referral_code"
                       variant="outlined"
                       fullWidth
