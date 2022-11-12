@@ -52,6 +52,21 @@ export const updateProfileData = (payload) => {
   });
 };
 
+export const getPreferenceData = () => {
+  return apiService({
+    url: "/profile/preferences",
+    method: "GET",
+  });
+};
+
+export const updatePreferenceData = (payload) => {
+  return apiService({
+    url: "/profile/preferences",
+    method: "PATCH",
+    body: payload,
+  });
+};
+
 export const uploadImages = (payload) => {
   return apiService({
     url: "/profiles/images/uploads",
@@ -59,9 +74,17 @@ export const uploadImages = (payload) => {
     body: payload
   });
 }
+
 export const getDropwdownValues = () => {
   return apiService({
     url: "/reference/drop-down",
+    method: "GET"
+  });
+}
+
+export const getStates = () => {
+  return apiService({
+    url: "/reference/states",
     method: "GET"
   });
 }
