@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState, useCallback } from "react";
 import { ToastContainer, toast, Zoom } from "react-toastify";
+import Loading from "../../ui-components/Loding/Loading";
 import { ls } from "../../utils/localStorage";
 import SaveIcon from "@mui/icons-material/Save";
 import { Formik } from "formik";
@@ -26,55 +27,27 @@ const EditPreferences = () => {
   const [states, setStates] = useState(null);
 
   const [formData, setFormData] = useState({
-    about_me: "",
-    address: "",
-    age: [20, 37],
-    body_type: "",
+    age: [],
+    annual_income: "",
     caste: "",
-    citizen: "",
-    city: "",
     country: "",
-    dob: new Date(),
-    drinking_habit: "",
-    eating_habit: "",
+    district: "",
+    dosham: "",
+    drinking_habits: "",
+    eating_habits: "",
     education: "",
-    email_id: "",
-    employeed_in: "",
-    end_date: new Date(),
-    family_status: "",
-    family_type: "",
-    fathers_occupation: "",
-    gender: "",
-    height: [4.5, 6.5],
-    hobbies: "",
-    interests: "",
+    employed_in: "",
+    height: [],
+    location: "",
+    looking_for: "Homely girl",
     marital_status: "",
-    mobileno: "",
     mother_tongue: "",
-    mothers_occupation: "",
-    name: "",
-    no_of_brothers: "",
-    no_of_brothers_married: "",
-    no_of_sisters: "",
-    no_of_sisters_married: "",
     occupation: "",
     physical_status: "",
-    pincode: "",
-    profession: "",
-    profile_creater: "",
-    profile_id: "",
-    referral_code: "",
     religion: "",
-    require_details: "",
-    salary: "",
-    smoking_habit: "",
+    smoking_habits: "",
     star: "",
-    start_date: new Date(),
     state: "",
-    sub_caste: "",
-    surname: "",
-    time_of_birth: new Date(),
-    weight: "",
     zodiac: "",
   });
 
@@ -102,7 +75,10 @@ const EditPreferences = () => {
         setFormData({
           ...formData,
           ...response.data,
+          age: [response?.data?.age?.from, response?.data?.age?.to],
+          height: [response?.data?.height?.from, response?.data?.height?.to],
         });
+        setLoading(false);
       }
     } catch (error) {
       setLoading(false);
@@ -110,6 +86,7 @@ const EditPreferences = () => {
   };
 
   const updatePreference = async (data) => {
+    setLoading(true);
     try {
       const response = await updatePreferenceData(data);
       console.log(response, "response");
@@ -121,19 +98,30 @@ const EditPreferences = () => {
           transition: Zoom,
         });
         fetchPreferenceData();
+        setLoading(false);
       }
     } catch (error) {
-      console.log(error);
-      toast.error("Something wend wrong", {
-        position: "top-right",
-        autoClose: 1500,
-        theme: "colored",
-        transition: Zoom,
-      });
+      console.log({ error });
+      setLoading(false);
+      toast.error(
+        error?.response?.data?.error?.message || "Something went wrong.",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
     }
   };
   return (
-    <div className="container-fluid edit-preferences">
+    <div
+      className="container-fluid edit-preferences"
+      style={{
+        overflow: loading ? "hidden" : "auto",
+        height: loading ? "calc(100vh - 112px)" : "auto",
+      }}
+    >
       <div>
         <h1>Edit Preferences</h1>
         <br />
@@ -154,43 +142,23 @@ const EditPreferences = () => {
                 }
               });
               let payload = { ...formData, ...data };
-              payload.height = parseFloat(payload.height);
-              payload.weight = parseFloat(payload.weight);
-              payload.no_of_sisters_married = parseFloat(
-                payload.no_of_sisters_married
-                  ? payload.no_of_sisters_married
-                  : 0
-              );
-              payload.no_of_brothers_married = parseFloat(
-                payload.no_of_brothers_married
-                  ? payload.no_of_brothers_married
-                  : 0
-              );
-              payload.no_of_brothers = parseFloat(
-                payload.no_of_brothers ? payload.no_of_brothers : 0
-              );
-              payload.no_of_sisters = parseFloat(
-                payload.no_of_sisters ? payload.no_of_sisters : 0
-              );
-              payload.gender = payload.gender.toString();
-              payload.body_type = payload.body_type.toString();
+              payload.height = {
+                from: payload.height[0],
+                to: payload.height[1],
+              };
+              payload.age = { from: payload.age[0], to: payload.age[1] };
               payload.caste = payload.caste.toString();
-              payload.citizen = payload.citizen.toString();
               payload.country = payload.country.toString();
-              payload.drinking_habit = payload.drinking_habit.toString();
-              payload.eating_habit = payload.eating_habit.toString();
+              payload.drinking_habits = payload.drinking_habits.toString();
+              payload.eating_habits = payload.eating_habits.toString();
               payload.education = payload.education.toString();
-              payload.family_status = payload.family_status.toString();
-              payload.family_type = payload.family_type.toString();
               payload.marital_status = payload.marital_status.toString();
               payload.mother_tongue = payload.mother_tongue.toString();
               payload.occupation = payload.occupation.toString();
               payload.physical_status = payload.physical_status.toString();
-              payload.profession = payload.profession.toString();
-              payload.profile_creater = payload.profile_creater.toString();
               payload.religion = payload.religion.toString();
-              payload.salary = payload.salary.toString();
-              payload.smoking_habit = payload.smoking_habit.toString();
+              payload.annual_income = payload.annual_income.toString();
+              payload.smoking_habits = payload.smoking_habits.toString();
               payload.star = payload.star.toString();
               payload.zodiac = payload.zodiac.toString();
 
@@ -199,12 +167,6 @@ const EditPreferences = () => {
               delete payload.updated_by;
               delete payload.created_at;
               delete payload.updated_at;
-              delete payload.images;
-              delete payload.is_membership;
-              delete payload.paid_status;
-              delete payload.paid_date;
-              delete payload.start_date;
-              delete payload.end_date;
 
               console.log(payload, "payload");
               updatePreference(payload);
@@ -341,9 +303,9 @@ const EditPreferences = () => {
                           <FormControl size="small" fullWidth>
                             <InputLabel> Smoking Habit</InputLabel>
                             <Select
-                              name="smoking_habit"
+                              name="smoking_habits"
                               label="Smoking Habit"
-                              value={values.smoking_habit || ""}
+                              value={values.smoking_habits || ""}
                               onChange={handleChange}
                               onBlur={handleBlur}
                             >
@@ -372,10 +334,10 @@ const EditPreferences = () => {
                         </div>
                         <div className="col-sm-6" style={{ display: "flex" }}>
                           <Slider
-                            min={4}
-                            max={7}
+                            min={120}
+                            max={220}
                             marks
-                            step={0.5}
+                            step={1}
                             name="height"
                             value={values.height}
                             onChange={handleChange}
@@ -428,9 +390,9 @@ const EditPreferences = () => {
                           <FormControl size="small" fullWidth>
                             <InputLabel> Eating Habit</InputLabel>
                             <Select
-                              name="eating_habit"
+                              name="eating_habits"
                               label="Eating Habit"
-                              value={values.eating_habit || ""}
+                              value={values.eating_habits || ""}
                               onChange={handleChange}
                               onBlur={handleBlur}
                             >
@@ -457,9 +419,9 @@ const EditPreferences = () => {
                           <FormControl size="small" fullWidth>
                             <InputLabel> Drinking Habit</InputLabel>
                             <Select
-                              name="drinking_habit"
+                              name="drinking_habits"
                               label="Drinking Habit"
-                              value={values.drinking_habit || ""}
+                              value={values.drinking_habits || ""}
                               onChange={handleChange}
                               onBlur={handleBlur}
                             >
@@ -676,10 +638,10 @@ const EditPreferences = () => {
                         </div>
                         <div className="col-sm-6">
                           <TextField
-                            name="employeed_in"
+                            name="employed_in"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.employeed_in}
+                            value={values.employed_in}
                             size="small"
                             fullWidth
                             label="Employed In"
@@ -734,9 +696,9 @@ const EditPreferences = () => {
                           <FormControl size="small" fullWidth>
                             <InputLabel>Annual Income</InputLabel>
                             <Select
-                              name="salary"
+                              name="annual_income"
                               label="Annual Income"
-                              value={values.salary || ""}
+                              value={values.annual_income || ""}
                               onChange={handleChange}
                               onBlur={handleBlur}
                             >
@@ -855,29 +817,6 @@ const EditPreferences = () => {
                           </FormControl>
                         </div>
                       </ListItem>
-                      <ListItem className="row">
-                        <div className="col-sm-4">
-                          <Typography
-                            variant="subtitle1"
-                            color="text.secondary"
-                            component="div"
-                          >
-                            Town/City:
-                          </Typography>
-                        </div>
-                        <div className="col-sm-6">
-                          <TextField
-                            name="city"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.city}
-                            size="small"
-                            fullWidth
-                            label="Town/City"
-                            variant="outlined"
-                          />
-                        </div>
-                      </ListItem>
                     </List>
                   </div>
                 </div>
@@ -888,6 +827,11 @@ const EditPreferences = () => {
           ""
         )}
       </div>
+      <Loading
+        styles={{ top: 0, left: 0, right: 0, width: "100%" }}
+        loading={loading}
+      />
+      <ToastContainer />
     </div>
   );
 };

@@ -40,6 +40,7 @@ import { getProfileData, updateProfileData, uploadImages } from "../../api/api";
 import Loading from "../../ui-components/Loding/Loading";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useDropzone } from "react-dropzone";
+import Dropzone from "react-dropzone";
 import { ls } from "../../utils/localStorage";
 import { parse } from "date-fns";
 
@@ -195,12 +196,15 @@ const EditProfile = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something wend wrong", {
-        position: "top-right",
-        autoClose: 1500,
-        theme: "colored",
-        transition: Zoom,
-      });
+      toast.error(
+        error?.response?.data?.error?.message || "Something wend wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
       setLoading(false);
     }
   };
@@ -233,8 +237,8 @@ const EditProfile = () => {
                 }
               });
               let payload = { ...formData, ...data };
-              payload.height = parseFloat(payload.height);
-              payload.weight = parseFloat(payload.weight);
+              payload.height = payload.height ? parseFloat(payload.height) : 0;
+              payload.weight = payload.weight ? parseFloat(payload.weight) : 0;
               payload.no_of_sisters_married = parseFloat(
                 payload.no_of_sisters_married
                   ? payload.no_of_sisters_married
@@ -1581,7 +1585,7 @@ const EditProfile = () => {
                   </div>
                 </div>
                 <br />
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-sm-12">
                     <Typography gutterBottom variant="h5" component="div">
                       Images
@@ -1608,8 +1612,59 @@ const EditProfile = () => {
                     ) : (
                       ""
                     )}
+                    <Dropzone
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        borderWidth: 2,
+                        borderColor: "rgb(102, 102, 102)",
+                        borderStyle: "dashed",
+                        borderRadius: 5,
+                      }}
+                      accept="image/*"
+                      onDrop={(acceptedFiles) => {
+                        if (acceptedFiles.length === 0) {
+                          return;
+                        }
+                        setFieldValue(
+                          "files",
+                          values.files.concat(acceptedFiles)
+                        );
+                      }}
+                    >
+                      {({
+                        isDragActive,
+                        isDragReject,
+                        acceptedFiles,
+                        rejectedFiles,
+                      }) => {
+                        if (isDragActive) {
+                          return "This file is authorized";
+                        }
+
+                        if (isDragReject) {
+                          return "This file is not authorized";
+                        }
+
+                        if (values?.files?.length === 0) {
+                          return <p>Try dragging a file here!</p>;
+                        }
+
+                        return values?.files?.map((file, i) => (
+                          // <Thumb key={i} file={file} />
+                          <img
+                            key={i}
+                            src={new FileReader().result}
+                            alt={file.name}
+                            className="img-thumbnail mt-2"
+                            height={200}
+                            width={200}
+                          />
+                        ));
+                      }}
+                    </Dropzone>
                   </div>
-                </div>
+                </div> */}
               </form>
             )}
           </Formik>
