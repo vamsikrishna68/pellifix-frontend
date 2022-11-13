@@ -174,7 +174,16 @@ const EditProfile = () => {
         });
         setLoading(false);
       }
-    } catch (error) {
+    } catch (error) {;
+      toast.error(
+        error?.response?.data?.error?.message || "Something wend wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
       setLoading(false);
     }
   };

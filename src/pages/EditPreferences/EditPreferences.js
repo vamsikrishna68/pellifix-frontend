@@ -81,6 +81,15 @@ const EditPreferences = () => {
         setLoading(false);
       }
     } catch (error) {
+      toast.error(
+        error?.response?.data?.error?.message || "Something wend wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
       setLoading(false);
     }
   };
@@ -161,6 +170,8 @@ const EditPreferences = () => {
               payload.smoking_habits = payload.smoking_habits.toString();
               payload.star = payload.star.toString();
               payload.zodiac = payload.zodiac.toString();
+              payload.state = payload.state.toString();
+              payload.district = payload.district.toString();
 
               delete payload.id;
               delete payload.created_by;
