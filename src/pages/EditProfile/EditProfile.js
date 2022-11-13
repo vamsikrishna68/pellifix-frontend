@@ -40,12 +40,14 @@ import { getProfileData, updateProfileData, uploadImages } from "../../api/api";
 import Loading from "../../ui-components/Loding/Loading";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useDropzone } from "react-dropzone";
+import Dropzone from "react-dropzone";
 import { ls } from "../../utils/localStorage";
 import { parse } from "date-fns";
 
 const EditProfile = () => {
   const [loading, setLoading] = useState(true);
   const [dropdownOptions, setDropdownOptions] = useState(null);
+  const [states, setStates] = useState(null);
 
   const [formData, setFormData] = useState({
     about_me: "",
@@ -67,7 +69,7 @@ const EditProfile = () => {
     family_type: "",
     fathers_occupation: "",
     gender: "",
-    height: 0,
+    height: "",
     hobbies: "",
     interests: "",
     marital_status: "",
@@ -96,8 +98,53 @@ const EditProfile = () => {
     sub_caste: "",
     surname: "",
     time_of_birth: new Date(),
-    weight: 0,
+    weight: "",
     zodiac: "",
+  });
+
+  const [myFiles, setMyFiles] = useState([]);
+  const onDrop = useCallback(
+    (acceptedFiles) => {
+      setMyFiles([...myFiles, ...acceptedFiles]);
+    },
+    [myFiles]
+  );
+  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+    onDrop,
+  });
+
+  const removeFile = (file) => () => {
+    const newFiles = [...myFiles];
+    newFiles.splice(newFiles.indexOf(file), 1);
+    setMyFiles(newFiles);
+  };
+
+  const upload = async () => {
+    const formData = new FormData();
+    myFiles.forEach((e) => {
+      formData.append("images", e);
+    });
+
+    const response = await uploadImages(formData);
+    console.log(response, "response");
+  };
+
+  const files = myFiles.map((file, index) => {
+    const objectUrl = URL.createObjectURL(file);
+    return (
+      <div key={index} className="uploaded-image">
+        <IconButton
+          onClick={removeFile(file)}
+          size="small"
+          className="clear-btn"
+          color="primary"
+          component="span"
+        >
+          <ClearIcon />
+        </IconButton>
+        <img src={objectUrl} />
+      </div>
+    );
   });
 
   const fetchDropdownsValues = async () => {
@@ -105,8 +152,14 @@ const EditProfile = () => {
     setDropdownOptions(data);
   };
 
+  const fetchStates = async () => {
+    const data = JSON.parse(ls.getItem("states_for_reference"));
+    setStates(data);
+  };
+
   useEffect(() => {
     fetchDropdownsValues();
+    fetchStates();
     fetchProfileData();
   }, []);
 
@@ -119,38 +172,60 @@ const EditProfile = () => {
           ...formData,
           ...response.data,
         });
+        setLoading(false);
       }
-    } catch (error) {
+    } catch (error) {;
+      toast.error(
+        error?.response?.data?.error?.message || "Something wend wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
       setLoading(false);
     }
   };
 
   const updateProfile = async (data) => {
     try {
+      setLoading(true);
       const response = await updateProfileData(data);
       console.log(response, "response");
       if (response.status === 204) {
-        toast.success('Profile updated successfully', {
-            position: "top-right",
-            autoClose: 1500,
-            theme: "colored",
-            transition: Zoom,
+        toast.success("Profile updated successfully", {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
         });
         fetchProfileData();
+        setLoading(false);
       }
     } catch (error) {
       console.log(error);
-      toast.error('Something wend wrong', {
-        position: "top-right",
-        autoClose: 1500,
-        theme: "colored",
-        transition: Zoom,
-    });
+      toast.error(
+        error?.response?.data?.error?.message || "Something wend wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
+      setLoading(false);
     }
   };
 
   return (
-    <div className="container-fluid edit-profile">
+    <div
+      className="container-fluid edit-profile"
+      style={{
+        overflow: loading ? "hidden" : "auto",
+        height: loading ? "calc(100vh - 112px)" : "auto",
+      }}
+    >
       <div>
         <h1>Edit Profile</h1>
         <br />
@@ -171,8 +246,8 @@ const EditProfile = () => {
                 }
               });
               let payload = { ...formData, ...data };
-              payload.height = parseFloat(payload.height);
-              payload.weight = parseFloat(payload.weight);
+              payload.height = payload.height ? parseFloat(payload.height) : 0;
+              payload.weight = payload.weight ? parseFloat(payload.weight) : 0;
               payload.no_of_sisters_married = parseFloat(
                 payload.no_of_sisters_married
                   ? payload.no_of_sisters_married
@@ -190,6 +265,29 @@ const EditProfile = () => {
                 payload.no_of_sisters ? payload.no_of_sisters : 0
               );
               payload.gender = payload.gender.toString();
+              payload.body_type = payload.body_type.toString();
+              payload.caste = payload.caste.toString();
+              payload.citizen = payload.citizen.toString();
+              payload.country = payload.country.toString();
+              payload.drinking_habit = payload.drinking_habit.toString();
+              payload.eating_habit = payload.eating_habit.toString();
+              payload.education = payload.education.toString();
+              payload.family_status = payload.family_status.toString();
+              payload.family_type = payload.family_type.toString();
+              payload.marital_status = payload.marital_status.toString();
+              payload.mother_tongue = payload.mother_tongue.toString();
+              payload.occupation = payload.occupation.toString();
+              payload.physical_status = payload.physical_status.toString();
+              payload.profession = payload.profession.toString();
+              payload.profile_creater = payload.profile_creater.toString();
+              payload.religion = payload.religion.toString();
+              payload.salary = payload.salary.toString();
+              payload.smoking_habit = payload.smoking_habit.toString();
+              payload.star = payload.star.toString();
+              payload.zodiac = payload.zodiac.toString();
+              payload.state = payload.state.toString();
+              payload.district = payload.district.toString();
+
               delete payload.id;
               delete payload.created_by;
               delete payload.updated_by;
@@ -477,7 +575,9 @@ const EditProfile = () => {
                               name="dob"
                               label="Date Of Birth"
                               value={values.dob}
-                              onChange={(value) => setFieldValue("dob", value, true)}
+                              onChange={(value) =>
+                                setFieldValue("dob", value, true)
+                              }
                               renderInput={(params) => (
                                 <TextField
                                   name="dob"
@@ -541,7 +641,7 @@ const EditProfile = () => {
                             size="small"
                             fullWidth
                             name="weight"
-                            value={values.weight || 0}
+                            value={values.weight || ""}
                             onChange={handleChange}
                             onBlur={handleBlur}
                             label="Weight"
@@ -874,7 +974,9 @@ const EditProfile = () => {
                           <LocalizationProvider dateAdapter={AdapterDateFns}>
                             <TimePicker
                               label="Time of Birth"
-                              onChange={(value) => setFieldValue("time_of_birth", value, true)}
+                              onChange={(value) =>
+                                setFieldValue("time_of_birth", value, true)
+                              }
                               value={values.time_of_birth}
                               renderInput={(params) => (
                                 <TextField
@@ -998,16 +1100,22 @@ const EditProfile = () => {
                           </Typography>
                         </div>
                         <div className="col-sm-6">
-                          <TextField
-                            name="state"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            value={values.state}
-                            size="small"
-                            fullWidth
-                            label="State"
-                            variant="outlined"
-                          />
+                          <FormControl size="small" fullWidth>
+                            <InputLabel>State</InputLabel>
+                            <Select
+                              name="state"
+                              label="State"
+                              value={values.state || ""}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              {states?.STATES.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </ListItem>
                       <ListItem className="row">
@@ -1021,15 +1129,24 @@ const EditProfile = () => {
                           </Typography>
                         </div>
                         <div className="col-sm-6">
-                          <TextField
-                            name="district"
-                            onChange={handleChange}
-                            onBlur={handleBlur}
-                            size="small"
-                            fullWidth
-                            label="District"
-                            variant="outlined"
-                          />
+                          <FormControl size="small" fullWidth>
+                            <InputLabel>District</InputLabel>
+                            <Select
+                              name="district"
+                              label="District"
+                              value={values.district || ""}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                            >
+                              {states?.DISTRICTS.filter(
+                                (obj) => values.state === obj.state_id
+                              ).map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
                         </div>
                       </ListItem>
                       <ListItem className="row">
@@ -1241,7 +1358,6 @@ const EditProfile = () => {
                           />
                         </div>
                       </ListItem>
-
                       <ListItem className="row">
                         <div className="col-sm-4">
                           <Typography
@@ -1257,7 +1373,7 @@ const EditProfile = () => {
                             name="no_of_brothers"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.no_of_brothers || 0}
+                            value={values.no_of_brothers}
                             size="small"
                             fullWidth
                             label="Number of Brothers"
@@ -1359,7 +1475,7 @@ const EditProfile = () => {
                             name="no_of_sisters"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.no_of_sisters || 0}
+                            value={values.no_of_sisters || ""}
                             size="small"
                             fullWidth
                             label="Number of Sisters"
@@ -1382,7 +1498,7 @@ const EditProfile = () => {
                             name="no_of_sisters_married"
                             onChange={handleChange}
                             onBlur={handleBlur}
-                            value={values.no_of_sisters_married || 0}
+                            value={values.no_of_sisters_married || ""}
                             size="small"
                             fullWidth
                             label="Number of Sisters Married"
@@ -1478,13 +1594,97 @@ const EditProfile = () => {
                   </div>
                 </div>
                 <br />
+                {/* <div className="row">
+                  <div className="col-sm-12">
+                    <Typography gutterBottom variant="h5" component="div">
+                      Images
+                    </Typography>
+                  </div>
+                  <div className="col-sm-12">
+                    <section className="image-container">
+                      <div {...getRootProps({ className: "dropzone" })}>
+                        <input {...getInputProps()} />
+                        <p>
+                          Drag 'n' drop Images here, or click to select Images
+                        </p>
+                      </div>
+                    </section>
+                    <div className="image-list">{files}</div>
+                    {acceptedFiles.length ? (
+                      <Button
+                        onClick={() => upload()}
+                        style={{ width: "100%" }}
+                        variant="contained"
+                      >
+                        Upload
+                      </Button>
+                    ) : (
+                      ""
+                    )}
+                    <Dropzone
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        borderWidth: 2,
+                        borderColor: "rgb(102, 102, 102)",
+                        borderStyle: "dashed",
+                        borderRadius: 5,
+                      }}
+                      accept="image/*"
+                      onDrop={(acceptedFiles) => {
+                        if (acceptedFiles.length === 0) {
+                          return;
+                        }
+                        setFieldValue(
+                          "files",
+                          values.files.concat(acceptedFiles)
+                        );
+                      }}
+                    >
+                      {({
+                        isDragActive,
+                        isDragReject,
+                        acceptedFiles,
+                        rejectedFiles,
+                      }) => {
+                        if (isDragActive) {
+                          return "This file is authorized";
+                        }
+
+                        if (isDragReject) {
+                          return "This file is not authorized";
+                        }
+
+                        if (values?.files?.length === 0) {
+                          return <p>Try dragging a file here!</p>;
+                        }
+
+                        return values?.files?.map((file, i) => (
+                          // <Thumb key={i} file={file} />
+                          <img
+                            key={i}
+                            src={new FileReader().result}
+                            alt={file.name}
+                            className="img-thumbnail mt-2"
+                            height={200}
+                            width={200}
+                          />
+                        ));
+                      }}
+                    </Dropzone>
+                  </div>
+                </div> */}
               </form>
             )}
           </Formik>
         ) : (
-          "Loading..."
+          ""
         )}
       </div>
+      <Loading
+        styles={{ top: 0, left: 0, right: 0, width: "100%" }}
+        loading={loading}
+      />
       <ToastContainer />
     </div>
   );

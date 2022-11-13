@@ -13,7 +13,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import { loadAnimation } from "lottie-web";
 import { defineLordIconElement } from "lord-icon-element";
 import { useEffect, useState, useCallback } from "react";
-import { getDropwdownValues } from "../../api/api";
+import { getDropwdownValues,getStates } from "../../api/api";
 import { ls } from "../../utils/localStorage";
 import { useNavigate } from "react-router-dom";
 
@@ -41,6 +41,7 @@ const responsive = {
 const Home = () => {
   useEffect(() => {
     fetchDropdownsValues();
+    fetchStates()
     // const interval = setInterval(() => fetchDropdownsValues(), 7200000);
     // return () => {
     //   clearInterval(interval);
@@ -51,6 +52,12 @@ const Home = () => {
     const response = await getDropwdownValues();
     ls.setItem("dropdown_values_for_reference", JSON.stringify(response.data));
   };
+
+  const fetchStates = async () => {
+    const response = await getStates();
+    ls.setItem("states_for_reference", JSON.stringify(response.data));
+  };
+
 
   const profiles = [
     {
