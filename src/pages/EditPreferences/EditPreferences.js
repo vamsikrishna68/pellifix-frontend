@@ -54,11 +54,13 @@ const EditPreferences = () => {
   const fetchDropdownsValues = async () => {
     const data = JSON.parse(ls.getItem("dropdown_values_for_reference"));
     setDropdownOptions(data);
+    fetchPreferenceData()
   };
 
   const fetchStates = async () => {
     const data = JSON.parse(ls.getItem("states_for_reference"));
     setStates(data);
+    fetchPreferenceData()
   };
 
   useEffect(() => {

@@ -120,14 +120,12 @@ const Welcome = () => {
                   onClick={() => navigate("/login")}
                   className="download-btn"
                 >
-                  {" "}
                   Login
                 </span>
                 <span
                   onClick={() => navigate("/login")}
                   className="download-btn"
                 >
-                  {" "}
                   Register
                 </span>
               </div>
