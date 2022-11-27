@@ -8,13 +8,17 @@ import { Formik } from "formik";
 import InputAdornment from "@mui/material/InputAdornment";
 import LockIcon from "@mui/icons-material/Lock";
 import * as Yup from "yup";
+import { useNavigate } from "react-router-dom";
+
 import AOS from "aos";
 import "./style.scss";
 import "aos/dist/aos.css";
 
 const ResetPassword = () => {
-  const [emailId, setEmailId] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const params = window.location.pathname.split("d/").pop();
+
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -24,11 +28,14 @@ const ResetPassword = () => {
     });
   });
 
-  const forgotPassword = () => {
+  const resetPassword = (values) => {
+    let payload = {
+      password: values.password,
+    };
     setLoading(true);
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}/v1/customer/password/reset`, {
-        email_id: emailId,
+      .post(`${process.env.REACT_APP_BASE_URL}/v1/customer/password/update/${params}`, {
+        ...payload,
       })
       .then((response) => {
         console.log(response);
@@ -40,6 +47,9 @@ const ResetPassword = () => {
             theme: "colored",
             transition: Zoom,
           });
+          setTimeout(() => {
+            navigate("/login");
+          }, 1000);
         }
       })
       .catch((err) => {
@@ -79,8 +89,7 @@ const ResetPassword = () => {
               })}
               onSubmit={(values) => {
                 setTimeout(() => {
-                  setFormData({ ...values });
-                  register(values);
+                  resetPassword(values);
                 }, 400);
               }}
             >

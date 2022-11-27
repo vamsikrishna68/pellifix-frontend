@@ -1,89 +1,43 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { useDropzone } from 'react-dropzone';
+import React from "react";
+import { useDropzone } from "react-dropzone";
 
-const baseStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  padding: '20px',
-  borderWidth: 2,
-  borderRadius: 2,
-  borderColor: '#eeeeee',
-  borderStyle: 'dashed',
-  backgroundColor: '#fafafa',
-  color: '#bdbdbd',
-  transition: 'border .3s ease-in-out'
-};
+function Dropzone({ onDrop, accept, open }) {
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
+    useDropzone({
+      accept,
+      onDrop,
+    });
 
-const activeStyle = {
-  borderColor: '#2196f3'
-};
-
-const acceptStyle = {
-  borderColor: '#00e676'
-};
-
-const rejectStyle = {
-  borderColor: '#ff1744'
-};
-
-function DropZone(props) {
-  const [files, setFiles] = useState([]);
-
-  const onDrop = useCallback(acceptedFiles => {
-    setFiles(acceptedFiles.map(file => Object.assign(file, {
-      preview: URL.createObjectURL(file)
-    })));
-  }, []);
-
-  const {
-    getRootProps,
-    getInputProps,
-    isDragActive,
-    isDragAccept,
-    isDragReject
-  } = useDropzone({
-    onDrop,
-    accept: 'image/jpeg, image/png'
-  });
-
-  const style = useMemo(() => ({
-    ...baseStyle,
-    ...(isDragActive ? activeStyle : {}),
-    ...(isDragAccept ? acceptStyle : {}),
-    ...(isDragReject ? rejectStyle : {})
-  }), [
-    isDragActive,
-    isDragReject,
-    isDragAccept
-  ]);
-
-  const thumbs = files.map(file => (
-    <div key={file.name}>
-      <img
-        src={file.preview}
-        alt={file.name}
-      />
-    </div>
-  ));
-
-  // clean up
-  useEffect(() => () => {
-    files.forEach(file => URL.revokeObjectURL(file.preview));
-  }, [files]);
+  // const files = acceptedFiles.map((file) => (
+  //   <li key={file.path}>
+  //     {file.path} - {file.size} bytes
+  //   </li>
+  // ));
 
   return (
-    <section>
-      <div {...getRootProps({style})}>
-        <input {...getInputProps()} />
-        <div>Drag and drop your images here.</div>
-
-      <aside>
-        {thumbs}
-      </aside>
+    <div>
+      <div {...getRootProps({ className: "dropzone" })}>
+        <input className="input-zone" {...getInputProps()} />
+        <div className="text-center">
+          {isDragActive ? (
+            <p className="dropzone-content">
+              Release to drop the files here
+            </p>
+          ) : (
+            <p className="dropzone-content">
+              Drag ’n’ drop some files here, or click to select files
+            </p>
+          )}
+          {/* <button type="button" onClick={open} className="btn">
+            Click to select files
+          </button> */}
+        </div>
       </div>
-    </section>
-  )
+      {/* <aside>
+        <ul>{files}</ul>
+      </aside> */}
+    </div>
+  );
 }
 
-export default DropZone;
+export default Dropzone;

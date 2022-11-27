@@ -40,6 +40,7 @@ import { getProfileData, updateProfileData, uploadImages } from "../../api/api";
 import Loading from "../../ui-components/Loding/Loading";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import DropZone from "./DropZone";
+import ImageGrid from "./ImageGrid";
 import { ls } from "../../utils/localStorage";
 
 const EditProfile = () => {
@@ -100,50 +101,24 @@ const EditProfile = () => {
     zodiac: "",
   });
 
-  // const [myFiles, setMyFiles] = useState([]);
-  // const onDrop = useCallback(
-  //   (acceptedFiles) => {
-  //     setMyFiles([...myFiles, ...acceptedFiles]);
-  //   },
-  //   [myFiles]
-  // );
-  // const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-  //   onDrop,
-  // });
+  const [images, setImages] = useState([]);
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.map((file) => {
+      const reader = new FileReader();
 
-  // const removeFile = (file) => () => {
-  //   const newFiles = [...myFiles];
-  //   newFiles.splice(newFiles.indexOf(file), 1);
-  //   setMyFiles(newFiles);
-  // };
+      reader.onload = function (e) {
+        setImages((prevState) => [...prevState, e.target.result]);
+      };
+      reader.readAsDataURL(file);
+      return file;
+    });
+  }, []);
 
-  // const upload = async () => {
-  //   const formData = new FormData();
-  //   myFiles.forEach((e) => {
-  //     formData.append("images", e);
-  //   });
-
-  //   const response = await uploadImages(formData);
-  //   console.log(response, "response");
-  // };
-
-  // const files = myFiles.map((file, index) => {
-  //   const objectUrl = URL.createObjectURL(file);
-  //   return (
-  //     <div key={index} className="uploaded-image">
-  //       <IconButton
-  //         onClick={removeFile(file)}
-  //         size="small"
-  //         className="clear-btn"
-  //         color="primary"
-  //         component="span"
-  //       >
-  //         <ClearIcon />
-  //       </IconButton>
-  //       <img src={objectUrl} />
-  //     </div>
-  //   );
-  // });
+  const removeFile = (file) => () => {
+    const newFiles = [...images];
+    newFiles.splice(newFiles.indexOf(file), 1);
+    setImages(newFiles);
+  };
 
   const handleChangeStatus = ({ meta }, status) => {
     console.log(status, meta);
@@ -174,6 +149,7 @@ const EditProfile = () => {
           ...formData,
           ...response.data,
         });
+        setImages(response.data.images);
         setLoading(false);
       }
     } catch (error) {
@@ -289,13 +265,13 @@ const EditProfile = () => {
               payload.zodiac = payload.zodiac.toString();
               payload.state = payload.state.toString();
               payload.district = payload.district.toString();
+              payload.images = images;
 
               delete payload.id;
               delete payload.created_by;
               delete payload.updated_by;
               delete payload.created_at;
               delete payload.updated_at;
-              delete payload.images;
               delete payload.is_membership;
               delete payload.paid_status;
               delete payload.paid_date;
@@ -1603,27 +1579,12 @@ const EditProfile = () => {
                     </Typography>
                   </div>
                   <div className="col-sm-12">
-                    {/* <section className="image-container">
-                      <div {...getRootProps({ className: "dropzone" })}>
-                        <input {...getInputProps()} />
-                        <p>
-                          Drag 'n' drop Images here, or click to select Images
-                        </p>
-                      </div>
-                    </section>
-                    <div className="image-list">{files}</div>
-                    {acceptedFiles.length ? (
-                      <Button
-                        onClick={() => upload()}
-                        style={{ width: "100%" }}
-                        variant="contained"
-                      >
-                        Upload
-                      </Button>
+                    {images.length < 5 ? (
+                      <DropZone onDrop={onDrop} accept={"image/*"} />
                     ) : (
                       ""
-                    )} */}
-                    <DropZone  />
+                    )}
+                    <ImageGrid images={images} removeFile={removeFile} />
                   </div>
                 </div>
               </form>

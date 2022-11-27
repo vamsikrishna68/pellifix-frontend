@@ -40,7 +40,7 @@ const routes = (isLoggedIn) => [
     element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/home" />,
   },
   {
-    path: "reset-password",
+    path: "reset-password/:id",
     element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
   },
   {
