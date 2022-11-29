@@ -43,6 +43,7 @@ const ForgotPassword = () => {
             theme: "colored",
             transition: Zoom,
           });
+          setEmailId("")
         }
       })
       .catch((err) => {

@@ -35,6 +35,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import SaveIcon from "@mui/icons-material/Save";
 import { Formik } from "formik";
+import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
 import { getProfileData, updateProfileData, uploadImages } from "../../api/api";
 import Loading from "../../ui-components/Loding/Loading";
@@ -102,14 +103,17 @@ const EditProfile = () => {
   });
 
   const [images, setImages] = useState([]);
+
   const onDrop = useCallback((acceptedFiles) => {
     acceptedFiles.map((file) => {
       const reader = new FileReader();
-
+      let formData = new FormData();
+      formData.append("images", file, file.name);
       reader.onload = function (e) {
         setImages((prevState) => [...prevState, e.target.result]);
       };
       reader.readAsDataURL(file);
+      uploadImage(formData)
       return file;
     });
   }, []);
@@ -118,6 +122,33 @@ const EditProfile = () => {
     const newFiles = [...images];
     newFiles.splice(newFiles.indexOf(file), 1);
     setImages(newFiles);
+  };
+
+  const uploadImage = async (formData) => {
+    try {
+      setLoading(true);
+      const response = await uploadImages(formData);
+      if (response && response.status == 200) {
+        setLoading(false);
+        toast.success(response.data.message, {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        });
+      }
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.error?.message || "Something wend wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
+      setLoading(false);
+    }
   };
 
   const handleChangeStatus = ({ meta }, status) => {

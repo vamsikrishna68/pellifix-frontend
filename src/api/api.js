@@ -69,25 +69,26 @@ export const updatePreferenceData = (payload) => {
 
 export const uploadImages = (payload) => {
   return apiService({
+    headers: { ["Content-Type"]: "multipart/form-data" },
     url: "/profiles/images/uploads",
     method: "POST",
-    body: payload
+    body: payload,
   });
-}
+};
 
 export const getDropwdownValues = () => {
   return apiService({
     url: "/reference/drop-down",
-    method: "GET"
+    method: "GET",
   });
-}
+};
 
 export const getStates = () => {
   return apiService({
     url: "/reference/states",
-    method: "GET"
+    method: "GET",
   });
-}
+};
 
 export const getWishList = () => {
   return apiService({
@@ -95,7 +96,6 @@ export const getWishList = () => {
     method: "GET",
   });
 };
-
 
 export const verifyPhone = (payload) => {
   return apiService({

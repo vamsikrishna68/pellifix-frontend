@@ -6,7 +6,9 @@ import Loading from "../../ui-components/Loding/Loading";
 import axios from "axios";
 import { Formik } from "formik";
 import InputAdornment from "@mui/material/InputAdornment";
-import LockIcon from "@mui/icons-material/Lock";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +18,8 @@ import "aos/dist/aos.css";
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
+  const [showPassword, setPassword] = useState(false);
+  const [showConfirmPassword, setConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const params = window.location.pathname.split("d/").pop();
 
@@ -34,19 +38,25 @@ const ResetPassword = () => {
     };
     setLoading(true);
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}/v1/customer/password/update/${params}`, {
-        ...payload,
-      })
+      .patch(
+        `${process.env.REACT_APP_BASE_URL}/v1/customer/password/update/${params}`,
+        {
+          ...payload,
+        }
+      )
       .then((response) => {
         console.log(response);
-        if (response && response.status == 200) {
+        if (response && response.status == 204) {
           setLoading(false);
-          toast.success(response.data.message, {
-            position: "top-right",
-            autoClose: 1500,
-            theme: "colored",
-            transition: Zoom,
-          });
+          toast.success(
+            response.data.message || "Reset password successfully",
+            {
+              position: "top-right",
+              autoClose: 1500,
+              theme: "colored",
+              transition: Zoom,
+            }
+          );
           setTimeout(() => {
             navigate("/login");
           }, 1000);
@@ -105,7 +115,7 @@ const ResetPassword = () => {
                   <div style={{ paddingLeft: 0 }}>
                     <TextField
                       className="formField"
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       name="password"
                       variant="outlined"
                       error={
@@ -127,7 +137,19 @@ const ResetPassword = () => {
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
-                            <LockIcon />
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => {
+                                setPassword(!showPassword);
+                              }}
+                              edge="end"
+                            >
+                              {showPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
                           </InputAdornment>
                         ),
                       }}
@@ -135,7 +157,7 @@ const ResetPassword = () => {
 
                     <TextField
                       className="formField"
-                      type="confirmPwd"
+                      type={showConfirmPassword ? "text" : "password"}
                       name="confirmPwd"
                       variant="outlined"
                       error={
@@ -159,7 +181,19 @@ const ResetPassword = () => {
                       InputProps={{
                         endAdornment: (
                           <InputAdornment position="end">
-                            <LockIcon />
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={() => {
+                                setConfirmPassword(!showConfirmPassword);
+                              }}
+                              edge="end"
+                            >
+                              {showConfirmPassword ? (
+                                <VisibilityOff />
+                              ) : (
+                                <Visibility />
+                              )}
+                            </IconButton>
                           </InputAdornment>
                         ),
                       }}
