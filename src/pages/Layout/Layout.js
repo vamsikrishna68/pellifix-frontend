@@ -28,6 +28,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import Authorization from "../../utils/authorization";
 import "./style.scss";
 
 const drawerWidth = 280;
@@ -142,10 +143,8 @@ const Layout = () => {
     setAnchorEl(null);
   };
 
-  const logout = () => {
-    localStorage.removeItem("pfToken");
-    navigate("/");
-  };
+  const logout = () => Authorization.logout();
+
   const profilePage = () => {
     navigate("/auth/profile");
   };

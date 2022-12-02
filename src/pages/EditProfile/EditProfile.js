@@ -35,14 +35,14 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
 import SaveIcon from "@mui/icons-material/Save";
 import { Formik } from "formik";
+import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
 import { getProfileData, updateProfileData, uploadImages } from "../../api/api";
 import Loading from "../../ui-components/Loding/Loading";
 import { ToastContainer, toast, Zoom } from "react-toastify";
-import { useDropzone } from "react-dropzone";
-import Dropzone from "react-dropzone";
+import DropZone from "./DropZone";
+import ImageGrid from "./ImageGrid";
 import { ls } from "../../utils/localStorage";
-import { parse } from "date-fns";
 
 const EditProfile = () => {
   const [loading, setLoading] = useState(true);
@@ -102,50 +102,58 @@ const EditProfile = () => {
     zodiac: "",
   });
 
-  const [myFiles, setMyFiles] = useState([]);
-  const onDrop = useCallback(
-    (acceptedFiles) => {
-      setMyFiles([...myFiles, ...acceptedFiles]);
-    },
-    [myFiles]
-  );
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    onDrop,
-  });
+  const [images, setImages] = useState([]);
+
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.map((file) => {
+      const reader = new FileReader();
+      let formData = new FormData();
+      formData.append("images", file, file.name);
+      reader.onload = function (e) {
+        setImages((prevState) => [...prevState, e.target.result]);
+      };
+      reader.readAsDataURL(file);
+      uploadImage(formData)
+      return file;
+    });
+  }, []);
 
   const removeFile = (file) => () => {
-    const newFiles = [...myFiles];
+    const newFiles = [...images];
     newFiles.splice(newFiles.indexOf(file), 1);
-    setMyFiles(newFiles);
+    setImages(newFiles);
   };
 
-  const upload = async () => {
-    const formData = new FormData();
-    myFiles.forEach((e) => {
-      formData.append("images", e);
-    });
-
-    const response = await uploadImages(formData);
-    console.log(response, "response");
+  const uploadImage = async (formData) => {
+    try {
+      setLoading(true);
+      const response = await uploadImages(formData);
+      if (response && response.status == 200) {
+        setLoading(false);
+        toast.success(response.data.message, {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        });
+      }
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.error?.message || "Something wend wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
+      setLoading(false);
+    }
   };
 
-  const files = myFiles.map((file, index) => {
-    const objectUrl = URL.createObjectURL(file);
-    return (
-      <div key={index} className="uploaded-image">
-        <IconButton
-          onClick={removeFile(file)}
-          size="small"
-          className="clear-btn"
-          color="primary"
-          component="span"
-        >
-          <ClearIcon />
-        </IconButton>
-        <img src={objectUrl} />
-      </div>
-    );
-  });
+  const handleChangeStatus = ({ meta }, status) => {
+    console.log(status, meta);
+  };
 
   const fetchDropdownsValues = async () => {
     const data = JSON.parse(ls.getItem("dropdown_values_for_reference"));
@@ -172,9 +180,10 @@ const EditProfile = () => {
           ...formData,
           ...response.data,
         });
+        setImages(response.data.images);
         setLoading(false);
       }
-    } catch (error) {;
+    } catch (error) {
       toast.error(
         error?.response?.data?.error?.message || "Something wend wrong",
         {
@@ -287,13 +296,13 @@ const EditProfile = () => {
               payload.zodiac = payload.zodiac.toString();
               payload.state = payload.state.toString();
               payload.district = payload.district.toString();
+              payload.images = images;
 
               delete payload.id;
               delete payload.created_by;
               delete payload.updated_by;
               delete payload.created_at;
               delete payload.updated_at;
-              delete payload.images;
               delete payload.is_membership;
               delete payload.paid_status;
               delete payload.paid_date;
@@ -1594,86 +1603,21 @@ const EditProfile = () => {
                   </div>
                 </div>
                 <br />
-                {/* <div className="row">
+                <div className="row">
                   <div className="col-sm-12">
                     <Typography gutterBottom variant="h5" component="div">
                       Images
                     </Typography>
                   </div>
                   <div className="col-sm-12">
-                    <section className="image-container">
-                      <div {...getRootProps({ className: "dropzone" })}>
-                        <input {...getInputProps()} />
-                        <p>
-                          Drag 'n' drop Images here, or click to select Images
-                        </p>
-                      </div>
-                    </section>
-                    <div className="image-list">{files}</div>
-                    {acceptedFiles.length ? (
-                      <Button
-                        onClick={() => upload()}
-                        style={{ width: "100%" }}
-                        variant="contained"
-                      >
-                        Upload
-                      </Button>
+                    {images.length < 5 ? (
+                      <DropZone onDrop={onDrop} accept={"image/*"} />
                     ) : (
                       ""
                     )}
-                    <Dropzone
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        borderWidth: 2,
-                        borderColor: "rgb(102, 102, 102)",
-                        borderStyle: "dashed",
-                        borderRadius: 5,
-                      }}
-                      accept="image/*"
-                      onDrop={(acceptedFiles) => {
-                        if (acceptedFiles.length === 0) {
-                          return;
-                        }
-                        setFieldValue(
-                          "files",
-                          values.files.concat(acceptedFiles)
-                        );
-                      }}
-                    >
-                      {({
-                        isDragActive,
-                        isDragReject,
-                        acceptedFiles,
-                        rejectedFiles,
-                      }) => {
-                        if (isDragActive) {
-                          return "This file is authorized";
-                        }
-
-                        if (isDragReject) {
-                          return "This file is not authorized";
-                        }
-
-                        if (values?.files?.length === 0) {
-                          return <p>Try dragging a file here!</p>;
-                        }
-
-                        return values?.files?.map((file, i) => (
-                          // <Thumb key={i} file={file} />
-                          <img
-                            key={i}
-                            src={new FileReader().result}
-                            alt={file.name}
-                            className="img-thumbnail mt-2"
-                            height={200}
-                            width={200}
-                          />
-                        ));
-                      }}
-                    </Dropzone>
+                    <ImageGrid images={images} removeFile={removeFile} />
                   </div>
-                </div> */}
+                </div>
               </form>
             )}
           </Formik>
