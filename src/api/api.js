@@ -90,12 +90,6 @@ export const getStates = () => {
   });
 };
 
-export const getWishList = () => {
-  return apiService({
-    url: "/users/shortlist",
-    method: "GET",
-  });
-};
 
 export const verifyPhone = (payload) => {
   return apiService({
@@ -110,5 +104,44 @@ export const generateOtp = (payload) => {
     url: "/customer/otp/generate",
     method: "PATCH",
     body: payload,
+  });
+};
+
+//Home section
+
+export const getDailyRecommendation = () => {
+  return apiService({
+    url: "/matches/daily",
+    method: "GET",
+  });
+};
+
+export const getHoroscopeMatches = () => {
+  return apiService({
+    url: "/matches/horoscopic",
+    method: "GET",
+  });
+};
+
+export const getPreferenceMatches = () => {
+  return apiService({
+    url: "/matches/preference",
+    method: "GET",
+  });
+};
+
+// Marriage profile
+export const getProfileDetails = (id) => {
+  return apiService({
+    url: `/profiles/details/${id}`,
+    method: "GET",
+  });
+};
+
+// Wishlist
+export const getWishList = () => {
+  return apiService({
+    url: "/users/shortlist",
+    method: "GET",
   });
 };

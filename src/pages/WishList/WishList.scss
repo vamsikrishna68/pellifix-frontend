@@ -1,0 +1,19 @@
+.wishlist-card {
+  transition: 0.8s all ease;
+  padding: 0.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.11);
+  .MuiCardHeader-root {
+    padding: 0.75rem 0 0;
+  }
+  .wishlist-btn {
+    display: block;
+    text-align: left;
+  }
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px !important;
+  }
+}
+
+.wishlist-no-record {
+  padding: 1rem 0 0.2rem;
+}
