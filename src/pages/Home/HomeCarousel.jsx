@@ -15,7 +15,7 @@ const HomeCarousel = (props) => {
   const navigate = useNavigate();
   return (
     <Carousel responsive={props.responsive} autoPlay={false} infinite={true}>
-      {props.content && props.content.data.length ? (
+      {props.content?.data?.length ? (
         props.content.data.map((d, i) => (
           <div key={i} style={{ padding: "10px 15px 10px 0px" }}>
             <Card className="profile-card" elevation={1} sx={{ maxWidth: 345 }}>
@@ -37,10 +37,18 @@ const HomeCarousel = (props) => {
                       onClick={(event) => {
                         event.stopPropagation();
                         event.preventDefault();
+                        props.onClickLike(d);
                         console.log("Button clicked");
                       }}
                     >
-                      <FavoriteIcon />
+                      <FavoriteIcon
+                        style={{
+                          color:
+                            props.isLiked.findIndex((x) => x === d.id) >= 0
+                              ? "#D53833"
+                              : "rgba(0, 0, 0, 0.54)",
+                        }}
+                      />
                     </IconButton>
                   }
                   title={d.name}

@@ -36,7 +36,9 @@ const WishList = () => {
       }
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message || "Something went wrong",
+        error?.message
+          ? error.message
+          : error?.response?.data?.error?.message || "Something went wrong",
         {
           position: "top-right",
           autoClose: 1500,
@@ -47,72 +49,6 @@ const WishList = () => {
       setLoading(false);
     }
   };
-
-  const data = [
-    {
-      age: 25,
-      city: "Chennai",
-      education: "Bachelors - Engineering / Computers / Others",
-      id: 3,
-      image:
-        "https://img.pellifix.com/profiles/pm000003_409895ed-ae9f-4817-96b6-371bff80981d.jpg",
-      name: "Tamil2",
-    },
-    {
-      age: 26,
-      city: "Chennai",
-      education: "Bachelors - Engineering / Computers / Others",
-      id: 4,
-      image:
-        "https://img.pellifix.com/profiles/pm000003_409895ed-ae9f-4817-96b6-371bff80981d.jpg",
-      name: "Tamil2",
-    },
-    {
-      age: 25,
-      city: "Chennai",
-      education: "Bachelors - Engineering / Computers / Others",
-      id: 5,
-      image:
-        "https://img.pellifix.com/profiles/pm000003_409895ed-ae9f-4817-96b6-371bff80981d.jpg",
-      name: "Tamil2",
-    },
-    {
-      age: 25,
-      city: "Chennai",
-      education: "Bachelors - Engineering / Computers / Others",
-      id: 10,
-      image:
-        "https://img.pellifix.com/profiles/pm000003_409895ed-ae9f-4817-96b6-371bff80981d.jpg",
-      name: "Tamil2",
-    },
-    {
-      age: 25,
-      city: "Chennai",
-      education: "Bachelors - Engineering / Computers / Others",
-      id: 6,
-      image:
-        "https://img.pellifix.com/profiles/pm000003_409895ed-ae9f-4817-96b6-371bff80981d.jpg",
-      name: "Tamil2",
-    },
-    {
-      age: 25,
-      city: "Chennai",
-      education: "Bachelors - Engineering / Computers / Others",
-      id: 8,
-      image:
-        "https://img.pellifix.com/profiles/pm000003_409895ed-ae9f-4817-96b6-371bff80981d.jpg",
-      name: "Tamil2",
-    },
-    {
-      age: 25,
-      city: "Chennai",
-      education: "Bachelors - Engineering / Computers / Others",
-      id: 9,
-      image:
-        "https://img.pellifix.com/profiles/pm000003_409895ed-ae9f-4817-96b6-371bff80981d.jpg",
-      name: "Tamil2",
-    },
-  ];
 
   const skeletonLoader = () => {
     return [1, 2, 3, 4].map((n) => (
@@ -138,52 +74,58 @@ const WishList = () => {
         justify="flex-start"
         alignItems="flex-start"
       >
-        {loading
-          ? skeletonLoader()
-          : data.map((d, i) => (
-              <Grid item xs={12} sm={6} md={3} key={data.indexOf(d)}>
-                <Card
-                  className="wishlist-card"
-                  elevation={1}
-                  sx={{ maxWidth: 345 }}
+        {loading ? (
+          skeletonLoader()
+        ) : wishlist?.data?.length ? (
+          wishlist.data.map((d, i) => (
+            <Grid item xs={12} sm={6} md={3} key={data.indexOf(d)}>
+              <Card
+                className="wishlist-card"
+                elevation={1}
+                sx={{ maxWidth: 345 }}
+              >
+                <ButtonBase
+                  className="wishlist-btn"
+                  onClick={() => navigate(`/auth/wishlist/${d.id}`)}
                 >
-                  <ButtonBase
-                    className="wishlist-btn"
-                    onClick={() => navigate(`/auth/wishlist/${d.id}`)}
-                  >
-                    <CardMedia
-                      component="img"
-                      height="150"
-                      image={d.image}
-                      alt="Paella dish"
-                    />
-                    <CardHeader
-                      action={
-                        <IconButton
-                          aria-label="settings"
-                          onMouseDown={(event) => event.stopPropagation()}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            event.preventDefault();
-                            console.log("Button clicked");
-                          }}
-                        >
-                          <FavoriteIcon />
-                        </IconButton>
-                      }
-                      title={d.name}
-                      titleTypographyProps={{ variant: "subtitle1" }}
-                    />
-                    <CardHeader
-                      subheader={
-                        d.age + " yrs" + " " + d.education + " " + d.city
-                      }
-                      subheaderTypographyProps={{ variant: "subtitle2" }}
-                    />
-                  </ButtonBase>
-                </Card>
-              </Grid>
-            ))}
+                  <CardMedia
+                    component="img"
+                    height="150"
+                    image={d.image}
+                    alt="Paella dish"
+                  />
+                  <CardHeader
+                    action={
+                      <IconButton
+                        aria-label="settings"
+                        onMouseDown={(event) => event.stopPropagation()}
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          event.preventDefault();
+                          console.log("Button clicked");
+                        }}
+                      >
+                        <FavoriteIcon />
+                      </IconButton>
+                    }
+                    title={d.name}
+                    titleTypographyProps={{ variant: "subtitle1" }}
+                  />
+                  <CardHeader
+                    subheader={
+                      d.age + " yrs" + " " + d.education + " " + d.city
+                    }
+                    subheaderTypographyProps={{ variant: "subtitle2" }}
+                  />
+                </ButtonBase>
+              </Card>
+            </Grid>
+          ))
+        ) : (
+          <Typography variant="h6" component="p" className="wishlist-no-record">
+            No records found.
+          </Typography>
+        )}
       </Grid>
     </Box>
   );

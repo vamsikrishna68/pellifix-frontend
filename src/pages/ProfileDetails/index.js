@@ -14,7 +14,7 @@ import {
   ButtonBase,
   Grid,
   Box,
-  Skeleton,
+  Skeleton,CardActionArea,
 } from "@mui/material";
 import "./ProfileDetails.scss";
 import { useNavigate } from "react-router-dom";
@@ -55,6 +55,13 @@ const ProfileDetails = () => {
         ""
       ) : (
         <Card sx={{ display: "flex" }}>
+        {/* {profileDetails?.name}
+        {profileDetails?.created_by}
+        {profileDetails?.age}
+        {profileDetails?.height}
+        {profileDetails?.id}
+        {profileDetails?.id}
+        {profileDetails?.id} */}
           <Grid
             container
             spacing={2}
@@ -63,12 +70,14 @@ const ProfileDetails = () => {
             alignItems="flex-start"
           >
             <Grid item xs={12} sm={6} md={4}>
-              <CardMedia
-                component="img"
-                height="250"
-                image={profileDetails?.image}
-                alt="Profile"
-              />
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="250"
+                  image={profileDetails?.image}
+                  alt="Profile"
+                />
+              </CardActionArea>
             </Grid>
             <Grid item xs={12} sm={6} md={8}>
               <Box sx={{ display: "flex", flexDirection: "column" }}>

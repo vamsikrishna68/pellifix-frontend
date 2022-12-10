@@ -17,6 +17,7 @@ import {
   getDailyRecommendation,
   getPreferenceMatches,
   getHoroscopeMatches,
+  sendWishList,
 } from "../../api/api";
 import { ls } from "../../utils/localStorage";
 import { useNavigate } from "react-router-dom";
@@ -51,6 +52,8 @@ const Home = () => {
   const [horoscopeMatches, setHoroscopeMatches] = useState([]);
   const [preferenceMatches, setPreferenceMatches] = useState([]);
 
+  const [isLiked, setIsLiked] = useState([]);
+
   useEffect(() => {
     fetchDropdownsValues();
     fetchStates();
@@ -78,7 +81,9 @@ const Home = () => {
       }
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message || "Something went wrong",
+        error?.message
+          ? error.message
+          : error?.response?.data?.error?.message || "Something went wrong",
         {
           position: "top-right",
           autoClose: 1500,
@@ -99,7 +104,9 @@ const Home = () => {
       }
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message || "Something went wrong",
+        error?.message
+          ? error.message
+          : error?.response?.data?.error?.message || "Something went wrong",
         {
           position: "top-right",
           autoClose: 1500,
@@ -120,7 +127,9 @@ const Home = () => {
       }
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message || "Something went wrong",
+        error?.message
+          ? error.message
+          : error?.response?.data?.error?.message || "Something went wrong",
         {
           position: "top-right",
           autoClose: 1500,
@@ -153,8 +162,16 @@ const Home = () => {
     );
   };
 
+  const onClickLike = (item) => {
+    let index = isLiked.findIndex((x) => x === item.id);
+    if (index >= 0) isLiked.splice(index, 1);
+    else isLiked.push(item.id);
+    setIsLiked([...isLiked]);
+  };
+
   return (
     <Box className="home_page">
+      {console.log({ isLiked })}
       <span style={{ display: "flex", alignItems: "center" }}>
         <lord-icon
           src="https://cdn.lordicon.com/lupuorrc.json"
@@ -168,7 +185,12 @@ const Home = () => {
       {dailyRecomLoad ? (
         skeletonLoader()
       ) : (
-        <HomeCarousel content={dailyRecommendation} responsive={responsive} />
+        <HomeCarousel
+          onClickLike={onClickLike}
+          content={dailyRecommendation}
+          responsive={responsive}
+          isLiked={isLiked}
+        />
       )}
       <br />
       <Divider />
@@ -186,7 +208,12 @@ const Home = () => {
       {horoscopeLoad ? (
         skeletonLoader()
       ) : (
-        <HomeCarousel content={horoscopeMatches} responsive={responsive} />
+        <HomeCarousel
+          onClickLike={onClickLike}
+          content={horoscopeMatches}
+          responsive={responsive}
+          isLiked={isLiked}
+        />
       )}
       <br />
       <Divider />
@@ -204,8 +231,15 @@ const Home = () => {
       {preferenceLoad ? (
         skeletonLoader()
       ) : (
-        <HomeCarousel content={preferenceMatches} responsive={responsive} />
+        <HomeCarousel
+          onClickLike={onClickLike}
+          content={preferenceMatches}
+          responsive={responsive}
+          isLiked={isLiked}
+        />
       )}
+
+      <ToastContainer />
     </Box>
   );
 };
