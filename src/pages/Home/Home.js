@@ -1,19 +1,23 @@
 import { Box, Divider } from "@mui/material";
 import Carousel from "react-multi-carousel";
+import HomeCarousel from "./HomeCarousel";
 import "react-multi-carousel/lib/styles.css";
 import "./style.scss";
 import * as React from "react";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import { loadAnimation } from "lottie-web";
 import { defineLordIconElement } from "lord-icon-element";
 import { useEffect, useState, useCallback } from "react";
-import { getDropwdownValues,getStates } from "../../api/api";
+import { ToastContainer, toast, Zoom } from "react-toastify";
+import Skeleton from "@mui/material/Skeleton";
+import {
+  getDropwdownValues,
+  getStates,
+  getDailyRecommendation,
+  getPreferenceMatches,
+  getHoroscopeMatches,
+} from "../../api/api";
 import { ls } from "../../utils/localStorage";
 import { useNavigate } from "react-router-dom";
 
@@ -39,13 +43,20 @@ const responsive = {
 };
 
 const Home = () => {
+  const [dailyRecomLoad, setDailyRecomLoad] = useState(true);
+  const [horoscopeLoad, setHoroscopeLoad] = useState(true);
+  const [preferenceLoad, setPreferenceLoad] = useState(true);
+
+  const [dailyRecommendation, setDailyRecommendation] = useState([]);
+  const [horoscopeMatches, setHoroscopeMatches] = useState([]);
+  const [preferenceMatches, setPreferenceMatches] = useState([]);
+
   useEffect(() => {
     fetchDropdownsValues();
-    fetchStates()
-    // const interval = setInterval(() => fetchDropdownsValues(), 7200000);
-    // return () => {
-    //   clearInterval(interval);
-    // };
+    fetchStates();
+    fetchDailyRecommendation();
+    fetchHoroscopeMatches();
+    fetchPreferenceMatches();
   }, []);
 
   const fetchDropdownsValues = async () => {
@@ -58,109 +69,90 @@ const Home = () => {
     ls.setItem("states_for_reference", JSON.stringify(response.data));
   };
 
+  const fetchDailyRecommendation = async () => {
+    try {
+      const response = await getDailyRecommendation();
+      if (response && response.data) {
+        setDailyRecommendation(response.data);
+        setDailyRecomLoad(false);
+      }
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.error?.message || "Something went wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
+      setDailyRecomLoad(false);
+    }
+  };
 
-  const profiles = [
-    {
-      id: 1,
-      name: "Stefie",
-      img: "p1.jpg",
-    },
-    {
-      id: 1,
-      name: "Laxu",
-      img: "p2.jpg",
-    },
-    {
-      id: 1,
-      name: "Ramx",
-      img: "p3.jpg",
-    },
-    {
-      id: 1,
-      name: "Loxy",
-      img: "p4.jpg",
-    },
-    {
-      id: 1,
-      name: "Stefie",
-      img: "p1.jpg",
-    },
-    {
-      id: 1,
-      name: "Laxu",
-      img: "p2.jpg",
-    },
-    {
-      id: 1,
-      name: "Ramx",
-      img: "p3.jpg",
-    },
-    {
-      id: 1,
-      name: "Loxy",
-      img: "p4.jpg",
-    },
-    {
-      id: 1,
-      name: "Stefie",
-      img: "p1.jpg",
-    },
-    {
-      id: 1,
-      name: "Laxu",
-      img: "p2.jpg",
-    },
-    {
-      id: 1,
-      name: "Ramx",
-      img: "p3.jpg",
-    },
-    {
-      id: 1,
-      name: "Loxy",
-      img: "p4.jpg",
-    },
-  ];
-  const corousel = (
-    <Carousel responsive={responsive} autoPlay={false} infinite={true}>
-      {profiles.map((profile) => (
-        <div style={{ padding: "10px 15px 10px 0px" }}>
-          <Card className="profile-card" elevation={3} sx={{ maxWidth: 345 }}>
-            <CardHeader
-              action={
-                <IconButton aria-label="settings">
-                  <FavoriteIcon />
-                </IconButton>
-              }
-              title={profile.name}
-              subheader="September 14, 2016"
-            />
-            <CardMedia
-              component="img"
-              height="300"
-              image={require(`../../assets/img/profiles/${profile.img}`)}
-              alt="Paella dish"
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                This impressive paella is a perfect party dish and a fun meal to
-                cook together with your guests. Add 1 cup of frozen peas along
-                with the mussels, if you like.
-              </Typography>
-            </CardContent>
-            {/* <CardActions disableSpacing>
-                                <IconButton aria-label="add to favorites">
-                                    <FavoriteIcon />
-                                </IconButton>
-                                <IconButton aria-label="share">
-                                    <ShareIcon />
-                                </IconButton>
-                            </CardActions> */}
-          </Card>
-        </div>
-      ))}
-    </Carousel>
-  );
+  const fetchHoroscopeMatches = async () => {
+    try {
+      const response = await getHoroscopeMatches();
+      if (response && response.data) {
+        setHoroscopeMatches(response.data);
+        setHoroscopeLoad(false);
+      }
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.error?.message || "Something went wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
+      setHoroscopeLoad(false);
+    }
+  };
+
+  const fetchPreferenceMatches = async () => {
+    try {
+      const response = await getPreferenceMatches();
+      if (response && response.data) {
+        setPreferenceMatches(response.data);
+        setPreferenceLoad(false);
+      }
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.error?.message || "Something went wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
+      setPreferenceLoad(false);
+    }
+  };
+
+  const skeletonLoader = () => {
+    return (
+      <Carousel responsive={responsive} autoPlay={false} infinite={false}>
+        {[1, 2, 3, 4, 5].map((n) => (
+          <div style={{ padding: "10px 15px 10px 0px" }}>
+            <Card
+              key={n}
+              className="profile-card"
+              elevation={1}
+              sx={{ maxWidth: 345 }}
+            >
+              <Skeleton variant="rectangular" height={158} />
+              <Skeleton />
+              <Skeleton width="60%" />
+            </Card>
+          </div>
+        ))}
+      </Carousel>
+    );
+  };
+
   return (
     <Box className="home_page">
       <span style={{ display: "flex", alignItems: "center" }}>
@@ -172,7 +164,12 @@ const Home = () => {
         ></lord-icon>
         <Typography variant="h5">Daily Recommendations</Typography>
       </span>
-      {corousel}
+      {console.log({ dailyRecomLoad, dailyRecommendation })}
+      {dailyRecomLoad ? (
+        skeletonLoader()
+      ) : (
+        <HomeCarousel content={dailyRecommendation} responsive={responsive} />
+      )}
       <br />
       <Divider />
       <br />
@@ -185,7 +182,12 @@ const Home = () => {
         ></lord-icon>
         <Typography variant="h5">Horoscopic Matches</Typography>
       </span>
-      {corousel}
+      {console.log({ horoscopeLoad, horoscopeMatches })}
+      {horoscopeLoad ? (
+        skeletonLoader()
+      ) : (
+        <HomeCarousel content={horoscopeMatches} responsive={responsive} />
+      )}
       <br />
       <Divider />
       <br />
@@ -198,7 +200,12 @@ const Home = () => {
         ></lord-icon>
         <Typography variant="h5">Preference Matches</Typography>
       </span>
-      {corousel}
+      {console.log({ preferenceLoad, preferenceMatches })}
+      {preferenceLoad ? (
+        skeletonLoader()
+      ) : (
+        <HomeCarousel content={preferenceMatches} responsive={responsive} />
+      )}
     </Box>
   );
 };

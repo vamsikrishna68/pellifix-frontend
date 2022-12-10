@@ -6,6 +6,7 @@ import PageNotFound from "../pages/PageNotFound/PageNotFound";
 import Layout from "../pages/Layout/Layout";
 import Home from "../pages/Home/Home";
 import WishList from "../pages/WishList";
+import ProfileDetails from "../pages/ProfileDetails";
 import Profile from "../pages/Profile/Profile";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
@@ -21,7 +22,7 @@ import { Navigate, Outlet } from "react-router-dom";
 const routes = (isLoggedIn) => [
   {
     path: "/",
-    element: !isLoggedIn ? <Welcome /> : <Navigate to="/auth/home" />, 
+    element: !isLoggedIn ? <Welcome /> : <Navigate to="/auth/home" />,
   },
   {
     path: "login",
@@ -47,20 +48,22 @@ const routes = (isLoggedIn) => [
     path: "auth",
     element: isLoggedIn ? <Layout /> : <Navigate to="/" />,
     children: [
-      { path:"home", element:<Home /> },
-      { path:"wishList", element:<WishList /> },
-      { path:"profile", element:<Profile /> },
-      { path:"edit-profile", element:<EditProfile /> },
-      { path:"view-profile", element:<ViewProfile /> },
-      { path:"edit-preference", element:<EditPreferences /> },
-      { path:"sub-ordinates", element:<SubOrdinates /> },
-      { path:"associates", element:<Associates /> },
-      { path:"admin-dashboard", element:<AdminDashboard /> },
+      { path: "home", element: <Home /> },
+      { path: `home/:id`, element: <ProfileDetails /> },
+      { path: "wishList", element: <WishList /> },
+      { path: `wishList/:id`, element: <ProfileDetails /> },
+      { path: "profile", element: <Profile /> },
+      { path: "edit-profile", element: <EditProfile /> },
+      { path: "view-profile", element: <ViewProfile /> },
+      { path: "edit-preference", element: <EditPreferences /> },
+      { path: "sub-ordinates", element: <SubOrdinates /> },
+      { path: "associates", element: <Associates /> },
+      { path: "admin-dashboard", element: <AdminDashboard /> },
     ],
   },
   {
     path: "*",
-    element: <PageNotFound /> ,
+    element: <PageNotFound />,
   },
 ];
 
