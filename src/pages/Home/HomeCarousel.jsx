@@ -43,10 +43,7 @@ const HomeCarousel = (props) => {
                     >
                       <FavoriteIcon
                         style={{
-                          color:
-                            props.isLiked.findIndex((x) => x === d.id) >= 0
-                              ? "#D53833"
-                              : "rgba(0, 0, 0, 0.54)",
+                          color: d.is_liked ? "#D53833" : "rgba(0, 0, 0, 0.54)",
                         }}
                       />
                     </IconButton>

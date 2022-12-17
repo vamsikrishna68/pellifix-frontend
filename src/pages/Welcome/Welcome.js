@@ -1,5 +1,7 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "../../ui-components/Header";
+import Footer from "../../ui-components/Footer";
 import AOS from "aos";
 import "./style.scss";
 import "aos/dist/aos.css";
@@ -15,90 +17,9 @@ const Welcome = () => {
     });
   });
 
-  useLayoutEffect(() => {
-    function updatePosition() {
-      let selectHeader = select("#header");
-
-      if (window.scrollY > 100) {
-        selectHeader.classList.add("header-scrolled");
-      } else {
-        selectHeader.classList.remove("header-scrolled");
-      }
-      let backtotop = select(".back-to-top");
-      if (backtotop) {
-        if (window.scrollY > 100) {
-          backtotop.classList.add("active");
-        } else {
-          backtotop.classList.remove("active");
-        }
-      }
-    }
-    window.addEventListener("scroll", updatePosition);
-    updatePosition();
-    return () => window.removeEventListener("scroll", updatePosition);
-  }, []);
-
-  const select = (el, all = false) => {
-    el = el.trim();
-    if (all) {
-      return [...document.querySelectorAll(el)];
-    } else {
-      return document.querySelector(el);
-    }
-  };
   return (
     <div className="welcome">
-      <header id="header" className="fixed-top  header-transparent ">
-        <div className="container d-flex align-items-center justify-content-between">
-          <div className="logo">
-            <h1>
-              <a href="index.html">Pellifix</a>
-            </h1>
-          </div>
-
-          <nav id="navbar" className="navbar">
-            <ul>
-              <li>
-                <a className="nav-link scrollto active" href="#hero">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a className="nav-link scrollto" href="#features">
-                  App Features
-                </a>
-              </li>
-              {/* <li><a className="nav-link scrollto" href="#gallery">Gallery</a></li> */}
-              <li>
-                <a className="nav-link scrollto" href="#faq">
-                  F.A.Q
-                </a>
-              </li>
-              <li>
-                <a className="nav-link scrollto" href="#contact">
-                  Contact
-                </a>
-              </li>
-              <li>
-                <span onClick={() => navigate("/login")} className="getstarted">
-                  {" "}
-                  Login
-                </span>
-              </li>
-              <li>
-                <span
-                  onClick={() => navigate("/register")}
-                  className="getstarted"
-                >
-                  {" "}
-                  Register
-                </span>
-              </li>
-            </ul>
-            <i className="bi bi-list mobile-nav-toggle"></i>
-          </nav>
-        </div>
-      </header>
+      <Header />
       <section id="hero" className="d-flex align-items-center">
         <div className="container">
           <div className="row">
@@ -435,13 +356,13 @@ const Welcome = () => {
             <div className="accordion-list">
               <ul>
                 <li data-aos="fade-up">
-                  <i className="bx bx-help-circle icon-help"></i>{" "}
+                  <i className="bx bx-help-circle icon-help"></i>
                   <a
                     data-bs-toggle="collapse"
                     className="collapse"
                     data-bs-target="#accordion-list-1"
                   >
-                    Non consectetur a erat nam at lectus urna duis?{" "}
+                    Non consectetur a erat nam at lectus urna duis?
                     <i className="bx bx-chevron-down icon-show"></i>
                     <i className="bx bx-chevron-up icon-close"></i>
                   </a>
@@ -460,13 +381,13 @@ const Welcome = () => {
                 </li>
 
                 <li data-aos="fade-up" data-aos-delay="100">
-                  <i className="bx bx-help-circle icon-help"></i>{" "}
+                  <i className="bx bx-help-circle icon-help"></i>
                   <a
                     data-bs-toggle="collapse"
                     data-bs-target="#accordion-list-2"
                     className="collapsed"
                   >
-                    Feugiat scelerisque varius morbi enim nunc?{" "}
+                    Feugiat scelerisque varius morbi enim nunc?
                     <i className="bx bx-chevron-down icon-show"></i>
                     <i className="bx bx-chevron-up icon-close"></i>
                   </a>
@@ -487,13 +408,13 @@ const Welcome = () => {
                 </li>
 
                 <li data-aos="fade-up" data-aos-delay="200">
-                  <i className="bx bx-help-circle icon-help"></i>{" "}
+                  <i className="bx bx-help-circle icon-help"></i>
                   <a
                     data-bs-toggle="collapse"
                     data-bs-target="#accordion-list-3"
                     className="collapsed"
                   >
-                    Dolor sit amet consectetur adipiscing elit?{" "}
+                    Dolor sit amet consectetur adipiscing elit?
                     <i className="bx bx-chevron-down icon-show"></i>
                     <i className="bx bx-chevron-up icon-close"></i>
                   </a>
@@ -514,7 +435,7 @@ const Welcome = () => {
                 </li>
 
                 <li data-aos="fade-up" data-aos-delay="300">
-                  <i className="bx bx-help-circle icon-help"></i>{" "}
+                  <i className="bx bx-help-circle icon-help"></i>
                   <a
                     data-bs-toggle="collapse"
                     data-bs-target="#accordion-list-4"
@@ -540,14 +461,14 @@ const Welcome = () => {
                 </li>
 
                 <li data-aos="fade-up" data-aos-delay="400">
-                  <i className="bx bx-help-circle icon-help"></i>{" "}
+                  <i className="bx bx-help-circle icon-help"></i>
                   <a
                     data-bs-toggle="collapse"
                     data-bs-target="#accordion-list-5"
                     className="collapsed"
                   >
                     Tortor vitae purus faucibus ornare. Varius vel pharetra vel
-                    turpis nunc eget lorem dolor?{" "}
+                    turpis nunc eget lorem dolor?
                     <i className="bx bx-chevron-down icon-show"></i>
                     <i className="bx bx-chevron-up icon-close"></i>
                   </a>
@@ -687,124 +608,7 @@ const Welcome = () => {
           </div>
         </section>
       </main>
-
-      <footer id="footer">
-        <div className="footer-newsletter">
-          <div className="container">
-            <div className="row justify-content-center">
-              <div className="col-lg-6">
-                <h4>Join Our Newsletter</h4>
-                <p>
-                  Tamen quem nulla quae legam multos aute sint culpa legam
-                  noster magna
-                </p>
-                <form action="" method="post">
-                  <input type="email" name="email" />
-                  <input type="submit" value="Subscribe" />
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="footer-top">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-3 col-md-6 footer-contact">
-                <h3>Pellifix</h3>
-                <p>
-                  C.C.S Colony <br />
-                  Dargamitta
-                  <br />
-                  Nellore <br />
-                  <br />
-                  <strong>Phone:</strong> +91 **********
-                  <br />
-                  <strong>Email:</strong> vamsi68krishna@gmail.com
-                  <br />
-                </p>
-              </div>
-
-              <div className="col-lg-3 col-md-6 footer-links">
-                <h4>Useful Links</h4>
-                <ul>
-                  <li>
-                    <i className="bx bx-chevron-right"></i> <a href="#">Home</a>
-                  </li>
-                  <li>
-                    <i className="bx bx-chevron-right"></i>{" "}
-                    <a href="#">About us</a>
-                  </li>
-                  <li>
-                    <i className="bx bx-chevron-right"></i>{" "}
-                    <a href="#">Services</a>
-                  </li>
-                  <li>
-                    <i className="bx bx-chevron-right"></i>{" "}
-                    <a href="#">Terms of service</a>
-                  </li>
-                  <li>
-                    <i className="bx bx-chevron-right"></i>{" "}
-                    <a href="#">Privacy policy</a>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="col-lg-3 col-md-6 footer-links">
-                <h4>Our Services</h4>
-                <ul>
-                  <li>
-                    <i className="bx bx-chevron-right"></i>{" "}
-                    <a href="#">Matches</a>
-                  </li>
-                  <li>
-                    <i className="bx bx-chevron-right"></i> <a href="#">Chat</a>
-                  </li>
-                  <li>
-                    <i className="bx bx-chevron-right"></i>{" "}
-                    <a href="#">Horescope</a>
-                  </li>
-                </ul>
-              </div>
-
-              <div className="col-lg-3 col-md-6 footer-links">
-                <h4>Our Social Networks</h4>
-                <p>
-                  Cras fermentum odio eu feugiat lide par naso tierra videa
-                  magna derita valies
-                </p>
-                <div className="social-links mt-3">
-                  <a href="https://twitter.com/home" className="twitter">
-                    <i className="bx bxl-twitter"></i>
-                  </a>
-                  <a
-                    href="https://www.facebook.com/profile.php?id=100082580644187"
-                    className="facebook"
-                  >
-                    <i className="bx bxl-facebook"></i>
-                  </a>
-                  <a
-                    href="https://instagram.com/pellifix?igshid=YmMyMTA2M2Y="
-                    className="instagram"
-                  >
-                    <i className="bx bxl-instagram"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="container py-4">
-          <div className="copyright">
-            &copy; Copyright{" "}
-            <strong>
-              <span>Pellifix</span>
-            </strong>
-            . All Rights Reserved
-          </div>
-        </div>
-      </footer>
+      <Footer />
       <a
         href="#"
         className="back-to-top d-flex align-items-center justify-content-center"

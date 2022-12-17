@@ -19,6 +19,7 @@ import {
   getHoroscopeMatches,
   sendWishList,
 } from "../../api/api";
+import axios from "axios";
 import { ls } from "../../utils/localStorage";
 import { useNavigate } from "react-router-dom";
 
@@ -53,6 +54,7 @@ const Home = () => {
   const [preferenceMatches, setPreferenceMatches] = useState([]);
 
   const [isLiked, setIsLiked] = useState([]);
+  const [short_id, setShortId] = useState("");
 
   useEffect(() => {
     fetchDropdownsValues();
@@ -78,6 +80,9 @@ const Home = () => {
       if (response && response.data) {
         setDailyRecommendation(response.data);
         setDailyRecomLoad(false);
+        setIsLiked(
+          response?.data?.data?.map(({ id, is_liked }) => id, is_liked)
+        );
       }
     } catch (error) {
       toast.error(
@@ -101,6 +106,9 @@ const Home = () => {
       if (response && response.data) {
         setHoroscopeMatches(response.data);
         setHoroscopeLoad(false);
+        setIsLiked(
+          response?.data?.data?.map(({ id, is_liked }) => id, is_liked)
+        );
       }
     } catch (error) {
       toast.error(
@@ -124,6 +132,9 @@ const Home = () => {
       if (response && response.data) {
         setPreferenceMatches(response.data);
         setPreferenceLoad(false);
+        setIsLiked(
+          response?.data?.data?.map(({ id, is_liked }) => id, is_liked)
+        );
       }
     } catch (error) {
       toast.error(
@@ -163,15 +174,52 @@ const Home = () => {
   };
 
   const onClickLike = (item) => {
-    let index = isLiked.findIndex((x) => x === item.id);
-    if (index >= 0) isLiked.splice(index, 1);
-    else isLiked.push(item.id);
-    setIsLiked([...isLiked]);
+    setIsLiked((v) => !v);
+    setShortId(item.id);
+  };
+
+  useEffect(() => {
+    if (short_id > 0) {
+      let data = {
+        is_liked: isLiked,
+        short_id: Number(short_id),
+      };
+      handleUpdateWishlist(data);
+    }
+  }, [short_id > 0]);
+
+  const handleUpdateWishlist = (data) => {
+    try {
+      const response = sendWishList(data);
+      if (response) {
+        toast.success(
+          response.message || "Profile is shortlisted successfully",
+          {
+            position: "top-right",
+            autoClose: 1500,
+            theme: "colored",
+            transition: Zoom,
+          }
+        );
+        setIsLiked("");
+        fetchDailyRecommendation();
+        fetchHoroscopeMatches();
+        fetchPreferenceMatches();
+      }
+    } catch (err) {
+      toast.error(err.response.data.error.message, {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "colored",
+        transition: Zoom,
+      });
+      setIsLiked("");
+    }
   };
 
   return (
     <Box className="home_page">
-      {console.log({ isLiked })}
+      {console.log({ short_id })}
       <span style={{ display: "flex", alignItems: "center" }}>
         <lord-icon
           src="https://cdn.lordicon.com/lupuorrc.json"
@@ -189,7 +237,6 @@ const Home = () => {
           onClickLike={onClickLike}
           content={dailyRecommendation}
           responsive={responsive}
-          isLiked={isLiked}
         />
       )}
       <br />
@@ -212,7 +259,6 @@ const Home = () => {
           onClickLike={onClickLike}
           content={horoscopeMatches}
           responsive={responsive}
-          isLiked={isLiked}
         />
       )}
       <br />
@@ -235,7 +281,6 @@ const Home = () => {
           onClickLike={onClickLike}
           content={preferenceMatches}
           responsive={responsive}
-          isLiked={isLiked}
         />
       )}
 

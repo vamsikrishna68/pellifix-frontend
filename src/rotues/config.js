@@ -17,6 +17,7 @@ import AdminLogin from "../pages/AdminLogin/AdminLogin";
 import SubOrdinates from "../pages/SubOrdinates/SubOrdinates";
 import Associates from "../pages/Associates/Associates";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
+import TermsAndConditions from "../pages/TermsAndConditions";
 import { Navigate, Outlet } from "react-router-dom";
 
 const routes = (isLoggedIn) => [
@@ -43,6 +44,10 @@ const routes = (isLoggedIn) => [
   {
     path: "reset-password/:id",
     element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
+  },
+  {
+    path: "terms-and-conditions",
+    element: !isLoggedIn ? <TermsAndConditions /> : <Navigate to="/auth/home" />,
   },
   {
     path: "auth",
