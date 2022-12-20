@@ -17,7 +17,9 @@ import {
   getDailyRecommendation,
   getPreferenceMatches,
   getHoroscopeMatches,
+  sendWishList,
 } from "../../api/api";
+import axios from "axios";
 import { ls } from "../../utils/localStorage";
 import { useNavigate } from "react-router-dom";
 
@@ -51,6 +53,9 @@ const Home = () => {
   const [horoscopeMatches, setHoroscopeMatches] = useState([]);
   const [preferenceMatches, setPreferenceMatches] = useState([]);
 
+  const [isLiked, setIsLiked] = useState([]);
+  const [short_id, setShortId] = useState("");
+
   useEffect(() => {
     fetchDropdownsValues();
     fetchStates();
@@ -75,10 +80,15 @@ const Home = () => {
       if (response && response.data) {
         setDailyRecommendation(response.data);
         setDailyRecomLoad(false);
+        setIsLiked(
+          response?.data?.data?.map(({ id, is_liked }) => id, is_liked)
+        );
       }
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message || "Something went wrong",
+        error?.message
+          ? error.message
+          : error?.response?.data?.error?.message || "Something went wrong",
         {
           position: "top-right",
           autoClose: 1500,
@@ -96,10 +106,15 @@ const Home = () => {
       if (response && response.data) {
         setHoroscopeMatches(response.data);
         setHoroscopeLoad(false);
+        setIsLiked(
+          response?.data?.data?.map(({ id, is_liked }) => id, is_liked)
+        );
       }
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message || "Something went wrong",
+        error?.message
+          ? error.message
+          : error?.response?.data?.error?.message || "Something went wrong",
         {
           position: "top-right",
           autoClose: 1500,
@@ -117,10 +132,15 @@ const Home = () => {
       if (response && response.data) {
         setPreferenceMatches(response.data);
         setPreferenceLoad(false);
+        setIsLiked(
+          response?.data?.data?.map(({ id, is_liked }) => id, is_liked)
+        );
       }
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message || "Something went wrong",
+        error?.message
+          ? error.message
+          : error?.response?.data?.error?.message || "Something went wrong",
         {
           position: "top-right",
           autoClose: 1500,
@@ -153,8 +173,53 @@ const Home = () => {
     );
   };
 
+  const onClickLike = (item) => {
+    setIsLiked((v) => !v);
+    setShortId(item.id);
+  };
+
+  useEffect(() => {
+    if (short_id > 0) {
+      let data = {
+        is_liked: isLiked,
+        short_id: Number(short_id),
+      };
+      handleUpdateWishlist(data);
+    }
+  }, [short_id > 0]);
+
+  const handleUpdateWishlist = (data) => {
+    try {
+      const response = sendWishList(data);
+      if (response) {
+        toast.success(
+          response.message || "Profile is shortlisted successfully",
+          {
+            position: "top-right",
+            autoClose: 1500,
+            theme: "colored",
+            transition: Zoom,
+          }
+        );
+        setIsLiked("");
+        fetchDailyRecommendation();
+        fetchHoroscopeMatches();
+        fetchPreferenceMatches();
+      }
+    } catch (err) {
+      toast.error(err.response.data.error.message, {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "colored",
+        transition: Zoom,
+      });
+      setIsLiked("");
+    }
+  };
+
   return (
     <Box className="home_page">
+      {console.log({ short_id })}
       <span style={{ display: "flex", alignItems: "center" }}>
         <lord-icon
           src="https://cdn.lordicon.com/lupuorrc.json"
@@ -168,7 +233,11 @@ const Home = () => {
       {dailyRecomLoad ? (
         skeletonLoader()
       ) : (
-        <HomeCarousel content={dailyRecommendation} responsive={responsive} />
+        <HomeCarousel
+          onClickLike={onClickLike}
+          content={dailyRecommendation}
+          responsive={responsive}
+        />
       )}
       <br />
       <Divider />
@@ -186,7 +255,11 @@ const Home = () => {
       {horoscopeLoad ? (
         skeletonLoader()
       ) : (
-        <HomeCarousel content={horoscopeMatches} responsive={responsive} />
+        <HomeCarousel
+          onClickLike={onClickLike}
+          content={horoscopeMatches}
+          responsive={responsive}
+        />
       )}
       <br />
       <Divider />
@@ -204,8 +277,14 @@ const Home = () => {
       {preferenceLoad ? (
         skeletonLoader()
       ) : (
-        <HomeCarousel content={preferenceMatches} responsive={responsive} />
+        <HomeCarousel
+          onClickLike={onClickLike}
+          content={preferenceMatches}
+          responsive={responsive}
+        />
       )}
+
+      <ToastContainer />
     </Box>
   );
 };

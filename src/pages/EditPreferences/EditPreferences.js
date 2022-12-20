@@ -25,6 +25,7 @@ const EditPreferences = () => {
   const [loading, setLoading] = useState(true);
   const [dropdownOptions, setDropdownOptions] = useState(null);
   const [states, setStates] = useState(null);
+  const [filterDistrict, setFilterDistrict] = useState([]);
 
   const [formData, setFormData] = useState({
     age: [],
@@ -54,13 +55,13 @@ const EditPreferences = () => {
   const fetchDropdownsValues = async () => {
     const data = JSON.parse(ls.getItem("dropdown_values_for_reference"));
     setDropdownOptions(data);
-    fetchPreferenceData()
+    fetchPreferenceData();
   };
 
   const fetchStates = async () => {
     const data = JSON.parse(ls.getItem("states_for_reference"));
     setStates(data);
-    fetchPreferenceData()
+    fetchPreferenceData(data);
   };
 
   useEffect(() => {
@@ -69,7 +70,14 @@ const EditPreferences = () => {
     fetchPreferenceData();
   }, []);
 
-  const fetchPreferenceData = async () => {
+  const filterDistrictFromState = (districts, values) => {
+    const filteredList = values.state
+      ? districts.filter((obj) => values.state === obj.state_id)
+      : districts;
+    setFilterDistrict([...filteredList]);
+  };
+
+  const fetchPreferenceData = async (state) => {
     try {
       setLoading(true);
       const response = await getPreferenceData();
@@ -80,6 +88,7 @@ const EditPreferences = () => {
           age: [response?.data?.age?.from, response?.data?.age?.to],
           height: [response?.data?.height?.from, response?.data?.height?.to],
         });
+        filterDistrictFromState(state.DISTRICTS, formData);
         setLoading(false);
       }
     } catch (error) {
@@ -125,6 +134,7 @@ const EditPreferences = () => {
       );
     }
   };
+
   return (
     <div
       className="container-fluid edit-preferences"
@@ -819,9 +829,7 @@ const EditPreferences = () => {
                               onChange={handleChange}
                               onBlur={handleBlur}
                             >
-                              {states?.DISTRICTS.filter(
-                                (obj) => values.state === obj.state_id
-                              ).map((option) => (
+                              {filterDistrict.map((option) => (
                                 <MenuItem key={option.id} value={option.id}>
                                   {option.name}
                                 </MenuItem>

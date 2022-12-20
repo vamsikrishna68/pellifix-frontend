@@ -145,3 +145,11 @@ export const getWishList = () => {
     method: "GET",
   });
 };
+
+export const sendWishList = (payload) => {
+  return apiService({
+    url: "/users/shortlist",
+    method: "PATCH",
+    body: payload,
+  });
+};
