@@ -1149,7 +1149,7 @@ const EditProfile = () => {
                               onBlur={handleBlur}
                             >
                               {states?.DISTRICTS.filter(
-                                (obj) => values.state === obj.state_id
+                                (obj) => values.state == obj.state_id
                               ).map((option) => (
                                 <MenuItem key={option.id} value={option.id}>
                                   {option.name}
