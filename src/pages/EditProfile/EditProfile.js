@@ -113,7 +113,7 @@ const EditProfile = () => {
         setImages((prevState) => [...prevState, e.target.result]);
       };
       reader.readAsDataURL(file);
-      uploadImage(formData)
+      uploadImage(formData);
       return file;
     });
   }, []);
@@ -139,7 +139,7 @@ const EditProfile = () => {
       }
     } catch (error) {
       toast.error(
-        error?.response?.data?.error?.message || "Something wend wrong",
+        error?.response?.data?.error?.message || "Something went wrong",
         {
           position: "top-right",
           autoClose: 1500,
@@ -200,6 +200,7 @@ const EditProfile = () => {
   const updateProfile = async (data) => {
     try {
       setLoading(true);
+      delete data.images;
       const response = await updateProfileData(data);
       console.log(response, "response");
       if (response.status === 204) {
