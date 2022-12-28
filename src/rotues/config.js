@@ -17,7 +17,8 @@ import AdminLogin from "../pages/AdminLogin/AdminLogin";
 import SubOrdinates from "../pages/SubOrdinates/SubOrdinates";
 import Associates from "../pages/Associates/Associates";
 import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
-import TermsAndConditions from "../pages/TermsAndConditions";
+import TermsAndConditions from "../pages/Agreement/TermsAndConditions";
+import PrivacyPolicy from "../pages/Agreement/PrivacyPolicy";
 import { Navigate, Outlet } from "react-router-dom";
 
 const routes = (isLoggedIn) => [
@@ -48,6 +49,9 @@ const routes = (isLoggedIn) => [
   {
     path: "terms-and-conditions",
     element: !isLoggedIn ? <TermsAndConditions /> : <Navigate to="/auth/home" />,
+  },  {
+    path: "privacy-policy",
+    element: !isLoggedIn ? <PrivacyPolicy /> : <Navigate to="/auth/home" />,
   },
   {
     path: "auth",

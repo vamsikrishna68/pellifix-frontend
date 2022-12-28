@@ -1,26 +1,13 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Header from "../../ui-components/Header";
 import Footer from "../../ui-components/Footer";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  IconButton,
-  Typography,
-  ButtonBase,
-  Grid,
-  Box,
-  Skeleton,
-  CardActionArea,
-} from "@mui/material";
+import { Typography, Box } from "@mui/material";
 import AOS from "aos";
 import "../Welcome/style.scss";
+import "./Agreement.scss";
 import "aos/dist/aos.css";
 
-const TermsAndConditions = () => {
-  const navigate = useNavigate();
+const PrivayPolicy = () => {
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -34,7 +21,7 @@ const TermsAndConditions = () => {
     <div className="welcome">
       <Header />
       <div className="container">
-        <Box className="terms">
+        <Box className="agreement">
           <Typography variant="h5" component="h1" data-aos="fade-up">
             Privacy Policy of Pellifix Matrimony
           </Typography>
@@ -62,7 +49,7 @@ const TermsAndConditions = () => {
             birth, educational qualifications, a user-specified password,
             mailing address, zip/pin code and telephone/mobile number or fax
             number.
-            {"\n"}
+            <br />
             We use a secure server for credit card transactions to protect the
             credit card information of our users and Cookies are used to store
             the login information. Cookies are small files placed on your hard
@@ -73,7 +60,8 @@ const TermsAndConditions = () => {
             account with us to pay the fees we charge, some additional
             information, including a billing address, a credit/debit card number
             and a credit/debit card expiration date and tracking information
-            from cheques or demand drafts is collected.{"\n"}
+            from cheques or demand drafts is collected.
+            <br />
             The user information we collect depends on the context of your
             interactions with us and the website or Apps, the choices you make
             and the products and features you use. The User Information is used
@@ -82,7 +70,8 @@ const TermsAndConditions = () => {
             others we may collect personal data you choose to allow us to access
             through their APIs. When the user accesses our websites or apps,
             data relating to device ID, log files ,Geographic Location, device
-            Information/specification are also collected automatically.{"\n"}
+            Information/specification are also collected automatically.
+            <br />
             We may use also your personal information for verification, analysis
             of data, usage trends and to evaluate and improve our site/App,
             marketing research , preventing of frauds. In our efforts to
@@ -115,7 +104,8 @@ const TermsAndConditions = () => {
             such sharing. Any information you give us is held with the utmost
             care and security. We are also bound to cooperate fully should a
             situation arise where we are required by law or legal process to
-            provide information about a customer/visitor.{"\n"}
+            provide information about a customer/visitor.
+            <br />
             Where required or permitted by law, information may be provided to
             others, such as regulators and law enforcement agencies or to
             protect the rights, property or personal safety of other members or
@@ -123,23 +113,26 @@ const TermsAndConditions = () => {
             law enforcement agencies / Gateway service providers / anti-fraud
             solution provider(s) if we feel that the transaction is of
             suspicious nature.
-            {"\n"}
+            <br />
             From time to time, we may consider corporate transactions such as a
             merger, acquisition, reorganization, asset sale, or similar. In
             these instances, we may transfer or allow access to information to
             enable the assessment and undertaking of that transaction. If we buy
             or sell any business or assets, personal information may be
-            transferred to third parties involved in the transaction.{"\n"}Our
-            website/apps links to other website/apps that may collect personally
-            identifiable information about you. We are not responsible for the
-            privacy policy or the contents of those linked website/apps.
+            transferred to third parties involved in the transaction.
+            <br />
+            Our website/apps links to other website/apps that may collect
+            personally identifiable information about you. We are not
+            responsible for the privacy policy or the contents of those linked
+            website/apps.
           </Typography>
           <Typography variant="h6" component="h2" data-aos="fade-up">
             How Long Do We Keep Your Information?
           </Typography>
           <Typography variant="subtitle2" component="p" data-aos="fade-up">
             As stipulated in the Privacy Policy we will retain the information
-            we collect from users under the following circumstances:{"\n"}
+            we collect from users under the following circumstances:
+            <br />
             For as long as the users subscribe to our services to meet their
             suitable purpose(s) for which it was collected, for the sake of
             enforcing agreements, for performing audits, for resolving any form
@@ -171,7 +164,7 @@ const TermsAndConditions = () => {
           <Typography variant="h6" component="h2" data-aos="fade-up">
             How to address your Grievance :
           </Typography>
-          <Typography variant="subtitle2" component="p" data-aos="fade-up">
+          <Typography variant="subtitle2" component="span" data-aos="fade-up">
             The Grievance officer : Mr. M Vamshikrishna. Address; Pellifix.com ,
             Contact details: 9381956441, 16-13-359/1, Near Kalpana Gas Godowns,
             Harinathapuram, Vidhyanagar Layout, Nellore 5240001 ,
@@ -180,7 +173,8 @@ const TermsAndConditions = () => {
           <Typography variant="subtitle2" component="p" data-aos="fade-up">
             The Grievance officer shall be available between 10 am to 6 pm IST
             from Monday to Saturday excluding Sunday's and Public Holidays in
-            India.{"\n"}
+            India.
+            <br />
             The Grievance officer is appointed as per Section 5 (9) of the
             Information Technology ( Reasonable Security & Procedures and
             Sensitive Personal data or Information ) Rule, 2011.
@@ -192,4 +186,4 @@ const TermsAndConditions = () => {
   );
 };
 
-export default TermsAndConditions;
+export default PrivayPolicy;
