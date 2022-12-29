@@ -16,7 +16,7 @@ const HomeCarousel = (props) => {
   return (
     <Carousel responsive={props.responsive} autoPlay={false} infinite={true}>
       {props.content?.data?.length ? (
-        props.content.data.map((d, i) => (
+        props.content.data.slice(0, 10).map((d, i) => (
           <div key={i} style={{ padding: "10px 15px 10px 0px" }}>
             <Card className="profile-card" elevation={1} sx={{ maxWidth: 345 }}>
               <ButtonBase
