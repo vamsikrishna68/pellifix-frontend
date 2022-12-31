@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
 import { Formik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import Typography from "@mui/material/Typography";
 import Select from "@mui/material/Select";
 import FormHelperText from "@mui/material/FormHelperText";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import EmailIcon from "@mui/icons-material/Email";
@@ -88,6 +91,7 @@ const Register = () => {
       dob: moment(values.dob).format("yyyy-MM-DD"),
     };
     delete payload.confirmPwd;
+    delete payload.is_agreement;
     console.log(payload);
     axios
       .post("https://api.pellifix.com/v1/customer/register", { ...payload })
@@ -130,6 +134,9 @@ const Register = () => {
       .min(6)
       .required("Password is Required")
       .oneOf([Yup.ref("password"), null], "Passwords must match"),
+    is_agreement: Yup.boolean()
+      .required("The terms and conditions must be accepted.")
+      .oneOf([true], "The terms and conditions must be accepted."),
   });
 
   return (
@@ -242,6 +249,7 @@ const Register = () => {
               gender: "",
               referral_code: "",
               dob: moment().subtract(18, "years").calendar(),
+              is_agreement: false,
             }}
             validationSchema={SignupSchema}
             onSubmit={(values) => {
@@ -524,8 +532,42 @@ const Register = () => {
                   </div>
                 </div>
                 <div className="row" style={{ paddingLeft: 0 }}>
+                  <div
+                    style={{ margin: "0.75rem 0" }}
+                    className="col-sm-12"
+                  >
+                    <FormControlLabel
+                      control={<Checkbox checked={values.is_agreement} />}
+                      label={
+                        <span className="terms-cond">
+                          By proceeding, I agree to Pellifix
+                          <NavLink to={"/terms-and-conditions"}>
+                            Terms and conditions
+                          </NavLink>
+                          .
+                        </span>
+                      }
+                      name="is_agreement"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {errors.is_agreement && touched.is_agreement ? (
+                      <Typography
+                        color="primary"
+                        variant="body2"
+                        component="div"
+                      >
+                        {errors.is_agreement}
+                      </Typography>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+                <div className="row" style={{ paddingLeft: 0 }}>
                   <div className="col-sm-6">
                     <TextField
+                      style={{ marginTop: 0 }}
                       className="formField"
                       type="referral_code"
                       name="referral_code"
@@ -548,6 +590,7 @@ const Register = () => {
 
                   <div className="col-sm-6">
                     <Button
+                      style={{ marginTop: 0 }}
                       className="button"
                       type="submit"
                       variant="contained"

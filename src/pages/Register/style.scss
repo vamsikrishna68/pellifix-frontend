@@ -1,160 +1,164 @@
 .register-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0;
+
+  .formField {
+    margin-top: 25px;
+    width: 100%;
+  }
+
+  .button {
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  .forgotpwd {
+    margin-top: 10px;
+    width: 100%;
+    text-align: end;
+    color: gray;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .heading1 {
+    line-height: 4rem;
+    font-size: 40px;
+  }
+
+  .heading2 {
+    line-height: 2rem;
+    font-size: 20px;
+  }
+
+  .para {
+    color: gray;
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  .newuser {
+    margin-top: 10px;
+
+    span {
+      font-size: 15px;
+    }
+  }
+
+  form {
+    width: 100%;
+  }
+
+  .full-width {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .center {
+    text-align: center;
+  }
+
+  .info-text {
+    letter-spacing: 1px;
+  }
+
+  .info-text a {
+    color: #d53833;
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+
+  .secondary-color {
+    color: #d53833;
+  }
+
+  .heading {
+    font-weight: 500;
+  }
+
+  .primaryColor:hover {
+    cursor: pointer;
+  }
+
+  .align-center {
+    padding: 0px 6%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .col-sm-6 {
+    padding-left: 0 !important;
+  }
+
+  .register-bg-image {
     width: 100%;
     height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 0;
+    background-image: url("../../assets/marriage.gif");
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
 
-    .formField {
-        margin-top: 30px;
-        width: 100%;
+  .grecaptcha-badge {
+    display: none;
+  }
+
+  .terms-cond {
+    font-size: 15px;
+    line-height: 1.5;
+     a {
+      color: #d53833;
+      padding-left: 0.35rem;
     }
-
-    .button {
-        margin-top: 30px;
-        width: 100%;
-    }
-
-    .forgotpwd {
-        margin-top: 10px;
-        width: 100%;
-        text-align: end;
-        color: gray;
-        font-size: 14px;
-        font-weight: 500;
-    }
-
-    .heading1 {
-        line-height: 4rem;
-        font-size: 40px;
-    }
-
-    .heading2 {
-        line-height: 2rem;
-        font-size: 20px;
-    }
-
-    .para {
-        color: gray;
-        font-weight: 500;
-        font-size: 12px;
-    }
-
-    .newuser {
-        margin-top: 10px;
-
-        span {
-            font-size: 15px;
-        }
-    }
-
-
-
-    form {
-        width: 100%;
-    }
-
-    .full-width {
-        width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .center {
-        text-align: center;
-    }
-
-    .info-text {
-        letter-spacing: 1px;
-    }
-
-    .info-text a {
-        color: #D53833;
-        font-weight: 600;
-        letter-spacing: 2px;
-    }
-
-    .secondary-color {
-        color: #D53833;
-    }
-
-    .heading {
-        font-weight: 500;
-    }
-
-    .primaryColor:hover {
-        cursor: pointer;
-    }
-
-    .align-center {
-        padding: 0px 6%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-    }
-
-    .col-sm-6 {
-        padding-left: 0 !important;
-    }
-
-    .register-bg-image {
-        width: 100%;
-        height: 100vh;
-        background-image: url('../../assets/marriage.gif');
-        background-size: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-
-    .grecaptcha-badge{
-        display: none;
-    }
-
- 
+  }
 }
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-    .register-container {
-        display: block;
-        height: 100%;
-        overflow: auto;
-        margin-bottom: 10px;
-         .register-bg-image{
-             height: 200px;
-             background-size:cover ;
-         }
+  .register-container {
+    display: block;
+    height: 100%;
+    overflow: auto;
+    margin-bottom: 10px;
+    .register-bg-image {
+      height: 200px;
+      background-size: cover;
     }
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (max-width: 768px) {
-    .register-container {
-        display: block;
-        height: 100%;
-        overflow: auto;
-         .register-bg-image{
-             height: 300px;
-             background-size:cover ;
-         }
+  .register-container {
+    display: block;
+    height: 100%;
+    overflow: auto;
+    .register-bg-image {
+      height: 300px;
+      background-size: cover;
     }
+  }
 }
-
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (max-width: 992px) {
-    .register-container {
-        display: block;
-        height: 100%;
-        overflow: auto;
-         .register-bg-image{
-             height: 400px;
-             background-size:cover ;
-         }
+  .register-container {
+    display: block;
+    height: 100%;
+    overflow: auto;
+    .register-bg-image {
+      height: 400px;
+      background-size: cover;
     }
+  }
 }

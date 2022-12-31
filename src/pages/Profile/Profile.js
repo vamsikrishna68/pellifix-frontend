@@ -158,7 +158,7 @@ const Profile = () => {
                   <div className="col-sm-9">
                     <List>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -167,9 +167,9 @@ const Profile = () => {
                             Name:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -178,7 +178,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -187,9 +187,9 @@ const Profile = () => {
                             Surname:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -198,7 +198,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -207,9 +207,9 @@ const Profile = () => {
                             Gender:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -220,7 +220,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -229,9 +229,9 @@ const Profile = () => {
                             Date Of Birth:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -240,7 +240,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -249,9 +249,9 @@ const Profile = () => {
                             Physical Status:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -263,7 +263,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -272,9 +272,9 @@ const Profile = () => {
                             Body Type:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -285,7 +285,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -294,9 +294,9 @@ const Profile = () => {
                             Weight (In KG):
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -305,7 +305,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -314,9 +314,9 @@ const Profile = () => {
                             Height (In CM):
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -325,7 +325,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -334,9 +334,9 @@ const Profile = () => {
                             Mother Tounge:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -348,7 +348,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -357,9 +357,9 @@ const Profile = () => {
                             Marital Status:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -371,7 +371,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -380,9 +380,9 @@ const Profile = () => {
                             Eating Habits:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -394,7 +394,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -403,9 +403,9 @@ const Profile = () => {
                             Smoking Habits:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -417,7 +417,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -426,9 +426,9 @@ const Profile = () => {
                             Drinking Habits:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -449,7 +449,7 @@ const Profile = () => {
                   <div className="col-sm-9">
                     <List>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -458,9 +458,9 @@ const Profile = () => {
                             Religion:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -471,7 +471,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -480,9 +480,9 @@ const Profile = () => {
                             Caste:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -502,7 +502,7 @@ const Profile = () => {
                   <div className="col-sm-9">
                     <List>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -511,9 +511,9 @@ const Profile = () => {
                             Nakshtram:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -524,7 +524,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -533,9 +533,9 @@ const Profile = () => {
                             Raasi:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -546,7 +546,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -555,9 +555,9 @@ const Profile = () => {
                             Time of Birth:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -575,7 +575,7 @@ const Profile = () => {
                   <div className="col-sm-9">
                     <List>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -584,9 +584,9 @@ const Profile = () => {
                             Country:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -597,7 +597,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -606,9 +606,9 @@ const Profile = () => {
                             Citizenship:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -619,7 +619,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -628,9 +628,9 @@ const Profile = () => {
                             State:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -639,7 +639,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -648,9 +648,9 @@ const Profile = () => {
                             District:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -659,7 +659,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -668,9 +668,9 @@ const Profile = () => {
                             Town/City:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -688,7 +688,7 @@ const Profile = () => {
                   <div className="col-sm-9">
                     <List>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -697,9 +697,9 @@ const Profile = () => {
                             Higher Qualification:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -710,7 +710,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -719,9 +719,9 @@ const Profile = () => {
                             Employed In:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -730,7 +730,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -739,9 +739,9 @@ const Profile = () => {
                             Occupation:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -752,7 +752,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -761,9 +761,9 @@ const Profile = () => {
                             Annual Income:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -783,7 +783,7 @@ const Profile = () => {
                   <div className="col-sm-9">
                     <List>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -792,9 +792,9 @@ const Profile = () => {
                             Family Type:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -805,7 +805,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -814,9 +814,9 @@ const Profile = () => {
                             Family Status:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -828,7 +828,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -837,9 +837,9 @@ const Profile = () => {
                             Fathers Occupation:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -848,7 +848,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -857,9 +857,9 @@ const Profile = () => {
                             Mothers Occupation:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -868,7 +868,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -877,9 +877,9 @@ const Profile = () => {
                             Number of Brothers:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -888,7 +888,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -897,9 +897,9 @@ const Profile = () => {
                             Number of Brothers Married:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -908,7 +908,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -917,9 +917,9 @@ const Profile = () => {
                             Number of Sisters:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -928,7 +928,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -937,9 +937,9 @@ const Profile = () => {
                             Number of Sisters Married:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -958,7 +958,7 @@ const Profile = () => {
                   <div className="col-sm-9">
                     <List>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -967,9 +967,9 @@ const Profile = () => {
                             Hobbies:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >
@@ -978,7 +978,7 @@ const Profile = () => {
                         </div>
                       </ListItem>
                       <ListItem className="row">
-                        <div className="col-sm-2">
+                        <div className="col-sm-3">
                           <Typography
                             variant="h6"
                             color="text.secondary"
@@ -987,9 +987,9 @@ const Profile = () => {
                             Interests:
                           </Typography>
                         </div>
-                        <div className="col-sm-6">
+                        <div className="col-sm-5">
                           <Typography
-                            variant="h5"
+                            variant="h6"
                             color="primary"
                             component="div"
                           >

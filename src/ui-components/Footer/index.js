@@ -62,7 +62,7 @@ const Footer = () => {
                 </li>
                 <li>
                   <i className="bx bx-chevron-right"></i>
-                  <a href="#">Privacy policy</a>
+                  <a href="/privacy-policy">Privacy policy</a>
                 </li>
               </ul>
             </div>

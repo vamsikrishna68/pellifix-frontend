@@ -80,9 +80,9 @@ const Home = () => {
       if (response && response.data) {
         setDailyRecommendation(response.data);
         setDailyRecomLoad(false);
-        setIsLiked(
-          response?.data?.data?.map(({ id, is_liked }) => id, is_liked)
-        );
+        // setIsLiked(
+        //   response?.data?.data?.map(({ id, is_liked }) => id, is_liked)
+        // );
       }
     } catch (error) {
       toast.error(
@@ -106,9 +106,9 @@ const Home = () => {
       if (response && response.data) {
         setHoroscopeMatches(response.data);
         setHoroscopeLoad(false);
-        setIsLiked(
-          response?.data?.data?.map(({ id, is_liked }) => id, is_liked)
-        );
+        // setIsLiked(
+        //   response?.data?.data?.map(({ id, is_liked }) => id, is_liked)
+        // );
       }
     } catch (error) {
       toast.error(
@@ -132,9 +132,9 @@ const Home = () => {
       if (response && response.data) {
         setPreferenceMatches(response.data);
         setPreferenceLoad(false);
-        setIsLiked(
-          response?.data?.data?.map(({ id, is_liked }) => id, is_liked)
-        );
+        // setIsLiked(
+        //   response?.data?.data?.map(({ id, is_liked }) => id, is_liked)
+        // );
       }
     } catch (error) {
       toast.error(
