@@ -119,10 +119,10 @@ const Profile = () => {
         alt="green iguana"
       />
       <CardContent>
-        <Typography gutterBottom variant="h4" component="div">
+        <Typography gutterBottom variant="h6" component="div">
           {profileData?.name || "-"}
         </Typography>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary">
+        <Typography sx={{ fontSize: 13 }} color="text.secondary">
           {profileData?.about_me || "-"}
         </Typography>
       </CardContent>

@@ -1,81 +1,37 @@
 import React, { useState, useEffect } from "react";
-import PageHeader from "../../../ui-components/PageHeader";
-import PeopleOutlineTwoToneIcon from "@mui/icons-material/PeopleOutlineTwoTone";
 import {
-  Paper,
-  TableBody,
-  TableRow,
-  TableCell,
-  Toolbar,
-  InputAdornment,
-  Theme,
+  Box,
+  Typography,
+  Card,
+  CardHeader,
+  CardMedia,
+  IconButton,
+  ButtonBase,
+  Grid,
+  Skeleton,
+  Stack,
+  TextField,
 } from "@mui/material";
-import ProfileTable from "./ProfileTable";
-import Controls from "../../../ui-components/controls/Controls";
-import {
-  getDropwdownValues,
-  getStates,
-  getDailyRecommendation,
-  getPreferenceMatches,
-  getHoroscopeMatches,
-  sendWishList,
-} from "../../../api/api";
-import { Search } from "@mui/icons-material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Pagination } from "@mui/material";
+import usePagination from "./Pagination";
+import { getDailyRecommendation } from "../../../api/api";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 
-// const useStyles = makeStyles((theme) =>
-//   createStyles({
-//     pageContent: {
-//       margin: '1rem',
-//       padding: '0.8rem',
-//     },
-//     searchInput: {
-//       width: "75%",
-//     },
-//   })
-// );
-
-const headCells = [
-  { id: "fullName", label: "Employee Name" },
-  { id: "email", label: "Email Address (Personal)" },
-  { id: "mobile", label: "Mobile Number" },
-  { id: "department", label: "Department", disableSorting: true },
-];
-
-export default function Employees() {
+export default function App() {
+  const [loading, setLoading] = useState(true);
   const [records, setRecords] = useState([]);
-  const [filterFn, setFilterFn] = useState({
-    fn: (items) => {
-      return items;
-    },
-  });
-
-  const [dailyRecomLoad, setDailyRecomLoad] = useState(true);
-  const [dailyRecommendation, setDailyRecommendation] = useState([]);
-
-  const handleSearch = (e) => {
-    let target = e.target;
-    setFilterFn({
-      fn: (items) => {
-        if (target.value == "") return items;
-        else
-          return items.filter((x) =>
-            x.fullName.toLowerCase().includes(target.value)
-          );
-      },
-    });
-  };
 
   useEffect(() => {
-    fetchDailyRecommendation();
+    fetchRecords();
   }, []);
 
-  const fetchDailyRecommendation = async () => {
+  const fetchRecords = async () => {
     try {
       const response = await getDailyRecommendation();
       if (response && response.data) {
-        setDailyRecommendation(response.data.data);
-        setDailyRecomLoad(false);
+        setRecords(response.data);
+        setLoading(false);
       }
     } catch (error) {
       toast.error(
@@ -89,41 +45,136 @@ export default function Employees() {
           transition: Zoom,
         }
       );
-      setDailyRecomLoad(false);
+      setLoading(false);
     }
+  };
+
+  const handleSearch = (e) => {
+    let target = e.target;
+    setRecords((items) => {
+      if (target.value == "") return items;
+      else
+        return items.filter((x) => x.name.toLowerCase().includes(target.value));
+    });
+  };
+
+  let [page, setPage] = useState(1);
+  const PER_PAGE = 10;
+  let length = records?.data?.length ? records?.data?.length : 0;
+  const count = Math.ceil(length / PER_PAGE);
+  const _DATA = usePagination(records?.data, PER_PAGE);
+
+  const handleChange = (e, p) => {
+    setPage(p);
+    _DATA.jump(p);
+  };
+
+  const skeletonLoader = () => {
+    return [1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+      <Grid item xs={12} sm={6} md={3} key={n}>
+        <Card className="wishlist-card" elevation={1} sx={{ maxWidth: 345 }}>
+          <Skeleton variant="rectangular" height={158} />
+          <Skeleton />
+          <Skeleton width="60%" />
+        </Card>
+      </Grid>
+    ));
   };
 
   return (
     <>
-      <PageHeader
-        title="All profiles"
-        icon={<PeopleOutlineTwoToneIcon fontSize="small" />}
-      />
-      {dailyRecommendation.length ? (
-        <Paper className="pageContent">
-          <Toolbar>
-            <Controls.Input
-              label="Search Employees"
-              className="searchInput"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              }}
-              onChange={handleSearch}
-            />
-          </Toolbar>
-          {/* <ProfileTable
-            records={dailyRecommendation}
-            headCells={headCells}
-            filterFn={filterFn}
-          /> */}
-        </Paper>
-      ) : (
-        ""
-      )}
+      <Box p="5">
+        <Typography gutterBottom variant="h4" component="h2">
+          All profiles
+        </Typography>
+        <TextField
+          variant="outlined"
+          label="Search Employees"
+          name="search"
+          onChange={handleSearch}
+          // InputProps={{
+          //   startAdornment: (
+          //     <InputAdornment position="start">
+          //       <Search />
+          //     </InputAdornment>
+          //   ),
+          // }}
+        />
+        <Grid
+          container
+          spacing={2}
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+        >
+          {loading ? (
+            skeletonLoader()
+          ) : _DATA.currentData().length ? (
+            _DATA.currentData().map((d, i) => (
+              <Grid item xs={12} sm={6} md={3} key={i}>
+                <Card
+                  className="wishlist-card"
+                  elevation={1}
+                  sx={{ maxWidth: 345 }}
+                >
+                  <ButtonBase
+                    className="wishlist-btn"
+                    onClick={() => navigate(`/auth/wishlist/${d.id}`)}
+                  >
+                    <CardMedia
+                      component="img"
+                      height="150"
+                      image={d.image}
+                      alt="Paella dish"
+                    />
+                    <CardHeader
+                      action={
+                        <IconButton
+                          aria-label="settings"
+                          onMouseDown={(event) => event.stopPropagation()}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            event.preventDefault();
+                            console.log("Button clicked");
+                          }}
+                        >
+                          <FavoriteIcon />
+                        </IconButton>
+                      }
+                      title={d.name}
+                      titleTypographyProps={{ variant: "subtitle1" }}
+                    />
+                    <CardHeader
+                      subheader={
+                        d.age + " yrs" + " " + d.education + " " + d.city
+                      }
+                      subheaderTypographyProps={{ variant: "subtitle2" }}
+                    />
+                  </ButtonBase>
+                </Card>
+              </Grid>
+            ))
+          ) : (
+            <Typography
+              variant="h6"
+              component="p"
+              className="wishlist-no-record"
+            >
+              No records found.
+            </Typography>
+          )}
+        </Grid>
+      </Box>
+      <Stack mt={6} mb={6} alignItems="flex-end">
+        <Pagination
+          count={count}
+          size="large"
+          page={page}
+          color="primary"
+          onChange={handleChange}
+        />
+      </Stack>
+      <ToastContainer />
     </>
   );
 }
