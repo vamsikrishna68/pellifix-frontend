@@ -8,10 +8,12 @@ import {
   Grid,
   Skeleton,
 } from "@mui/material";
+import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProfileDetails } from "../../api/api";
 import { ls } from "../../utils/localStorage";
+import moment from "moment";
 import "./style.scss";
 
 const ViewProfile = () => {
@@ -34,7 +36,10 @@ const ViewProfile = () => {
     try {
       const response = await getProfileDetails(id);
       if (response) {
-        setProfileDetails(response.data);
+        setProfileDetails({
+          ...response.data,
+          dob: moment(response.data.dob).format("MMM DD yyyy"),
+        });
         setLoading(false);
       }
     } catch (error) {
@@ -135,7 +140,7 @@ const ViewProfile = () => {
                     {profileDetails?.name || "-"}
                   </Typography>
                   <Typography sx={{ fontSize: 14 }} color="text.secondary">
-                    {profileDetails?.about || "-"}
+                    {profileDetails?.about_me || "-"}
                   </Typography>
                 </CardContent>
               </Card>
@@ -194,9 +199,10 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.GENDER.filter(
+                            {profileDetails?.gender || "-"}
+                            {/* {dropdownOptions?.GENDER.filter(
                               (x) => x.id === parseInt(profileDetails?.gender)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -216,11 +222,12 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.PHYSICAL_STATUS.filter(
+                            {profileDetails?.physical_status || "-"}
+                            {/* {dropdownOptions?.PHYSICAL_STATUS.filter(
                               (x) =>
                                 x.id ===
                                 parseInt(profileDetails?.physical_status)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -260,11 +267,12 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.MARITAL_STATUS.filter(
+                            {profileDetails?.marital_status || "-"}
+                            {/* {dropdownOptions?.MARITAL_STATUS.filter(
                               (x) =>
                                 x.id ===
                                 parseInt(profileDetails?.marital_status)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -284,10 +292,11 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.SMOKING.filter(
+                            {profileDetails?.smoking_habit || "-"}
+                            {/* {dropdownOptions?.SMOKING.filter(
                               (x) =>
                                 x.id === parseInt(profileDetails?.smoking_habit)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -307,11 +316,12 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.DRINKING.filter(
+                            {profileDetails?.drinking_habit || "-"}
+                            {/* {dropdownOptions?.DRINKING.filter(
                               (x) =>
                                 x.id ===
                                 parseInt(profileDetails?.drinking_habit)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -375,10 +385,11 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.BODY_TYPES.filter(
+                            {profileDetails?.body_type || "-"}
+                            {/* {dropdownOptions?.BODY_TYPES.filter(
                               (x) =>
                                 x.id === parseInt(profileDetails?.body_type)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -418,10 +429,11 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.MOTHER_TOUNGE_LIST.filter(
+                            {profileDetails?.mother_tongue || "-"}
+                            {/* {dropdownOptions?.MOTHER_TOUNGE_LIST.filter(
                               (x) =>
                                 x.id === parseInt(profileDetails?.mother_tongue)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -441,10 +453,11 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.FOOD.filter(
+                            {profileDetails?.eating_habit || "-"}
+                            {/* {dropdownOptions?.FOOD.filter(
                               (x) =>
                                 x.id === parseInt(profileDetails?.eating_habit)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -478,9 +491,10 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.RELIGION.filter(
+                            {profileDetails?.religion || "-"}
+                            {/* {dropdownOptions?.RELIGION.filter(
                               (x) => x.id === parseInt(profileDetails?.religion)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -500,9 +514,10 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.CASTE.filter(
+                            {profileDetails?.caste || "-"}
+                            {/* {dropdownOptions?.CASTE.filter(
                               (x) => x.id === parseInt(profileDetails?.caste)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -533,9 +548,10 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.STAR_LIST.filter(
+                            {profileDetails?.star || "-"}
+                            {/* {dropdownOptions?.STAR_LIST.filter(
                               (x) => x.id === parseInt(profileDetails?.star)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -555,9 +571,10 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.ZODIAC_LIST.filter(
+                            {profileDetails?.zodiac || "-"}
+                            {/* {dropdownOptions?.ZODIAC_LIST.filter(
                               (x) => x.id === parseInt(profileDetails?.zodiac)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -671,9 +688,10 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.COUNTRYS.filter(
+                            {profileDetails?.country || "-"}
+                            {/* {dropdownOptions?.COUNTRYS.filter(
                               (x) => x.id === parseInt(profileDetails?.country)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -693,9 +711,10 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.COUNTRYS.filter(
+                            {profileDetails?.citizen || "-"}
+                            {/* {dropdownOptions?.COUNTRYS.filter(
                               (x) => x.id === parseInt(profileDetails?.citizen)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -726,10 +745,11 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.EDUCATION.filter(
+                            {profileDetails?.education || "-"}
+                            {/* {dropdownOptions?.EDUCATION.filter(
                               (x) =>
                                 x.id === parseInt(profileDetails?.education)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -769,10 +789,11 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.OCCUPATION.filter(
+                            {profileDetails?.occupation || "-"}
+                            {/* {dropdownOptions?.OCCUPATION.filter(
                               (x) =>
                                 x.id === parseInt(profileDetails?.occupation)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -792,9 +813,10 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.COUNTRYS.filter(
+                            {profileDetails?.country || "-"}
+                            {/* {dropdownOptions?.COUNTRYS.filter(
                               (x) => x.id === parseInt(profileDetails?.country)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -814,9 +836,10 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.SALARY.filter(
+                            {profileDetails?.salary || "-"}
+                            {/* {dropdownOptions?.SALARY.filter(
                               (x) => x.id === parseInt(profileDetails?.salary)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -848,10 +871,11 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.FAMILY_TYPE.filter(
+                            {profileDetails?.family_type || "-"}
+                            {/* {dropdownOptions?.FAMILY_TYPE.filter(
                               (x) =>
                                 x.id === parseInt(profileDetails?.family_type)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -917,10 +941,11 @@ const ViewProfile = () => {
                             color="primary"
                             component="div"
                           >
-                            {dropdownOptions?.FAMILY_STATUS.filter(
+                            {profileDetails?.family_status || "-"}
+                            {/* {dropdownOptions?.FAMILY_STATUS.filter(
                               (x) =>
                                 x.id === parseInt(profileDetails?.family_status)
-                            ).map((x) => x.name)}
+                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -1031,7 +1056,7 @@ const ViewProfile = () => {
                     </Typography>
                   </div>
                   <div className="row other_images">
-                    {profileDetails?.images.length &&
+                    {profileDetails?.images.length ? (
                       profileDetails?.images.map((img, i) => (
                         <div className="col-sm-6">
                           <Card style={{ marginBottom: "1rem" }} elevation={6}>
@@ -1048,7 +1073,18 @@ const ViewProfile = () => {
                             />
                           </Card>
                         </div>
-                      ))}
+                      ))
+                    ) : (
+                      <div className="col-sm-6">
+                        <Typography
+                          variant="subtitle1"
+                          color="text.secondary"
+                          component="div"
+                        >
+                          No images found
+                        </Typography>
+                      </div>
+                    )}
                   </div>
                 </div>
               </CardContent>
@@ -1056,6 +1092,7 @@ const ViewProfile = () => {
           )}
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
