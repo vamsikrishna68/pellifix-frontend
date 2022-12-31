@@ -21,7 +21,7 @@ import {
 } from "../../api/api";
 import axios from "axios";
 import { ls } from "../../utils/localStorage";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
@@ -228,6 +228,7 @@ const Home = () => {
           style={{ width: 55, height: 50 }}
         ></lord-icon>
         <Typography variant="h5">Daily Recommendations</Typography>
+        <NavLink to={"/auth/home/all-profiles"}>View more</NavLink>
       </span>
       {console.log({ dailyRecomLoad, dailyRecommendation })}
       {dailyRecomLoad ? (

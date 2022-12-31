@@ -7,6 +7,7 @@ import Layout from "../pages/Layout/Layout";
 import Home from "../pages/Home/Home";
 import WishList from "../pages/WishList";
 import ProfileDetails from "../pages/ProfileDetails";
+import ProfilePage from "../pages/Home/ProfilePage";
 import Profile from "../pages/Profile/Profile";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
@@ -58,12 +59,12 @@ const routes = (isLoggedIn) => [
     element: isLoggedIn ? <Layout /> : <Navigate to="/" />,
     children: [
       { path: "home", element: <Home /> },
-      { path: `home/:id`, element: <ProfileDetails /> },
+      { path: `home/all-profiles`, element: <ProfilePage /> },
       { path: "wishList", element: <WishList /> },
       { path: `wishList/:id`, element: <ProfileDetails /> },
       { path: "profile", element: <Profile /> },
       { path: "edit-profile", element: <EditProfile /> },
-      { path: "view-profile", element: <ViewProfile /> },
+      { path: "home/view-profile/:id", element: <ViewProfile /> },
       { path: "edit-preference", element: <EditPreferences /> },
       { path: "sub-ordinates", element: <SubOrdinates /> },
       { path: "associates", element: <Associates /> },

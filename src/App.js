@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, useRoutes } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import "./App.css";
+import "../src/pages/WishList/WishList.scss";
 import Authorization from "./utils/authorization";
 import routes from './rotues/config';
 
