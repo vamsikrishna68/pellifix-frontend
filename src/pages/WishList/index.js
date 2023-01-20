@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import { getWishList } from "../../api/api";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import Carousel from "react-multi-carousel";
 import {
   Card,
-  CardContent,
   CardHeader,
   CardMedia,
   IconButton,
@@ -63,71 +61,78 @@ const WishList = () => {
   };
 
   return (
-    <Box className="wishlist">
-      <Typography gutterBottom variant="h4" component="h2">
-        Wishlist
-      </Typography>
-      <Grid
-        container
-        spacing={2}
-        direction="row"
-        justify="flex-start"
-        alignItems="flex-start"
-      >
-        {loading ? (
-          skeletonLoader()
-        ) : wishlist?.data?.length ? (
-          wishlist.data.map((d, i) => (
-            <Grid item xs={12} sm={6} md={3} key={data.indexOf(d)}>
-              <Card
-                className="wishlist-card"
-                elevation={1}
-                sx={{ maxWidth: 345 }}
-              >
-                <ButtonBase
-                  className="wishlist-btn"
-                  onClick={() => navigate(`/auth/wishlist/${d.id}`)}
+    <>
+      <Box className="wishlist">
+        <Typography gutterBottom variant="h4" component="h2">
+          Wishlist
+        </Typography>
+        <Grid
+          container
+          spacing={2}
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+        >
+          {loading ? (
+            skeletonLoader()
+          ) : wishlist?.data?.length ? (
+            wishlist.data.map((d, i) => (
+              <Grid item xs={12} sm={6} md={3} key={i}>
+                <Card
+                  className="wishlist-card"
+                  elevation={1}
+                  sx={{ maxWidth: 345 }}
                 >
-                  <CardMedia
-                    component="img"
-                    height="150"
-                    image={d.image}
-                    alt="Paella dish"
-                  />
-                  <CardHeader
-                    action={
-                      <IconButton
-                        aria-label="settings"
-                        onMouseDown={(event) => event.stopPropagation()}
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          event.preventDefault();
-                          console.log("Button clicked");
-                        }}
-                      >
-                        <FavoriteIcon />
-                      </IconButton>
-                    }
-                    title={d.name}
-                    titleTypographyProps={{ variant: "subtitle1" }}
-                  />
-                  <CardHeader
-                    subheader={
-                      d.age + " yrs" + " " + d.education + " " + d.city
-                    }
-                    subheaderTypographyProps={{ variant: "subtitle2" }}
-                  />
-                </ButtonBase>
-              </Card>
-            </Grid>
-          ))
-        ) : (
-          <Typography variant="h6" component="p" className="wishlist-no-record">
-            No records found.
-          </Typography>
-        )}
-      </Grid>
-    </Box>
+                  <ButtonBase
+                    className="wishlist-btn"
+                    onClick={() => navigate(`/auth/wishlist/${d.id}`)}
+                  >
+                    <CardMedia
+                      component="img"
+                      height="150"
+                      image={d.image}
+                      alt="Paella dish"
+                    />
+                    <CardHeader
+                      action={
+                        <IconButton
+                          aria-label="settings"
+                          onMouseDown={(event) => event.stopPropagation()}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            event.preventDefault();
+                            console.log("Button clicked");
+                          }}
+                        >
+                          <FavoriteIcon />
+                        </IconButton>
+                      }
+                      title={d.name}
+                      titleTypographyProps={{ variant: "subtitle1" }}
+                    />
+                    <CardHeader
+                      subheader={
+                        d.age + " yrs" + " " + d.education + " " + d.city
+                      }
+                      subheaderTypographyProps={{ variant: "subtitle2" }}
+                    />
+                  </ButtonBase>
+                </Card>
+              </Grid>
+            ))
+          ) : (
+            <Typography
+              variant="h6"
+              component="p"
+              className="wishlist-no-record"
+            >
+              No records found.
+            </Typography>
+          )}
+        </Grid>
+      </Box>
+      <ToastContainer />
+    </>
   );
 };
 

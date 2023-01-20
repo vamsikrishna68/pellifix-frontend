@@ -11,7 +11,7 @@ import {
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getProfileDetails } from "../../api/api";
+import { getProfileDetails, updateViewedProfile } from "../../api/api";
 import { ls } from "../../utils/localStorage";
 import moment from "moment";
 import "./style.scss";
@@ -41,6 +41,7 @@ const ViewProfile = () => {
           dob: moment(response.data.dob).format("MMM DD yyyy"),
         });
         setLoading(false);
+        updateProfilViewed(response.data.id);
       }
     } catch (error) {
       toast.error(
@@ -55,6 +56,33 @@ const ViewProfile = () => {
         }
       );
       setLoading(false);
+    }
+  };
+
+  const updateProfilViewed = async (profileId) => {
+    try {
+      let data = {
+        profile_id: profileId,
+      };
+      const response = await updateViewedProfile(data);
+      if (response && response.status >= 200 && response.status <= 300) {
+        toast.success(response.data.message, {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        });
+      }
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.error?.message || "Something wend wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
     }
   };
 

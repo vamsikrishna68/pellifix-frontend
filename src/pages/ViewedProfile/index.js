@@ -1,39 +1,35 @@
 import React, { useState, useEffect } from "react";
+import { getViewedProfile } from "../../api/api";
+import { ToastContainer, toast, Zoom } from "react-toastify";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import {
-  Box,
-  Typography,
   Card,
   CardHeader,
   CardMedia,
   IconButton,
+  Typography,
   ButtonBase,
   Grid,
+  Box,
   Skeleton,
-  Stack,
-  TextField,
-  InputAdornment,
 } from "@mui/material";
-import Search from "@mui/icons-material/Search";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Pagination } from "@mui/material";
-import usePagination from "./Pagination";
-import { getDailyRecommendation } from "../../../api/api";
-import { ToastContainer, toast, Zoom } from "react-toastify";
+import "./ViewedProfile.scss";
+import { useNavigate } from "react-router-dom";
 
-export default function App() {
+const ViewedProfile = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [records, setRecords] = useState([]);
-  const [copyList, setCopyList] = useState([]);
+  const [viewedProfile, setViewedProfile] = useState([]);
 
   useEffect(() => {
-    fetchRecords();
+    fetchViewedProfile();
   }, []);
 
-  const fetchRecords = async () => {
+  const fetchViewedProfile = async () => {
     try {
-      const response = await getDailyRecommendation();
+      const response = await getViewedProfile();
       if (response && response.data) {
-        setRecords(response.data);
+        setViewedProfile(response.data);
         setLoading(false);
       }
     } catch (error) {
@@ -52,36 +48,10 @@ export default function App() {
     }
   };
 
-  let [page, setPage] = useState(1);
-  const PER_PAGE = 10;
-  let length = copyList.length
-    ? copyList.length
-    : records?.data?.length
-    ? records?.data?.length
-    : 0;
-  const count = Math.ceil(length / PER_PAGE);
-  const _DATA = usePagination(
-    copyList.length ? copyList : records?.data,
-    PER_PAGE
-  );
-
-  const handleChange = (e, p) => {
-    setPage(p);
-    _DATA.jump(p);
-  };
-
-  const handleSearch = (searched) => {
-    setCopyList(
-      records?.data?.filter((item) =>
-        item.name.toLowerCase().includes(searched.toLowerCase())
-      )
-    );
-  };
-
   const skeletonLoader = () => {
-    return [1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+    return [1, 2, 3, 4].map((n) => (
       <Grid item xs={12} sm={6} md={3} key={n}>
-        <Card className="wishlist-card" elevation={1} sx={{ maxWidth: 345 }}>
+        <Card className="viewed-profile-card" elevation={1} sx={{ maxWidth: 345 }}>
           <Skeleton variant="rectangular" height={158} />
           <Skeleton />
           <Skeleton width="60%" />
@@ -92,26 +62,11 @@ export default function App() {
 
   return (
     <>
-      <Box p="5">
-        {/* <Typography gutterBottom variant="h4" component="h2">
-          All profiles
-        </Typography> */}
-        <TextField
-          style={{ width: "50%" }}
-          variant="outlined"
-          label="Search profiles"
-          name="search"
-          onChange={(e) => handleSearch(e.target.value)}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">
-                <Search />
-              </InputAdornment>
-            ),
-          }}
-        />
+      <Box className="viewed-profile">
+        <Typography gutterBottom variant="h4" component="h2">
+          Viewed profile
+        </Typography>
         <Grid
-          style={{ marginTop: "1rem" }}
           container
           spacing={2}
           direction="row"
@@ -120,17 +75,17 @@ export default function App() {
         >
           {loading ? (
             skeletonLoader()
-          ) : _DATA.currentData().length ? (
-            (copyList.length ? copyList : _DATA.currentData()).map((d, i) => (
+          ) : viewedProfile?.data?.length ? (
+            viewedProfile.data.map((d, i) => (
               <Grid item xs={12} sm={6} md={3} key={i}>
                 <Card
-                  className="wishlist-card"
+                  className="viewed-profile-card"
                   elevation={1}
                   sx={{ maxWidth: 345 }}
                 >
                   <ButtonBase
-                    className="wishlist-btn"
-                    onClick={() => navigate(`/auth/wishlist/${d.id}`)}
+                    className="viewed-profile-btn"
+                    onClick={() => navigate(`/auth/viewed-profile/${d.id}`)}
                   >
                     <CardMedia
                       component="img"
@@ -169,23 +124,16 @@ export default function App() {
             <Typography
               variant="h6"
               component="p"
-              className="wishlist-no-record"
+              className="viewed-profile-no-record"
             >
               No records found.
             </Typography>
           )}
         </Grid>
       </Box>
-      <Stack mt={6} mb={6} alignItems="flex-end">
-        <Pagination
-          count={count}
-          size="large"
-          page={page}
-          color="primary"
-          onChange={handleChange}
-        />
-      </Stack>
       <ToastContainer />
     </>
   );
-}
+};
+
+export default ViewedProfile;

@@ -153,3 +153,19 @@ export const sendWishList = (payload) => {
     body: payload,
   });
 };
+
+// Wishlist
+export const getViewedProfile = () => {
+  return apiService({
+    url: "/users/profile-views",
+    method: "GET",
+  });
+};
+
+export const updateViewedProfile = (payload) => {
+  return apiService({
+    url: "/users/profile-views",
+    method: "POST",
+    body: payload,
+  });
+};
