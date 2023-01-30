@@ -21,7 +21,7 @@ const HomeCarousel = (props) => {
             <Card className="profile-card" elevation={1} sx={{ maxWidth: 345 }}>
               <ButtonBase
                 className="profile-btn"
-                onClick={() => navigate(`/auth/home/${d.id}`)}
+                onClick={() => navigate(`/auth/home/view-profile/${d.id}`)}
               >
                 <CardMedia
                   component="img"

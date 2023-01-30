@@ -1,35 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { getWishList } from "../../api/api";
-import { ToastContainer, toast, Zoom } from "react-toastify";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import {
+  Box,
+  Typography,
   Card,
   CardHeader,
   CardMedia,
   IconButton,
-  Typography,
   ButtonBase,
   Grid,
-  Box,
   Skeleton,
+  Stack,
+  TextField,
+  InputAdornment,
 } from "@mui/material";
-import "./WishList.scss";
-import { useNavigate } from "react-router-dom";
+import Search from "@mui/icons-material/Search";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import { Pagination } from "@mui/material";
+import usePagination from "./Pagination";
+import { getHoroscopeMatches } from "../../../api/api";
+import { ToastContainer, toast, Zoom } from "react-toastify";
 
-const WishList = () => {
-  const navigate = useNavigate();
+export default function App() {
   const [loading, setLoading] = useState(true);
-  const [wishlist, setWishList] = useState([]);
+  const [records, setRecords] = useState([]);
+  const [copyList, setCopyList] = useState([]);
 
   useEffect(() => {
-    fetchWishList();
+    fetchRecords();
   }, []);
 
-  const fetchWishList = async () => {
+  const fetchRecords = async () => {
     try {
-      const response = await getWishList();
+      const response = await getHoroscopeMatches();
       if (response && response.data) {
-        setWishList(response.data);
+        setRecords(response.data);
         setLoading(false);
       }
     } catch (error) {
@@ -48,8 +52,34 @@ const WishList = () => {
     }
   };
 
+  let [page, setPage] = useState(1);
+  const PER_PAGE = 10;
+  let length = copyList.length
+    ? copyList.length
+    : records?.data?.length
+    ? records?.data?.length
+    : 0;
+  const count = Math.ceil(length / PER_PAGE);
+  const _DATA = usePagination(
+    copyList.length ? copyList : records?.data,
+    PER_PAGE
+  );
+
+  const handleChange = (e, p) => {
+    setPage(p);
+    _DATA.jump(p);
+  };
+
+  const handleSearch = (searched) => {
+    setCopyList(
+      records?.data?.filter((item) =>
+        item.name.toLowerCase().includes(searched.toLowerCase())
+      )
+    );
+  };
+
   const skeletonLoader = () => {
-    return [1, 2, 3, 4].map((n) => (
+    return [1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
       <Grid item xs={12} sm={6} md={3} key={n}>
         <Card className="wishlist-card" elevation={1} sx={{ maxWidth: 345 }}>
           <Skeleton variant="rectangular" height={158} />
@@ -62,11 +92,26 @@ const WishList = () => {
 
   return (
     <>
-      <Box className="wishlist">
-        <Typography gutterBottom variant="h4" component="h2">
-          Wishlist
-        </Typography>
+      <Box p="5">
+        {/* <Typography gutterBottom variant="h4" component="h2">
+          All profiles
+        </Typography> */}
+        <TextField
+          style={{ width: "50%" }}
+          variant="outlined"
+          label="Search profiles"
+          name="search"
+          onChange={(e) => handleSearch(e.target.value)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+                <Search />
+              </InputAdornment>
+            ),
+          }}
+        />
         <Grid
+          style={{ marginTop: "1rem" }}
           container
           spacing={2}
           direction="row"
@@ -75,8 +120,8 @@ const WishList = () => {
         >
           {loading ? (
             skeletonLoader()
-          ) : wishlist?.data?.length ? (
-            wishlist.data.map((d, i) => (
+          ) : _DATA.currentData().length ? (
+            (copyList.length ? copyList : _DATA.currentData()).map((d, i) => (
               <Grid item xs={12} sm={6} md={3} key={i}>
                 <Card
                   className="wishlist-card"
@@ -131,9 +176,16 @@ const WishList = () => {
           )}
         </Grid>
       </Box>
+      <Stack mt={6} mb={6} alignItems="flex-end">
+        <Pagination
+          count={count}
+          size="large"
+          page={page}
+          color="primary"
+          onChange={handleChange}
+        />
+      </Stack>
       <ToastContainer />
     </>
   );
-};
-
-export default WishList;
+}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getWishList } from "../../api/api";
+import { getViewedProfile } from "../../api/api";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import {
@@ -13,23 +13,23 @@ import {
   Box,
   Skeleton,
 } from "@mui/material";
-import "./WishList.scss";
+import "./ViewedProfile.scss";
 import { useNavigate } from "react-router-dom";
 
-const WishList = () => {
+const ViewedProfile = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [wishlist, setWishList] = useState([]);
+  const [viewedProfile, setViewedProfile] = useState([]);
 
   useEffect(() => {
-    fetchWishList();
+    fetchViewedProfile();
   }, []);
 
-  const fetchWishList = async () => {
+  const fetchViewedProfile = async () => {
     try {
-      const response = await getWishList();
+      const response = await getViewedProfile();
       if (response && response.data) {
-        setWishList(response.data);
+        setViewedProfile(response.data);
         setLoading(false);
       }
     } catch (error) {
@@ -51,7 +51,7 @@ const WishList = () => {
   const skeletonLoader = () => {
     return [1, 2, 3, 4].map((n) => (
       <Grid item xs={12} sm={6} md={3} key={n}>
-        <Card className="wishlist-card" elevation={1} sx={{ maxWidth: 345 }}>
+        <Card className="viewed-profile-card" elevation={1} sx={{ maxWidth: 345 }}>
           <Skeleton variant="rectangular" height={158} />
           <Skeleton />
           <Skeleton width="60%" />
@@ -62,9 +62,9 @@ const WishList = () => {
 
   return (
     <>
-      <Box className="wishlist">
+      <Box className="viewed-profile">
         <Typography gutterBottom variant="h4" component="h2">
-          Wishlist
+          Viewed profile
         </Typography>
         <Grid
           container
@@ -75,17 +75,17 @@ const WishList = () => {
         >
           {loading ? (
             skeletonLoader()
-          ) : wishlist?.data?.length ? (
-            wishlist.data.map((d, i) => (
+          ) : viewedProfile?.data?.length ? (
+            viewedProfile.data.map((d, i) => (
               <Grid item xs={12} sm={6} md={3} key={i}>
                 <Card
-                  className="wishlist-card"
+                  className="viewed-profile-card"
                   elevation={1}
                   sx={{ maxWidth: 345 }}
                 >
                   <ButtonBase
-                    className="wishlist-btn"
-                    onClick={() => navigate(`/auth/wishlist/${d.id}`)}
+                    className="viewed-profile-btn"
+                    onClick={() => navigate(`/auth/viewed-profile/${d.id}`)}
                   >
                     <CardMedia
                       component="img"
@@ -124,7 +124,7 @@ const WishList = () => {
             <Typography
               variant="h6"
               component="p"
-              className="wishlist-no-record"
+              className="viewed-profile-no-record"
             >
               No records found.
             </Typography>
@@ -136,4 +136,4 @@ const WishList = () => {
   );
 };
 
-export default WishList;
+export default ViewedProfile;

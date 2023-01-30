@@ -21,7 +21,7 @@ import {
 } from "../../api/api";
 import axios from "axios";
 import { ls } from "../../utils/localStorage";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
@@ -228,8 +228,14 @@ const Home = () => {
           style={{ width: 55, height: 50 }}
         ></lord-icon>
         <Typography variant="h5">Daily Recommendations</Typography>
+        {dailyRecommendation.data?.length ? (
+          <NavLink className="view-more" to={"/auth/home/daily-recommendation"}>
+            View more
+          </NavLink>
+        ) : (
+          ""
+        )}
       </span>
-      {console.log({ dailyRecomLoad, dailyRecommendation })}
       {dailyRecomLoad ? (
         skeletonLoader()
       ) : (
@@ -250,8 +256,14 @@ const Home = () => {
           style={{ width: 55, height: 50, marginTop: "-2px" }}
         ></lord-icon>
         <Typography variant="h5">Horoscopic Matches</Typography>
+        {horoscopeMatches.data?.length ? (
+          <NavLink className="view-more" to={"/auth/home/horoscopic"}>
+            View more
+          </NavLink>
+        ) : (
+          ""
+        )}
       </span>
-      {console.log({ horoscopeLoad, horoscopeMatches })}
       {horoscopeLoad ? (
         skeletonLoader()
       ) : (
@@ -272,8 +284,14 @@ const Home = () => {
           style={{ width: 55, height: 50, marginTop: "-2px" }}
         ></lord-icon>
         <Typography variant="h5">Preference Matches</Typography>
+        {preferenceMatches.data?.length ? (
+          <NavLink className="view-more" to={"/auth/home/preference"}>
+            View more
+          </NavLink>
+        ) : (
+          ""
+        )}
       </span>
-      {console.log({ preferenceLoad, preferenceMatches })}
       {preferenceLoad ? (
         skeletonLoader()
       ) : (

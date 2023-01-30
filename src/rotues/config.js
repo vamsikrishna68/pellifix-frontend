@@ -6,7 +6,10 @@ import PageNotFound from "../pages/PageNotFound/PageNotFound";
 import Layout from "../pages/Layout/Layout";
 import Home from "../pages/Home/Home";
 import WishList from "../pages/WishList";
-import ProfileDetails from "../pages/ProfileDetails";
+import ViewedProfile from "../pages/ViewedProfile";
+import DailyRecomProfilePage from "../pages/Home/ProfilePage";
+import HoroscopeProfilePage from "../pages/Home/ProfilePage/HoroscopeProfilePage";
+import PreferenceProfiePage from "../pages/Home/ProfilePage/PreferenceProfiePage";
 import Profile from "../pages/Profile/Profile";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
@@ -58,13 +61,17 @@ const routes = (isLoggedIn) => [
     element: isLoggedIn ? <Layout /> : <Navigate to="/" />,
     children: [
       { path: "home", element: <Home /> },
-      { path: `home/:id`, element: <ProfileDetails /> },
+      { path: `home/daily-recommendation`, element: <DailyRecomProfilePage /> },
+      { path: `home/horoscopic`, element: <HoroscopeProfilePage /> },
+      { path: `home/preference`, element: <PreferenceProfiePage /> },
+      { path: "home/view-profile/:id", element: <ViewProfile /> },
       { path: "wishList", element: <WishList /> },
-      { path: `wishList/:id`, element: <ProfileDetails /> },
+      { path: `wishList/view-profile/:id`, element: <ViewProfile /> },
       { path: "profile", element: <Profile /> },
       { path: "edit-profile", element: <EditProfile /> },
-      { path: "view-profile", element: <ViewProfile /> },
       { path: "edit-preference", element: <EditPreferences /> },
+      { path: "profile-viewed", element: <ViewedProfile /> },
+      { path: `profile-viewed/view-profile/:id`, element: <ViewProfile /> },
       { path: "sub-ordinates", element: <SubOrdinates /> },
       { path: "associates", element: <Associates /> },
       { path: "admin-dashboard", element: <AdminDashboard /> },

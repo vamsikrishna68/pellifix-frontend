@@ -1,18 +1,25 @@
 .view_profile {
-    .profile_details {
-        height: 78vh;
-        overflow-y: auto;
-        padding-bottom: 20px;
-        padding-top: 10px;
-    }
+  .vp-flex {
+    display: flex;
+    justify-content: space-between;
+  }
+  .profile_details {
+    padding: 64px 0 20px;
+    width: calc(100% - 320px);
+  }
 
-    .profile_image {
-        padding-top: 10px;
+  .profile_image {
+    padding-top: 10px;
+    width: 300px;
+    .profile_basic_details {
+      position: fixed;
+      width: 300px;
     }
+  }
 
-    .other_images {
-        .col-sm-4 {
-            margin-bottom: 15px;
-        }
+  .other_images {
+    .col-sm-4 {
+      margin-bottom: 15px;
     }
+  }
 }
