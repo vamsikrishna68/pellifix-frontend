@@ -10,7 +10,7 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import * as Yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import AOS from "aos";
 import "./style.scss";
@@ -22,6 +22,8 @@ const ResetPassword = () => {
   const [showConfirmPassword, setConfirmPassword] = useState(false);
   const navigate = useNavigate();
   const params = window.location.pathname.split("d/").pop();
+  const location = useLocation();
+  const isAssociate = location && location.pathname && location.pathname.includes('/associates/reset-password');
 
   useEffect(() => {
     AOS.init({
@@ -37,9 +39,16 @@ const ResetPassword = () => {
       password: values.password,
     };
     setLoading(true);
+    let resetPasswordUrl;
+
+    if (isAssociate) {
+      resetPasswordUrl = `${process.env.REACT_APP_BASE_URL}/cp/v1/auth/associates/password/update/${params}`
+    } else {
+      resetPasswordUrl = `${process.env.REACT_APP_BASE_URL}/v1/customer/password/update/${params}`
+    }
     axios
       .patch(
-        `${process.env.REACT_APP_BASE_URL}/v1/customer/password/update/${params}`,
+        resetPasswordUrl,
         {
           ...payload,
         }
@@ -58,7 +67,11 @@ const ResetPassword = () => {
             }
           );
           setTimeout(() => {
-            navigate("/login");
+            if (isAssociate) {
+              navigate("/associates/login");
+            } else {
+              navigate("/login");
+            }
           }, 1000);
         }
       })
@@ -162,8 +175,8 @@ const ResetPassword = () => {
                       variant="outlined"
                       error={
                         errors.confirmPwd &&
-                        touched.confirmPwd &&
-                        errors.confirmPwd
+                          touched.confirmPwd &&
+                          errors.confirmPwd
                           ? true
                           : false
                       }

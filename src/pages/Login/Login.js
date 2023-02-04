@@ -1,8 +1,8 @@
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { Formik } from "formik";
-import { useState,useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import Loading from "../../ui-components/Loding/Loading";
@@ -13,24 +13,37 @@ import "aos/dist/aos.css";
 
 const Login = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
+  const isAssociatelogin = location && location.pathname && location.pathname == '/associates/login';
   useEffect(() => {
 
     AOS.init({
-        duration: 1000,
-        easing: "ease-in-out",
-        once: false,
-        mirror: true
+      duration: 1000,
+      easing: "ease-in-out",
+      once: false,
+      mirror: true
     });
-})
+  })
+
 
   const login = (values) => {
     setLoading(true);
+    let userType;
+    if (isAssociatelogin) {
+      userType = `cp/v1/auth${location.pathname}`;
+    } else {
+      userType = `v1/customer${location.pathname}`;
+    }
+    validateUserLogin(values, `https://api.pellifix.com/${userType}`);
+  };
+
+  const validateUserLogin = (values, api) => {
     axios
-      .post("https://api.pellifix.com/v1/customer/login", { ...values })
+      .post(api, { ...values },)
       .then((response) => {
         console.log(response);
-        if(response && response.status==200){
+        if (response && response.status == 200) {
           Authorization.login(response.data)
           setLoading(false);
           toast.success("Login Successfully!", {
@@ -43,7 +56,7 @@ const Login = () => {
             navigate("/auth/home");
           }, 1000);
         }
-  
+
       })
       .catch((err) => {
         console.log(err);
@@ -55,17 +68,19 @@ const Login = () => {
         });
         setLoading(false);
       });
-  };
+  }
 
   return (
     <div className="container-fluid login-container">
-      <div
-        data-aos="fade-down"
-        className="col-xs-12 col-sm-12 col-md-12 col-lg-7"
-        style={{ position: "relative" }}
-      >
-        <div className="login-bg-image"></div>
-      </div>
+      {!isAssociatelogin ?
+        <div
+          data-aos="fade-down"
+          className="col-xs-12 col-sm-12 col-md-12 col-lg-7"
+          style={{ position: "relative" }}
+        >
+          <div className="login-bg-image"></div>
+        </div>
+        : null}
       <div className="col-xs-12 col-sm-12 col-md-12 col-lg-5 align-center">
         <h3 className="primaryColor heading1">Login</h3>
         <br />
@@ -154,9 +169,9 @@ const Login = () => {
                 Login
               </Button>
               <div>
-              <NavLink to={'/forgot-password'} className="forgotpwd">Forgot Password?</NavLink>
-                </div>
-             
+                <NavLink to={isAssociatelogin ? '/associates/forgot-password' : '/forgot-password'} className="forgotpwd">Forgot Password?</NavLink>
+              </div>
+
               <div className="newuser">
                 <span>
                   Don't have an account yet?{" "}

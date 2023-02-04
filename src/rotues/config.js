@@ -38,6 +38,10 @@ const routes = (isLoggedIn) => [
     element: !isLoggedIn ? <AdminLogin /> : <Navigate to="/auth/home" />,
   },
   {
+    path: "associates/login",
+    element: !isLoggedIn ? <Login /> : <Navigate to="/auth/home" />,
+  },
+  {
     path: "register",
     element: !isLoggedIn ? <Register /> : <Navigate to="/auth/home" />,
   },
@@ -46,7 +50,15 @@ const routes = (isLoggedIn) => [
     element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/home" />,
   },
   {
+    path: "associates/forgot-password",
+    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/home" />,
+  },
+  {
     path: "reset-password/:id",
+    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
+  },
+  {
+    path: "associates/reset-password/:id",
     element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
   },
   {

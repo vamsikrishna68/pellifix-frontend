@@ -80,6 +80,14 @@ const Header = () => {
                 Register
               </span>
             </li>
+            <li>
+              <span
+                onClick={() => navigate("/associates/login")}
+                className="getstarted"
+              >
+                Associate Login
+              </span>
+            </li>
           </ul>
           <i className="bi bi-list mobile-nav-toggle"></i>
         </nav>
