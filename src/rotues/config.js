@@ -23,6 +23,9 @@ import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
 import TermsAndConditions from "../pages/Agreement/TermsAndConditions";
 import PrivacyPolicy from "../pages/Agreement/PrivacyPolicy";
 import { Navigate, Outlet } from "react-router-dom";
+import AssosiateProfile from "../pages/Profile/AssosiateProfile";
+import {EditAssosiateProfile} from "../pages/EditProfile/EditAssosiateProfile";
+
 
 const routes = (isLoggedIn) => [
   {
@@ -87,6 +90,9 @@ const routes = (isLoggedIn) => [
       { path: "sub-ordinates", element: <SubOrdinates /> },
       { path: "associates", element: <Associates /> },
       { path: "admin-dashboard", element: <AdminDashboard /> },
+      { path: "associates/viewprofile", element: <AssosiateProfile /> },
+      { path: "associates/editprofile", element: <EditAssosiateProfile /> },
+      { path: "associates/home", element: <Home /> },
     ],
   },
   {

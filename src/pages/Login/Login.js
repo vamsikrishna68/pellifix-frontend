@@ -53,7 +53,11 @@ const Login = () => {
             transition: Zoom,
           });
           setTimeout(() => {
-            navigate("/auth/home");
+            if (isAssociatelogin) {
+              navigate("/auth/associates/home");
+            } else {
+              navigate("/auth/home");
+            }
           }, 1000);
         }
 

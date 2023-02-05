@@ -24,12 +24,13 @@ import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import PreviewIcon from "@mui/icons-material/Preview";
 import HomeIcon from "@mui/icons-material/Home";
 import IconButton from "@mui/material/IconButton";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate,useLocation } from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Authorization from "../../utils/authorization";
 import "./style.scss";
+import { useState, useEffect } from "react";
 
 const drawerWidth = 280;
 
@@ -134,7 +135,11 @@ const Layout = () => {
   const [open, setOpen] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const role = "";
+  const location = useLocation();
+  const isAssociatelogin=location && location.pathname && location.pathname.includes('associates');
 
+
+   
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -148,8 +153,11 @@ const Layout = () => {
   const profilePage = () => {
     navigate("/auth/profile");
   };
+  const assosiateProfilePage = () => {
+    navigate("associates/viewprofile");
+  };
 
-  const sideMenu = [
+  let sideMenu = [
     {
       title: "Home",
       icon: "https://cdn.lordicon.com/gmzxduhd.json",
@@ -219,7 +227,23 @@ const Layout = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-
+  
+  if(isAssociatelogin){
+    sideMenu=[
+      {
+        title: "View Profile",
+        icon: "https://cdn.lordicon.com/imamsnbq.json",
+        path: "associates/viewprofile",
+        role: "USER",
+      },
+      {
+        title: "Edit Assosiate Profile",
+        icon: "https://cdn.lordicon.com/wloilxuq.json",
+        path: "associates/editprofile",
+        role: "USER",
+      },
+    ];
+  }
   return (
     <Box>
       <CssBaseline />
@@ -258,7 +282,7 @@ const Layout = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={profilePage}>Profile</MenuItem>
+              <MenuItem onClick={isAssociatelogin?assosiateProfilePage:profilePage}>Profile</MenuItem>
               <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>
           </Box>
