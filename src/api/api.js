@@ -186,3 +186,11 @@ export const updateViewedProfile = (payload) => {
     body: payload,
   });
 };
+
+// Wishlist
+export const getAssociateEarningsInfo = (type) => {
+  return apiService({
+    url: `https://api.pellifix.com/cp/v1/employees/earnings?type=${type}`,
+    method: "GET",
+  });
+};

@@ -24,7 +24,7 @@ import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import PreviewIcon from "@mui/icons-material/Preview";
 import HomeIcon from "@mui/icons-material/Home";
 import IconButton from "@mui/material/IconButton";
-import { NavLink, Outlet, useNavigate,useLocation } from "react-router-dom";
+import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
@@ -136,10 +136,10 @@ const Layout = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const role = "";
   const location = useLocation();
-  const isAssociatelogin=location && location.pathname && location.pathname.includes('associates');
+  const isAssociatelogin = location && location.pathname && location.pathname.includes('associates');
 
 
-   
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -227,9 +227,9 @@ const Layout = () => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
-  if(isAssociatelogin){
-    sideMenu=[
+
+  if (isAssociatelogin) {
+    sideMenu = [
       {
         title: "View Profile",
         icon: "https://cdn.lordicon.com/imamsnbq.json",
@@ -237,9 +237,15 @@ const Layout = () => {
         role: "USER",
       },
       {
-        title: "Edit Assosiate Profile",
+        title: "Edit Profile",
         icon: "https://cdn.lordicon.com/wloilxuq.json",
         path: "associates/editprofile",
+        role: "USER",
+      },
+      {
+        title: "Earnings",
+        icon: "https://cdn.lordicon.com/zpxybbhl.json",
+        path: "associates/Earnings",
         role: "USER",
       },
     ];
@@ -282,7 +288,7 @@ const Layout = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={isAssociatelogin?assosiateProfilePage:profilePage}>Profile</MenuItem>
+              <MenuItem onClick={isAssociatelogin ? assosiateProfilePage : profilePage}>Profile</MenuItem>
               <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>
           </Box>
@@ -307,6 +313,7 @@ const Layout = () => {
                 className={({ isActive }) =>
                   isActive ? "activeRoute" : "routes"
                 }
+                key={index}
               >
                 <ListItem
                   key={menu.title}

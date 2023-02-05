@@ -24,7 +24,8 @@ import TermsAndConditions from "../pages/Agreement/TermsAndConditions";
 import PrivacyPolicy from "../pages/Agreement/PrivacyPolicy";
 import { Navigate, Outlet } from "react-router-dom";
 import AssosiateProfile from "../pages/Profile/AssosiateProfile";
-import {EditAssosiateProfile} from "../pages/EditProfile/EditAssosiateProfile";
+import { EditAssosiateProfile } from "../pages/Associates/EditProfile/EditAssosiateProfile";
+import EarningsInfo from "../pages/Associates/Earnings/EarningsInfo";
 
 
 const routes = (isLoggedIn) => [
@@ -67,7 +68,7 @@ const routes = (isLoggedIn) => [
   {
     path: "terms-and-conditions",
     element: !isLoggedIn ? <TermsAndConditions /> : <Navigate to="/auth/home" />,
-  },  {
+  }, {
     path: "privacy-policy",
     element: !isLoggedIn ? <PrivacyPolicy /> : <Navigate to="/auth/home" />,
   },
@@ -93,6 +94,8 @@ const routes = (isLoggedIn) => [
       { path: "associates/viewprofile", element: <AssosiateProfile /> },
       { path: "associates/editprofile", element: <EditAssosiateProfile /> },
       { path: "associates/home", element: <Home /> },
+      { path: "associates/earnings", element: <EarningsInfo /> },
+
     ],
   },
   {
