@@ -50,7 +50,10 @@ class Authorization {
     }
     return accessToken;
   }
-
+  getProfileId() {
+    let profileId = JSON.parse(ls.getItem("authorizedUserDetails"))?.id;
+    return profileId;
+  }
   /**
    * login the user by setting it in local storage
    *
