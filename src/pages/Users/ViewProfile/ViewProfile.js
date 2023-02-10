@@ -11,8 +11,8 @@ import {
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getProfileDetails, updateViewedProfile } from "../../api/api";
-import { ls } from "../../utils/localStorage";
+import { getProfileDetails, updateViewedProfile } from "../../../api/api";
+import { ls } from "../../../utils/localStorage";
 import moment from "moment";
 import "./style.scss";
 

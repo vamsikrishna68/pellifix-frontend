@@ -3,7 +3,7 @@ import Header from "../../ui-components/Header";
 import Footer from "../../ui-components/Footer";
 import { Typography, Box } from "@mui/material";
 import AOS from "aos";
-import "../Welcome/style.scss";
+import "../Users/Welcome/style.scss";
 import "./Agreement.scss";
 import "aos/dist/aos.css";
 

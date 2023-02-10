@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../pages/Welcome/style.scss";
+import "../../pages/Users/Welcome/style.scss";
 import "aos/dist/aos.css";
 
 const Header = () => {

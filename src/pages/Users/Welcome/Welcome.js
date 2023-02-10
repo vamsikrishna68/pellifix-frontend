@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../../ui-components/Header";
-import Footer from "../../ui-components/Footer";
+import Header from "../../../ui-components/Header";
+import Footer from "../../../ui-components/Footer";
 import AOS from "aos";
 import "./style.scss";
 import "aos/dist/aos.css";
@@ -57,7 +57,7 @@ const Welcome = () => {
             >
               <img
                 style={{ width: "140%", height: "600px" }}
-                src={require("../../assets/img/img1.gif")}
+                src={require("../../../assets/img/img1.gif")}
                 className="img-fluid"
                 alt=""
               />
@@ -160,7 +160,7 @@ const Welcome = () => {
                 data-aos-delay="100"
               >
                 <img
-                  src={require("../../assets/img/details-1.png")}
+                  src={require("../../../assets/img/details-1.png")}
                   className="img-fluid"
                   alt=""
                 />
@@ -174,7 +174,7 @@ const Welcome = () => {
             <div className="row content">
               <div className="col-md-4" data-aos="fade-right">
                 <img
-                  src={require("../../assets/img/details-1.png")}
+                  src={require("../../../assets/img/details-1.png")}
                   className="img-fluid"
                   alt=""
                 />
@@ -218,7 +218,7 @@ const Welcome = () => {
             <div className="row content">
               <div className="col-md-4 order-1 order-md-2" data-aos="fade-left">
                 <img
-                  src={require("../../assets/img/details-2.png")}
+                  src={require("../../../assets/img/details-2.png")}
                   className="img-fluid"
                   alt=""
                 />
@@ -252,7 +252,7 @@ const Welcome = () => {
             <div className="row content">
               <div className="col-md-4" data-aos="fade-right">
                 <img
-                  src={require("../../assets/img/details-3.png")}
+                  src={require("../../../assets/img/details-3.png")}
                   className="img-fluid"
                   alt=""
                 />
@@ -297,7 +297,7 @@ const Welcome = () => {
             <div className="row content">
               <div className="col-md-4 order-1 order-md-2" data-aos="fade-left">
                 <img
-                  src={require("../../assets/img/details-4.png")}
+                  src={require("../../../assets/img/details-4.png")}
                   className="img-fluid"
                   alt=""
                 />

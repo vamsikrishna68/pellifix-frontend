@@ -1,4 +1,4 @@
-import "../../EditProfile/style.scss";
+import "../../Users/EditProfile/style.scss";
 import {
   TextField,
   FormControl,
