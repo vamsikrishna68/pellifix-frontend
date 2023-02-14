@@ -1,0 +1,27 @@
+.subscribe-popup {
+  img {
+    width: 150px;
+    height: 150px;
+  }
+  p {
+    color: gray;
+  }
+  span {
+    display: block;
+    text-align: center;
+    position: relative;
+    min-width: 200px;
+    background: none;
+    padding: 0.5rem;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 2rem;
+    border: 3px solid #D53833;
+    color: #D53833;
+    cursor: pointer;
+    &:hover {
+      background: #D53833;
+      color: #fff;
+    }
+  }
+}
