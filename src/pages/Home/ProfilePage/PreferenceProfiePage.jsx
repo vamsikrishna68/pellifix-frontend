@@ -73,7 +73,7 @@ export default function App() {
   const handleSearch = (searched) => {
     setCopyList(
       records?.data?.filter((item) =>
-        item.name.toLowerCase().includes(searched.toLowerCase())
+        searched ? item.name.toLowerCase().includes(searched.toLowerCase()) : ""
       )
     );
   };
