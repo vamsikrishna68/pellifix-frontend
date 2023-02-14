@@ -29,6 +29,7 @@ import Menu from "@mui/material/Menu";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Authorization from "../../utils/authorization";
+import { deletingProfile } from "../../api/api";
 import "./style.scss";
 
 const drawerWidth = 280;
@@ -145,6 +146,27 @@ const Layout = () => {
 
   const logout = () => Authorization.logout();
 
+  const deleteProfile = async () => {
+    try {
+      const response = await deletingProfile();
+      if (response.status === 204) {
+        Authorization.logout();
+      }
+    } catch (error) {
+      toast.error(
+        error?.message
+          ? error.message
+          : error?.response?.data?.error?.message || "Something went wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
+    }
+  };
+
   const profilePage = () => {
     navigate("/auth/profile");
   };
@@ -260,6 +282,7 @@ const Layout = () => {
             >
               <MenuItem onClick={profilePage}>Profile</MenuItem>
               <MenuItem onClick={logout}>Logout</MenuItem>
+              <MenuItem onClick={deleteProfile}>Delete</MenuItem>
             </Menu>
           </Box>
         </Toolbar>

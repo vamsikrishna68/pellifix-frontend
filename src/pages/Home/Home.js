@@ -14,6 +14,7 @@ import Skeleton from "@mui/material/Skeleton";
 import {
   getDropwdownValues,
   getStates,
+  getProfileData,
   getDailyRecommendation,
   getPreferenceMatches,
   getHoroscopeMatches,
@@ -59,6 +60,7 @@ const Home = () => {
   useEffect(() => {
     fetchDropdownsValues();
     fetchStates();
+    fetchMyProfile();
     fetchDailyRecommendation();
     fetchHoroscopeMatches();
     fetchPreferenceMatches();
@@ -72,6 +74,17 @@ const Home = () => {
   const fetchStates = async () => {
     const response = await getStates();
     ls.setItem("states_for_reference", JSON.stringify(response.data));
+  };
+
+  const fetchMyProfile = async () => {
+    const response = await getProfileData();
+    let profileData = {
+      name: response?.data?.name,
+      email: response?.data?.email_id,
+      phone: response?.data?.mobileno,
+      profileId:response?.data?.profile_id
+    };
+    ls.setItem("profile_for_reference", JSON.stringify(profileData));
   };
 
   const fetchDailyRecommendation = async () => {

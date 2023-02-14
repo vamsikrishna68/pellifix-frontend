@@ -59,11 +59,14 @@ export default function App() {
     : records?.data?.length
     ? records?.data?.length
     : 0;
+  console.log({ length });
   const count = Math.ceil(length / PER_PAGE);
+  console.log({ count });
   const _DATA = usePagination(
     copyList.length ? copyList : records?.data,
     PER_PAGE
   );
+  console.log({ _DATA });
 
   const handleChange = (e, p) => {
     setPage(p);
@@ -73,7 +76,7 @@ export default function App() {
   const handleSearch = (searched) => {
     setCopyList(
       records?.data?.filter((item) =>
-        item.name.toLowerCase().includes(searched.toLowerCase())
+        searched ? item.name.toLowerCase().includes(searched.toLowerCase()) : ""
       )
     );
   };
@@ -118,6 +121,7 @@ export default function App() {
           justify="flex-start"
           alignItems="flex-start"
         >
+          {console.log({ copyList, dkjjj: _DATA.currentData() })}
           {loading ? (
             skeletonLoader()
           ) : _DATA.currentData().length ? (

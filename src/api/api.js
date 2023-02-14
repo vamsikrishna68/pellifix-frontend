@@ -169,3 +169,20 @@ export const updateViewedProfile = (payload) => {
     body: payload,
   });
 };
+
+// Razorpay
+export const fetchRazorPay = (payload) => {
+  return apiService({
+    url: "/razor/payment",
+    method: "POST",
+    body: payload,
+  });
+};
+
+// Delete profile
+export const deletingProfile = () => {
+  return apiService({
+    url: "/profiles",
+    method: "DELETE",
+  });
+};

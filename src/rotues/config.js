@@ -16,6 +16,8 @@ import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import ViewProfile from "../pages/ViewProfile/ViewProfile";
 import EditProfile from "../pages/EditProfile/EditProfile";
 import EditPreferences from "../pages/EditPreferences/EditPreferences";
+import Chat from "../pages/Chat";
+import Subscription from "../pages/Subscription";
 import AdminLogin from "../pages/AdminLogin/AdminLogin";
 import SubOrdinates from "../pages/SubOrdinates/SubOrdinates";
 import Associates from "../pages/Associates/Associates";
@@ -51,8 +53,13 @@ const routes = (isLoggedIn) => [
   },
   {
     path: "terms-and-conditions",
-    element: !isLoggedIn ? <TermsAndConditions /> : <Navigate to="/auth/home" />,
-  },  {
+    element: !isLoggedIn ? (
+      <TermsAndConditions />
+    ) : (
+      <Navigate to="/auth/home" />
+    ),
+  },
+  {
     path: "privacy-policy",
     element: !isLoggedIn ? <PrivacyPolicy /> : <Navigate to="/auth/home" />,
   },
@@ -72,6 +79,8 @@ const routes = (isLoggedIn) => [
       { path: "edit-preference", element: <EditPreferences /> },
       { path: "profile-viewed", element: <ViewedProfile /> },
       { path: `profile-viewed/view-profile/:id`, element: <ViewProfile /> },
+      { path: "chat", element: <Chat /> },
+      { path: "subscribe", element: <Subscription /> },
       { path: "sub-ordinates", element: <SubOrdinates /> },
       { path: "associates", element: <Associates /> },
       { path: "admin-dashboard", element: <AdminDashboard /> },
