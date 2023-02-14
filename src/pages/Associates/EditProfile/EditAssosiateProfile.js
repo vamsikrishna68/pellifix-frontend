@@ -1,4 +1,4 @@
-import "./style.scss";
+import "../../Users/EditProfile/style.scss";
 import {
   TextField,
   FormControl,
@@ -13,8 +13,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import SaveIcon from "@mui/icons-material/Save";
 import { Formik } from "formik";
 import { useEffect, useState } from "react";
-import { getAssosiateProfileData, updateAssosiateProfileData } from "../../api/api";
-import Loading from "../../ui-components/Loding/Loading";
+import { getAssosiateProfileData, updateAssosiateProfileData } from "../../../api/api";
+import Loading from "../../../ui-components/Loding/Loading";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { MuiTelInput ,matchIsValidTel} from 'mui-tel-input'
 

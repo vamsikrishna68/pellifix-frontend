@@ -1,30 +1,31 @@
 import React from "react";
 import Login from "../pages/Login/Login";
-import Welcome from "../pages/Welcome/Welcome";
+import Welcome from "../pages/Users/Welcome/Welcome";
 import Register from "../pages/Register/Register";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
 import Layout from "../pages/Layout/Layout";
 import Home from "../pages/Home/Home";
-import WishList from "../pages/WishList";
-import ViewedProfile from "../pages/ViewedProfile";
+import WishList from "../pages/Users/WishList";
+import ViewedProfile from "../pages/Users/ViewedProfile";
 import DailyRecomProfilePage from "../pages/Home/ProfilePage";
 import HoroscopeProfilePage from "../pages/Home/ProfilePage/HoroscopeProfilePage";
 import PreferenceProfiePage from "../pages/Home/ProfilePage/PreferenceProfiePage";
-import Profile from "../pages/Profile/Profile";
+import Profile from "../pages/Users/Profile/Profile";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
-import ViewProfile from "../pages/ViewProfile/ViewProfile";
-import EditProfile from "../pages/EditProfile/EditProfile";
-import EditPreferences from "../pages/EditPreferences/EditPreferences";
-import AdminLogin from "../pages/AdminLogin/AdminLogin";
+import ViewProfile from "../pages/Users/ViewProfile/ViewProfile";
+import EditProfile from "../pages/Users/EditProfile/EditProfile";
+import EditPreferences from "../pages/Users/EditPreferences/EditPreferences";
+import AdminLogin from "../pages/Admin/AdminLogin/AdminLogin";
 import SubOrdinates from "../pages/SubOrdinates/SubOrdinates";
 import Associates from "../pages/Associates/Associates";
-import AdminDashboard from "../pages/AdminDashboard/AdminDashboard";
+import AdminDashboard from "../pages/Admin/AdminDashboard/AdminDashboard";
 import TermsAndConditions from "../pages/Agreement/TermsAndConditions";
 import PrivacyPolicy from "../pages/Agreement/PrivacyPolicy";
 import { Navigate, Outlet } from "react-router-dom";
-import AssosiateProfile from "../pages/Profile/AssosiateProfile";
-import {EditAssosiateProfile} from "../pages/EditProfile/EditAssosiateProfile";
+import AssosiateProfile from "../pages/Associates/ViewProfile/AssosiateProfile";
+import { EditAssosiateProfile } from "../pages/Associates/EditProfile/EditAssosiateProfile";
+import EarningsInfo from "../pages/Associates/Earnings/EarningsInfo";
 
 
 const routes = (isLoggedIn) => [
@@ -67,7 +68,7 @@ const routes = (isLoggedIn) => [
   {
     path: "terms-and-conditions",
     element: !isLoggedIn ? <TermsAndConditions /> : <Navigate to="/auth/home" />,
-  },  {
+  }, {
     path: "privacy-policy",
     element: !isLoggedIn ? <PrivacyPolicy /> : <Navigate to="/auth/home" />,
   },
@@ -93,6 +94,8 @@ const routes = (isLoggedIn) => [
       { path: "associates/viewprofile", element: <AssosiateProfile /> },
       { path: "associates/editprofile", element: <EditAssosiateProfile /> },
       { path: "associates/home", element: <Home /> },
+      { path: "associates/earnings", element: <EarningsInfo /> },
+
     ],
   },
   {

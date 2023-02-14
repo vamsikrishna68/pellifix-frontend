@@ -15,20 +15,7 @@ import {
   Autocomplete,
   IconButton,
 } from "@mui/material";
-import {
-  genderList,
-  physicalStatusList,
-  maritalStatusList,
-  smokingHabitsList,
-  drinkingHabitsList,
-  eatingHabitsList,
-  bodyTypeList,
-  motherToungeList,
-  religionsList,
-  nakshtramList,
-  raasilist,
-  countries,
-} from "../../utils/dropDownValues";
+
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -37,12 +24,12 @@ import SaveIcon from "@mui/icons-material/Save";
 import { Formik } from "formik";
 import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
-import { getProfileData, updateProfileData, uploadImages } from "../../api/api";
-import Loading from "../../ui-components/Loding/Loading";
+import { getProfileData, updateProfileData, uploadImages } from "../../../api/api";
+import Loading from "../../../ui-components/Loding/Loading";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import DropZone from "./DropZone";
 import ImageGrid from "./ImageGrid";
-import { ls } from "../../utils/localStorage";
+import { ls } from "../../../utils/localStorage";
 
 const EditProfile = () => {
   const [loading, setLoading] = useState(true);
