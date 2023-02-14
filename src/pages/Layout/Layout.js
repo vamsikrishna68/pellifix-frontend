@@ -21,6 +21,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Authorization from "../../utils/authorization";
 import AssociateLayout from "../Associates/Layout/Layout";
 import UserLayout from "../Users/Layout/Layout";
+import { deletingProfile } from "../../api/api";
+import "./style.scss";
 
 const drawerWidth = 280;
 
@@ -126,7 +128,8 @@ const Layout = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const role = "";
   const location = useLocation();
-  const isAssociatelogin = location && location.pathname && location.pathname.includes('associates');
+  const isAssociatelogin =
+    location && location.pathname && location.pathname.includes("associates");
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -138,13 +141,33 @@ const Layout = () => {
 
   const logout = () => Authorization.logout();
 
+  const deleteProfile = async () => {
+    try {
+      const response = await deletingProfile();
+      if (response.status === 204) {
+        Authorization.logout();
+      }
+    } catch (error) {
+      toast.error(
+        error?.message
+          ? error.message
+          : error?.response?.data?.error?.message || "Something went wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
+    }
+  };
+
   const profilePage = () => {
     navigate("/auth/profile");
   };
   const assosiateProfilePage = () => {
     navigate("associates/viewprofile");
   };
-
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -192,8 +215,13 @@ const Layout = () => {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={isAssociatelogin ? assosiateProfilePage : profilePage}>Profile</MenuItem>
+              <MenuItem
+                onClick={isAssociatelogin ? assosiateProfilePage : profilePage}
+              >
+                Profile
+              </MenuItem>
               <MenuItem onClick={logout}>Logout</MenuItem>
+              <MenuItem onClick={deleteProfile}>Delete</MenuItem>
             </Menu>
           </Box>
         </Toolbar>
@@ -210,11 +238,11 @@ const Layout = () => {
         </DrawerHeader>
         <Divider />
 
-        {isAssociatelogin ?
-          <AssociateLayout open={open}/> :
-          <UserLayout open={open}/>
-        }
-
+        {isAssociatelogin ? (
+          <AssociateLayout open={open} />
+        ) : (
+          <UserLayout open={open} />
+        )}
       </Drawer>
       <Main open={open}>
         <DrawerHeader />

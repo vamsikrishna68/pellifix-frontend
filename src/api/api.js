@@ -52,7 +52,7 @@ export const updateProfileData = (payload) => {
   });
 };
 export const getAssosiateProfileData = () => {
-  let assosiateProfileId=Authorization.getProfileId();
+  let assosiateProfileId = Authorization.getProfileId();
 
   return apiService({
     url: `https://api.pellifix.com/cp/v1/associates/${assosiateProfileId}`,
@@ -60,7 +60,7 @@ export const getAssosiateProfileData = () => {
   });
 };
 export const updateAssosiateProfileData = (payload) => {
-  let assosiateProfileId=Authorization.getProfileId();
+  let assosiateProfileId = Authorization.getProfileId();
 
   return apiService({
     url: `https://api.pellifix.com/cp/v1/associates/${assosiateProfileId}`,
@@ -106,7 +106,6 @@ export const getStates = () => {
     method: "GET",
   });
 };
-
 
 export const verifyPhone = (payload) => {
   return apiService({
@@ -192,5 +191,22 @@ export const getAssociateEarningsInfo = (type) => {
   return apiService({
     url: `https://api.pellifix.com/cp/v1/employees/earnings?type=${type}`,
     method: "GET",
+  });
+};
+
+// Razorpay
+export const fetchRazorPay = (payload) => {
+  return apiService({
+    url: "/razor/payment",
+    method: "POST",
+    body: payload,
+  });
+};
+
+// Delete profile
+export const deletingProfile = () => {
+  return apiService({
+    url: "/profiles",
+    method: "DELETE",
   });
 };
