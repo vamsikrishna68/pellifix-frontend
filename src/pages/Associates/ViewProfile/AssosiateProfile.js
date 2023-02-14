@@ -11,15 +11,14 @@ import {
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
-import { getAssosiateProfileData } from "../../api/api";
+import { getAssosiateProfileData } from "../../../api/api";
 import { loadAnimation } from "lottie-web";
 import { defineLordIconElement } from "lord-icon-element";
 import moment from "moment";
-import { ls } from "../../utils/localStorage";
 
 // register lottie and define custom element
 defineLordIconElement(loadAnimation);
-import "./style.scss";
+import "../../Users/Profile/style.scss";
 
 const Profile = () => {
   const [profileData, setProfileData] = useState(null);

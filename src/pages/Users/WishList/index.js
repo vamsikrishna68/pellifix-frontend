@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getWishList } from "../../api/api";
+import { getWishList } from "../../../api/api";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import {

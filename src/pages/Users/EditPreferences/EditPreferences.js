@@ -15,11 +15,11 @@ import {
 } from "@mui/material";
 import { useEffect, useState, useCallback } from "react";
 import { ToastContainer, toast, Zoom } from "react-toastify";
-import Loading from "../../ui-components/Loding/Loading";
-import { ls } from "../../utils/localStorage";
+import Loading from "../../../ui-components/Loding/Loading";
+import { ls } from "../../../utils/localStorage";
 import SaveIcon from "@mui/icons-material/Save";
 import { Formik } from "formik";
-import { getPreferenceData, updatePreferenceData } from "../../api/api";
+import { getPreferenceData, updatePreferenceData } from "../../../api/api";
 
 const EditPreferences = () => {
   const [loading, setLoading] = useState(true);
