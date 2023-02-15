@@ -13,12 +13,12 @@ import PreferenceProfiePage from "../pages/Home/ProfilePage/PreferenceProfiePage
 import Profile from "../pages/Users/Profile/Profile";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
-import ViewProfile from "../pages/ViewProfile/ViewProfile";
-import EditProfile from "../pages/EditProfile/EditProfile";
-import EditPreferences from "../pages/EditPreferences/EditPreferences";
+import ViewProfile from "../pages/Users/ViewProfile/ViewProfile";
+import EditProfile from "../pages/Users/EditProfile/EditProfile";
+import EditPreferences from "../pages/Users/EditPreferences/EditPreferences";
 import Chat from "../pages/Chat";
 import Subscription from "../pages/Subscription";
-import AdminLogin from "../pages/AdminLogin/AdminLogin";
+import AdminLogin from "../pages/Admin/AdminLogin/AdminLogin";
 import SubOrdinates from "../pages/SubOrdinates/SubOrdinates";
 import Associates from "../pages/Associates/Associates";
 import AdminDashboard from "../pages/Admin/AdminDashboard/AdminDashboard";
