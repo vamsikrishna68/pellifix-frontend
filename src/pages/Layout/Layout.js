@@ -11,7 +11,6 @@ import Divider from "@mui/material/Divider";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
@@ -22,7 +21,7 @@ import Authorization from "../../utils/authorization";
 import AssociateLayout from "../Associates/Layout/Layout";
 import UserLayout from "../Users/Layout/Layout";
 import { deletingProfile } from "../../api/api";
-import "./style.scss";
+// import "./style.scss";
 
 const drawerWidth = 280;
 
