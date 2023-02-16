@@ -46,7 +46,6 @@ const Login = () => {
     axios
       .post(api, { ...values },)
       .then((response) => {
-        console.log(response);
         if (response && response.status == 200) {
           Authorization.login(response.data)
           setLoading(false);
@@ -58,9 +57,9 @@ const Login = () => {
           });
           setTimeout(() => {
             if (isAssociatelogin) {
-              navigate("/auth/associates/home");
+              navigate("/auth/associates/view-profile");
             } else if (isSubOrdinatelogin) {
-              navigate("/auth/sub-ordinate/home");
+              navigate("/auth/sub-ordinate/view-profile");
             } else {
               navigate("/auth/home");
             }
@@ -69,7 +68,6 @@ const Login = () => {
 
       })
       .catch((err) => {
-        console.log(err);
         toast.error(err.response.data.error.message, {
           position: "top-right",
           autoClose: 3000,

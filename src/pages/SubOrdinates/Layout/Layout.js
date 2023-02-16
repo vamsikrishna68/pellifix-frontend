@@ -7,34 +7,34 @@ import Tooltip from "@mui/material/Tooltip";
 import "./style.scss";
 import List from "@mui/material/List";
 
-
-const AssociateLayout = (props) => {
+const SubordinateLayout = (props) => {
   const { open } = props;
+
   let sideMenu = [
     {
       title: "View Profile",
       icon: "https://cdn.lordicon.com/imamsnbq.json",
-      path: "associates/view-profile",
-      role: "ASSOCIATE",
+      path: "sub-ordinate/view-profile",
+      role: "SUB_ORDINATE",
     },
     {
       title: "Edit Profile",
       icon: "https://cdn.lordicon.com/wloilxuq.json",
-      path: "associates/edit-profile",
-      role: "ASSOCIATE",
+      path: "sub-ordinate/edit-profile",
+      role: "SUB_ORDINATE",
     },
     {
       title: "Earnings",
       icon: "https://cdn.lordicon.com/zpxybbhl.json",
-      path: "associates/Earnings",
-      role: "ASSOCIATE",
+      path: "sub-ordinate/earnings",
+      role: "SUB_ORDINATE",
     },
   ];
 
   return (
     <List sx={{ paddingTop: 0 }}>
       {sideMenu.map((menu, index) =>
-        menu.role === "ASSOCIATE" ? (
+        menu.role === "SUB_ORDINATE" ? (
           <NavLink
             to={menu.path}
             className={({ isActive }) =>
@@ -80,4 +80,4 @@ const AssociateLayout = (props) => {
   );
 };
 
-export default AssociateLayout;
+export default SubordinateLayout;

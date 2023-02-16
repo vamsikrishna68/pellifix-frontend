@@ -28,6 +28,8 @@ import { Navigate, Outlet } from "react-router-dom";
 import AssosiateProfile from "../pages/Associates/ViewProfile/AssosiateProfile";
 import { EditAssosiateProfile } from "../pages/Associates/EditProfile/EditAssosiateProfile";
 import EarningsInfo from "../pages/Associates/Earnings/EarningsInfo";
+import SubOrdinatesViewProfile from "../pages/SubOrdinates/ViewProfile";
+import { EditSubordinateProfile } from "../pages/SubOrdinates/EditProfile";
 
 const routes = (isLoggedIn) => [
   {
@@ -108,14 +110,18 @@ const routes = (isLoggedIn) => [
       { path: `profile-viewed/view-profile/:id`, element: <ViewProfile /> },
       { path: "chat", element: <Chat /> },
       { path: "subscribe", element: <Subscription /> },
-      { path: "sub-ordinates", element: <SubOrdinates /> },
-      { path: "associates", element: <Associates /> },
       { path: "admin-dashboard", element: <AdminDashboard /> },
-      { path: "associates/viewprofile", element: <AssosiateProfile /> },
-      { path: "associates/editprofile", element: <EditAssosiateProfile /> },
-      { path: "associates/home", element: <Home /> },
+
+      { path: "associates", element: <Associates /> },
+      { path: "associates/view-profile", element: <AssosiateProfile /> },
+      { path: "associates/edit-profile", element: <EditAssosiateProfile /> },
       { path: "associates/earnings", element: <EarningsInfo /> },
-      { path: "sub-ordinate/home", element: <Home /> },
+
+      { path: "sub-ordinates", element: <SubOrdinates /> },
+      { path: "sub-ordinate/view-profile", element: <SubOrdinatesViewProfile /> },
+      { path: "sub-ordinate/edit-profile", element: <EditSubordinateProfile /> },
+      { path: "sub-ordinate/earnings", element: <EarningsInfo /> },
+
     ],
   },
   {

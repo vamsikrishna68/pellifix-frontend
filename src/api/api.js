@@ -51,6 +51,7 @@ export const updateProfileData = (payload) => {
     body: payload,
   });
 };
+
 export const getAssosiateProfileData = () => {
   let assosiateProfileId = Authorization.getProfileId();
 
@@ -59,11 +60,31 @@ export const getAssosiateProfileData = () => {
     method: "GET",
   });
 };
+
 export const updateAssosiateProfileData = (payload) => {
   let assosiateProfileId = Authorization.getProfileId();
 
   return apiService({
     url: `https://api.pellifix.com/cp/v1/associates/${assosiateProfileId}`,
+    method: "PATCH",
+    body: payload,
+  });
+};
+
+export const getSubordinateProfileData = () => {
+  let ProfileId = Authorization.getProfileId();
+
+  return apiService({
+    url: `https://api.pellifix.com/cp/v1/sub-ordinates/${ProfileId}`,
+    method: "GET",
+  });
+};
+
+export const updateSubordinateProfileData = (payload) => {
+  let ProfileId = Authorization.getProfileId();
+
+  return apiService({
+    url: `https://api.pellifix.com/cp/v1/sub-ordinates/${ProfileId}`,
     method: "PATCH",
     body: payload,
   });
