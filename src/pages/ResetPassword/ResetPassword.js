@@ -24,6 +24,7 @@ const ResetPassword = () => {
   const params = window.location.pathname.split("d/").pop();
   const location = useLocation();
   const isAssociate = location && location.pathname && location.pathname.includes('/associates/reset-password');
+  const isSubOrdinate = location && location.pathname && location.pathname.includes('/sub-ordinate/reset-password');
 
   useEffect(() => {
     AOS.init({
@@ -43,6 +44,8 @@ const ResetPassword = () => {
 
     if (isAssociate) {
       resetPasswordUrl = `${process.env.REACT_APP_BASE_URL}/cp/v1/auth/associates/password/update/${params}`
+    } else if (isSubOrdinate) {
+      resetPasswordUrl = `${process.env.REACT_APP_BASE_URL}/cp/v1/auth/sub-ordinate/password/update/${params}`
     } else {
       resetPasswordUrl = `${process.env.REACT_APP_BASE_URL}/v1/customer/password/update/${params}`
     }
@@ -69,6 +72,8 @@ const ResetPassword = () => {
           setTimeout(() => {
             if (isAssociate) {
               navigate("/associates/login");
+            } else  if (isSubOrdinate) {
+              navigate("/sub-ordinate/login");
             } else {
               navigate("/login");
             }

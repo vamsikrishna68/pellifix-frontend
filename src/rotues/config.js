@@ -67,6 +67,18 @@ const routes = (isLoggedIn) => [
     element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
   },
   {
+    path: "sub-ordinate/login",
+    element: !isLoggedIn ? <Login /> : <Navigate to="/auth/home" />,
+  },
+  {
+    path: "sub-ordinate/forgot-password",
+    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/home" />,
+  },
+  {
+    path: "sub-ordinate/reset-password/:id",
+    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
+  },
+  {
     path: "terms-and-conditions",
     element: !isLoggedIn ? (
       <TermsAndConditions />
@@ -103,6 +115,7 @@ const routes = (isLoggedIn) => [
       { path: "associates/editprofile", element: <EditAssosiateProfile /> },
       { path: "associates/home", element: <Home /> },
       { path: "associates/earnings", element: <EarningsInfo /> },
+      { path: "sub-ordinate/home", element: <Home /> },
     ],
   },
   {

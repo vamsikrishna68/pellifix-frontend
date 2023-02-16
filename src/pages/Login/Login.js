@@ -16,6 +16,8 @@ const Login = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const isAssociatelogin = location && location.pathname && location.pathname == '/associates/login';
+  const isSubOrdinatelogin = location && location.pathname && location.pathname == '/sub-ordinate/login';
+
   useEffect(() => {
 
     AOS.init({
@@ -31,6 +33,8 @@ const Login = () => {
     setLoading(true);
     let userType;
     if (isAssociatelogin) {
+      userType = `cp/v1/auth${location.pathname}`;
+    }else if(isSubOrdinatelogin) {
       userType = `cp/v1/auth${location.pathname}`;
     } else {
       userType = `v1/customer${location.pathname}`;
@@ -55,6 +59,8 @@ const Login = () => {
           setTimeout(() => {
             if (isAssociatelogin) {
               navigate("/auth/associates/home");
+            } else if (isSubOrdinatelogin) {
+              navigate("/auth/sub-ordinate/home");
             } else {
               navigate("/auth/home");
             }
@@ -76,7 +82,7 @@ const Login = () => {
 
   return (
     <div className="container-fluid login-container">
-      {!isAssociatelogin ?
+      {(!isAssociatelogin && !isSubOrdinatelogin) ?
         <div
           data-aos="fade-down"
           className="col-xs-12 col-sm-12 col-md-12 col-lg-7"
@@ -173,7 +179,7 @@ const Login = () => {
                 Login
               </Button>
               <div>
-                <NavLink to={isAssociatelogin ? '/associates/forgot-password' : '/forgot-password'} className="forgotpwd">Forgot Password?</NavLink>
+                <NavLink to={isAssociatelogin ? '/associates/forgot-password' : isSubOrdinatelogin ? '/sub-ordinate/forgot-password'  :'/forgot-password'} className="forgotpwd">Forgot Password?</NavLink>
               </div>
 
               <div className="newuser">
