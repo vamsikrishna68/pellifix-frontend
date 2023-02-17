@@ -208,7 +208,7 @@ export const updateViewedProfile = (payload) => {
 };
 
 // Wishlist
-export const getAssociateEarningsInfo = (type) => {
+export const getEarningsInfo = (type) => {
   return apiService({
     url: `https://api.pellifix.com/cp/v1/employees/earnings?type=${type}`,
     method: "GET",

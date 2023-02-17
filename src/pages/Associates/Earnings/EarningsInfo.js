@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { getAssociateEarningsInfo } from '../../../api/api';
+import { getEarningsInfo } from '../../../api/api';
 import EarningsInfo_LineChart from './EarningInfo-LineChart';
 import EarningsInfo_BarChart from './EarningsInfo-BarChart';
 import EarningsInfo_PieChart from './EarningsInfo-PieChart';
@@ -29,7 +29,7 @@ function EarningsInfo() {
 
     const getEarnings = async () => {
         try {
-            const response = await getAssociateEarningsInfo(chartDisplayType);
+            const response = await getEarningsInfo(chartDisplayType);
             if (response.status === 200) {
                 if (chartDisplayType == 'MONTH') {
                     formatEarnigsData(response.data, chartDisplayType);
