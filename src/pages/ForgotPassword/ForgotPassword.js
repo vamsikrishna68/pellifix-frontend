@@ -14,6 +14,7 @@ const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const isAssociate = location && location.pathname && location.pathname == '/associates/forgot-password';
+  const isSubOrdinate = location && location.pathname && location.pathname == '/sub-ordinate/forgot-password';
 
   useEffect(() => {
     AOS.init({
@@ -36,6 +37,8 @@ const ForgotPassword = () => {
     let forgotPasswordUrl;
     if (isAssociate) {
       forgotPasswordUrl = `${process.env.REACT_APP_BASE_URL}/cp/v1/auth/associates/password/reset`
+    } else if (isSubOrdinate) {
+      forgotPasswordUrl = `${process.env.REACT_APP_BASE_URL}/cp/v1/auth/sub-ordinate/password/reset`
     } else {
       forgotPasswordUrl = `${process.env.REACT_APP_BASE_URL}/v1/customer/password/reset`
     }

@@ -16,6 +16,8 @@ const Login = () => {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const isAssociatelogin = location && location.pathname && location.pathname == '/associates/login';
+  const isSubOrdinatelogin = location && location.pathname && location.pathname == '/sub-ordinate/login';
+
   useEffect(() => {
 
     AOS.init({
@@ -32,6 +34,8 @@ const Login = () => {
     let userType;
     if (isAssociatelogin) {
       userType = `cp/v1/auth${location.pathname}`;
+    }else if(isSubOrdinatelogin) {
+      userType = `cp/v1/auth${location.pathname}`;
     } else {
       userType = `v1/customer${location.pathname}`;
     }
@@ -42,7 +46,6 @@ const Login = () => {
     axios
       .post(api, { ...values },)
       .then((response) => {
-        console.log(response);
         if (response && response.status == 200) {
           Authorization.login(response.data)
           setLoading(false);
@@ -54,7 +57,9 @@ const Login = () => {
           });
           setTimeout(() => {
             if (isAssociatelogin) {
-              navigate("/auth/associates/home");
+              navigate("/auth/associates/view-profile");
+            } else if (isSubOrdinatelogin) {
+              navigate("/auth/sub-ordinate/view-profile");
             } else {
               navigate("/auth/home");
             }
@@ -63,7 +68,6 @@ const Login = () => {
 
       })
       .catch((err) => {
-        console.log(err);
         toast.error(err.response.data.error.message, {
           position: "top-right",
           autoClose: 3000,
@@ -76,7 +80,7 @@ const Login = () => {
 
   return (
     <div className="container-fluid login-container">
-      {!isAssociatelogin ?
+      {(!isAssociatelogin && !isSubOrdinatelogin) ?
         <div
           data-aos="fade-down"
           className="col-xs-12 col-sm-12 col-md-12 col-lg-7"
@@ -173,7 +177,7 @@ const Login = () => {
                 Login
               </Button>
               <div>
-                <NavLink to={isAssociatelogin ? '/associates/forgot-password' : '/forgot-password'} className="forgotpwd">Forgot Password?</NavLink>
+                <NavLink to={isAssociatelogin ? '/associates/forgot-password' : isSubOrdinatelogin ? '/sub-ordinate/forgot-password'  :'/forgot-password'} className="forgotpwd">Forgot Password?</NavLink>
               </div>
 
               <div className="newuser">

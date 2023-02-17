@@ -88,6 +88,14 @@ const Header = () => {
                 Associate Login
               </span>
             </li>
+            <li>
+              <span
+                onClick={() => navigate("/sub-ordinate/login")}
+                className="getstarted"
+              >
+                Subordinate Login
+              </span>
+            </li>
           </ul>
           <i className="bi bi-list mobile-nav-toggle"></i>
         </nav>
