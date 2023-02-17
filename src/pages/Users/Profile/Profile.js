@@ -110,10 +110,10 @@ const Profile = () => {
         height="250"
         image={
           profileData?.image !== "" &&
-          profileData?.image !== undefined &&
-          profileData?.image !== null
+            profileData?.image !== undefined &&
+            profileData?.image !== null
             ? // process.env.REACT_APP_BASE_URL + "/" +
-              profileData?.image
+            profileData?.image
             : ""
         }
         alt="green iguana"
@@ -134,8 +134,8 @@ const Profile = () => {
       <div className="row">
         <div className="col-sm-9">
           <List>
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-              <ListItem className="row">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((n, index) => (
+              <ListItem className="row" key={index}>
                 <div className="col-sm-3">
                   <Skeleton />
                 </div>
