@@ -43,10 +43,23 @@ export const getProfileData = () => {
     method: "GET",
   });
 };
+export const getCustomerProfileData = (id) => {
+  return apiService({
+    url: `${process.env.REACT_APP_BASE_URL}/cp/v1/profiles/${id}`,
+    method: "GET",
+  });
+};
 
 export const updateProfileData = (payload) => {
   return apiService({
     url: "/profiles",
+    method: "PATCH",
+    body: payload,
+  });
+};
+export const updateCustomerProfileData = (payload,id) => {
+  return apiService({
+    url: `${process.env.REACT_APP_BASE_URL}/cp/v1/profiles/${id}`,
     method: "PATCH",
     body: payload,
   });
