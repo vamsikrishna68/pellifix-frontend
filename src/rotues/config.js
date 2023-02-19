@@ -27,9 +27,10 @@ import PrivacyPolicy from "../pages/Agreement/PrivacyPolicy";
 import { Navigate, Outlet } from "react-router-dom";
 import AssosiateProfile from "../pages/Associates/ViewProfile/AssosiateProfile";
 import { EditAssosiateProfile } from "../pages/Associates/EditProfile/EditAssosiateProfile";
-import EarningsInfo from "../pages/Associates/Earnings/EarningsInfo";
+import AssociateEarningsInfo from "../pages/Associates/Earnings/EarningsInfo";
 import SubOrdinatesViewProfile from "../pages/SubOrdinates/ViewProfile";
 import { EditSubordinateProfile } from "../pages/SubOrdinates/EditProfile";
+import SubordinateEarningsInfo from "../pages/SubOrdinates/Earnings/EarningsInfo";
 
 const routes = (isLoggedIn) => [
   {
@@ -115,12 +116,12 @@ const routes = (isLoggedIn) => [
       { path: "associates", element: <Associates /> },
       { path: "associates/view-profile", element: <AssosiateProfile /> },
       { path: "associates/edit-profile", element: <EditAssosiateProfile /> },
-      { path: "associates/earnings", element: <EarningsInfo /> },
+      { path: "associates/earnings", element: <AssociateEarningsInfo /> },
 
       { path: "sub-ordinates", element: <SubOrdinates /> },
       { path: "sub-ordinate/view-profile", element: <SubOrdinatesViewProfile /> },
       { path: "sub-ordinate/edit-profile", element: <EditSubordinateProfile /> },
-      { path: "sub-ordinate/earnings", element: <EarningsInfo /> },
+      { path: "sub-ordinate/earnings", element: <SubordinateEarningsInfo /> },
 
     ],
   },
