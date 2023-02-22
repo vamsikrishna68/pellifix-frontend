@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API } from "../utils/apiEndpoints";
 axios.defaults.baseURL = "https://api.pellifix.com/v1/";
 import Authorization from "../utils/authorization";
 
@@ -56,7 +57,7 @@ export const getAssosiateProfileData = () => {
   let assosiateProfileId = Authorization.getProfileId();
 
   return apiService({
-    url: `https://api.pellifix.com/cp/v1/associates/${assosiateProfileId}`,
+    url: `${API.associateProfile}${assosiateProfileId}`,
     method: "GET",
   });
 };
@@ -65,7 +66,7 @@ export const updateAssosiateProfileData = (payload) => {
   let assosiateProfileId = Authorization.getProfileId();
 
   return apiService({
-    url: `https://api.pellifix.com/cp/v1/associates/${assosiateProfileId}`,
+    url: `${API.associateProfile}${assosiateProfileId}`,
     method: "PATCH",
     body: payload,
   });
@@ -75,7 +76,7 @@ export const getSubordinateProfileData = () => {
   let ProfileId = Authorization.getProfileId();
 
   return apiService({
-    url: `https://api.pellifix.com/cp/v1/sub-ordinates/${ProfileId}`,
+    url: `${API.subOrdinateUpdateProfile}${ProfileId}`,
     method: "GET",
   });
 };
@@ -84,7 +85,7 @@ export const updateSubordinateProfileData = (payload) => {
   let ProfileId = Authorization.getProfileId();
 
   return apiService({
-    url: `https://api.pellifix.com/cp/v1/sub-ordinates/${ProfileId}`,
+    url: `${API.subOrdinateUpdateProfile}${ProfileId}`,
     method: "PATCH",
     body: payload,
   });
@@ -210,7 +211,7 @@ export const updateViewedProfile = (payload) => {
 // Wishlist
 export const getEarningsInfo = (type) => {
   return apiService({
-    url: `https://api.pellifix.com/cp/v1/employees/earnings?type=${type}`,
+    url: `${API.getEarnings}${type}`,
     method: "GET",
   });
 };

@@ -42,7 +42,7 @@ const routes = (isLoggedIn) => [
     element: !isLoggedIn ? <Login /> : <Navigate to="/auth/home" />,
   },
   {
-    path: "admin-login",
+    path: "admin/login",
     element: !isLoggedIn ? <AdminLogin /> : <Navigate to="/auth/home" />,
   },
   {
@@ -82,6 +82,14 @@ const routes = (isLoggedIn) => [
     element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
   },
   {
+    path: "admin/forgot-password",
+    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/home" />,
+  },
+  {
+    path: "admin/reset-password/:id",
+    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
+  },
+  {
     path: "terms-and-conditions",
     element: !isLoggedIn ? (
       <TermsAndConditions />
@@ -111,7 +119,8 @@ const routes = (isLoggedIn) => [
       { path: `profile-viewed/view-profile/:id`, element: <ViewProfile /> },
       { path: "chat", element: <Chat /> },
       { path: "subscribe", element: <Subscription /> },
-      { path: "admin-dashboard", element: <AdminDashboard /> },
+      
+      { path: "admin/dashboard", element: <AdminDashboard /> },
 
       { path: "associates", element: <Associates /> },
       { path: "associates/view-profile", element: <AssosiateProfile /> },

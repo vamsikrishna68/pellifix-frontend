@@ -10,6 +10,7 @@ import Authorization from "../../utils/authorization";
 import AOS from 'aos';
 import './style.scss'
 import "aos/dist/aos.css";
+import { API } from "../../utils/apiEndpoints";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -31,15 +32,15 @@ const Login = () => {
 
   const login = (values) => {
     setLoading(true);
-    let userType;
+    let api;
     if (isAssociatelogin) {
-      userType = `cp/v1/auth${location.pathname}`;
+      api = API.associateLogin;
     }else if(isSubOrdinatelogin) {
-      userType = `cp/v1/auth${location.pathname}`;
+      api = API.subOrdinateLogin;
     } else {
-      userType = `v1/customer${location.pathname}`;
+      api = API.customerLogin;
     }
-    validateUserLogin(values, `https://api.pellifix.com/${userType}`);
+    validateUserLogin(values, api);
   };
 
   const validateUserLogin = (values, api) => {
