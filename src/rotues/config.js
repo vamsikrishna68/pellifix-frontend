@@ -31,6 +31,7 @@ import { EditAssosiateProfile } from "../pages/Associates/EditProfile/EditAssosi
 import EarningsInfo from "../pages/Associates/Earnings/EarningsInfo";
 import SubOrdinatesViewProfile from "../pages/SubOrdinates/ViewProfile";
 import { EditSubordinateProfile } from "../pages/SubOrdinates/EditProfile";
+import  CustomerDetails  from "../pages/SubOrdinates/CustomerDetails";
 
 const routes = (isLoggedIn) => [
   {
@@ -124,6 +125,7 @@ const routes = (isLoggedIn) => [
       { path: "sub-ordinate/view-profile", element: <SubOrdinatesViewProfile /> },
       { path: "sub-ordinate/edit-profile", element: <EditSubordinateProfile /> },
       { path: "sub-ordinate/earnings", element: <EarningsInfo /> },
+      { path: "sub-ordinate/customer-details", element: <CustomerDetails /> },
 
     ],
   },

@@ -38,7 +38,13 @@ const SubordinateLayout = (props) => {
       icon: "https://cdn.lordicon.com/dxjqoygy.json",
       path: "sub-ordinate/edit-customer-profile",
       role: "SUB_ORDINATE",
-    }
+    },
+    {
+      title: "Customer Details",
+      icon: "https://cdn.lordicon.com/tyounuzx.json",
+      path: "sub-ordinate/customer-details",
+      role: "SUB_ORDINATE",
+  },
   ];
 
   return (
