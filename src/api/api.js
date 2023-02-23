@@ -244,3 +244,17 @@ export const deletingProfile = () => {
     method: "DELETE",
   });
 };
+//get subscription page visited customer Data
+export const getSubscriptionPageVisitedCustomerData = () => {
+  return apiService({
+    url: `${process.env.REACT_APP_BASE_URL}/cp/v1/payment/page/viewed`,
+    method: "GET",
+  });
+};
+//delete subscription page visited customer Data
+export const deleteViewedContactDetails = (id) => {
+  return apiService({
+    url: `${process.env.REACT_APP_BASE_URL}/cp/v1/payment/page/viewed/${id}`,
+    method: "PATCH",
+  });
+};
