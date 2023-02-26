@@ -27,13 +27,13 @@ function AppRoutes() {
 function App() {
 
   return (
-    <React.StrictMode>
+    // <React.StrictMode>
       <ThemeProvider theme={theme}>
       <BrowserRouter>
         <AppRoutes/>
       </BrowserRouter>
       </ThemeProvider>
-    </React.StrictMode>
+    // </React.StrictMode>
   );
 }
 

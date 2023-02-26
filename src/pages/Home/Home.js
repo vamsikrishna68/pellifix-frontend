@@ -82,7 +82,8 @@ const Home = () => {
       name: response?.data?.name,
       email: response?.data?.email_id,
       phone: response?.data?.mobileno,
-      profileId:response?.data?.profile_id
+      profileId:response?.data?.profile_id,
+      id:response?.data?.id
     };
     ls.setItem("profile_for_reference", JSON.stringify(profileData));
   };

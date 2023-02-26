@@ -3,52 +3,71 @@ import PaymentModal from "./PaymentModal";
 import PricingCard from "./PricingCard";
 import { ls } from "../../utils/localStorage";
 import "./Subscription.scss";
+
 const pricingDataAll = {
-  generic: {
-    priceDesc: "some small print",
-    description:
-      "This is the most basic package but it's also the cheapest. Great for ordinary use.",
-  },
-
-  common: {
-    one: {
-      description:
-        "This is the most basic package but it's also the cheapest. Great for ordinary use.",
-    },
-    two: {
-      description:
-        "Best selling option. This is well suited for all around general everything.",
-    },
-    three: {
-      description:
-        "Enterprise edition. Heavy duty awesomeness that'll handle just about anything",
-    },
-  },
-
   regular: {
-    generic: {
-      priceOverview: "Standard Version",
+    quarterly: {
+      months: 3,
+      price: 6900,
+      date: "31-Jan-2023",
+      description: {
+        one: "Send unlimited messages, chat, and make video calls",
+        two: "Access 40 verified mobile numbers",
+        three: "View unlimited horoscope",
+      },
     },
-    one: {
-      title: "Mothly",
-      price: 1.45,
-      billingCode: "basic-extra",
-      priceOverview: "Includes all Extra features",
-      days: "30 Days",
+    halfYearly: {
+      months: 6,
+      price: 13800,
+      date: "31-Jan-2023",
+      description: {
+        one: "Send unlimited messages, chat, and make video calls",
+        two: "Access 40 verified mobile numbers",
+        three: "View unlimited horoscope",
+      },
     },
-    two: {
-      title: "Half-yearly",
-      price: 2.45,
-      billingCode: "advanced-extra",
-      priceOverview: "Includes all Extra features",
-      days: "6 Months",
+    yearly: {
+      months: 12,
+      price: 20700,
+      date: "31-Jan-2023",
+      description: {
+        one: "Send unlimited messages, chat, and make video calls",
+        two: "Access 40 verified mobile numbers",
+        three: "View unlimited horoscope",
+      },
     },
-    three: {
-      title: "Yearly",
-      price: 3.45,
-      billingCode: "enterprise-extra",
-      priceOverview: "Includes all Extra features",
-      days: "1 Year",
+  },
+
+  assistedService: {
+    quarterly: {
+      months: 3,
+      price: 8100,
+      date: "31-Jan-2023",
+      description: {
+        one: "Send unlimited messages, chat, and make video calls",
+        two: "Access 40 verified mobile numbers",
+        three: "View unlimited horoscope",
+      },
+    },
+    halfYearly: {
+      months: 6,
+      price: 1500,
+      date: "31-Jan-2023",
+      description: {
+        one: "Send unlimited messages, chat, and make video calls",
+        two: "Access 40 verified mobile numbers",
+        three: "View unlimited horoscope",
+      },
+    },
+    yearly: {
+      months: 12,
+      price: 21900,
+      date: "31-Jan-2023",
+      description: {
+        one: "Send unlimited messages, chat, and make video calls",
+        two: "Access 40 verified mobile numbers",
+        three: "View unlimited horoscope",
+      },
     },
   },
 };
@@ -60,8 +79,16 @@ class Subscription extends React.Component {
     this.state = {
       fields,
       openCardDetailModal: false,
+      selectedPlan: "regular",
     };
   }
+
+  togglePromo = (plan) => {
+    this.setState({
+      selectedPlan: plan,
+    });
+  };
+
   componentDidMount() {
     // this.fetchMyProfile();
     const script = document.createElement("script");
@@ -114,15 +141,9 @@ class Subscription extends React.Component {
   };
 
   render() {
-    const { openCardDetailModal, fields } = this.state;
-    let pricingDataCurrent = pricingDataAll.regular;
-    let common = pricingDataAll.common;
-    pricingDataCurrent = pricingDataAll.regular;
-
-    const generic = pricingDataAll.generic,
-      one = pricingDataCurrent.one,
-      two = pricingDataCurrent.two,
-      three = pricingDataCurrent.three;
+    const { openCardDetailModal, fields, selectedPlan } = this.state;
+    let regularData = pricingDataAll.regular;
+    let assistedServiceData = pricingDataAll.assistedService;
     return (
       <div className="subscription">
         {openCardDetailModal && (
@@ -132,6 +153,7 @@ class Subscription extends React.Component {
               phone: fields.phone,
               email: fields.email,
               fare: fields.fare,
+              id: fields.id,
               pellifixid: "Pellifix",
               profileId: fields.profileId,
             }}
@@ -144,30 +166,69 @@ class Subscription extends React.Component {
         )}
         <section>
           <h1>Choose your plan!</h1>
+          {/* <input type="checkbox" onChange={this.togglePromo.bind(this)} /> */}
+          <div className="switch-field">
+            <input
+              type="radio"
+              id="radio-one"
+              name="switch-one"
+              value="regular"
+              checked={selectedPlan === "regular"}
+              onChange={() => this.togglePromo("regular")}
+            />
+            <label htmlFor="radio-one">Regular</label>
+            <input
+              type="radio"
+              id="radio-two"
+              name="switch-one"
+              value="assistedService"
+              checked={selectedPlan === "assistedService"}
+              onChange={() => this.togglePromo("assistedService")}
+            />
+            <label htmlFor="radio-two">Assisted Service</label>
+          </div>
           <div className="container">
-            <PricingCard
-              pricingData={one}
-              common={common.one}
-              generic={generic}
-              handlePay={this.handlePay}
-              monthly
-            />
+            {selectedPlan === "regular" ? (
+              <>
+                <PricingCard
+                  pricingData={regularData.quarterly}
+                  handlePay={this.handlePay}
+                  monthly
+                />
 
-            <PricingCard
-              pricingData={two}
-              common={common.two}
-              generic={generic}
-              handlePay={this.handlePay}
-              halfYearly
-            />
+                <PricingCard
+                  pricingData={regularData.halfYearly}
+                  handlePay={this.handlePay}
+                  halfYearly
+                />
 
-            <PricingCard
-              pricingData={three}
-              common={common.three}
-              generic={generic}
-              handlePay={this.handlePay}
-              yearly
-            />
+                <PricingCard
+                  pricingData={regularData.yearly}
+                  handlePay={this.handlePay}
+                  yearly
+                />
+              </>
+            ) : (
+              <>
+                <PricingCard
+                  pricingData={assistedServiceData.quarterly}
+                  handlePay={this.handlePay}
+                  monthly
+                />
+
+                <PricingCard
+                  pricingData={assistedServiceData.halfYearly}
+                  handlePay={this.handlePay}
+                  halfYearly
+                />
+
+                <PricingCard
+                  pricingData={assistedServiceData.yearly}
+                  handlePay={this.handlePay}
+                  yearly
+                />
+              </>
+            )}
           </div>
         </section>
       </div>

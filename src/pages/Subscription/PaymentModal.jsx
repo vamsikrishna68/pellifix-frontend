@@ -10,20 +10,22 @@ class PaymentModal extends React.PureComponent {
   fetchPay = async () => {
     const { customer: c } = this.props;
     let formData = {
-      amount: c.fare,
+      amount: Number(c.fare),
       receipt: c.profileId,
       notes: {
+        id: c.id,
         name: c.name,
-        email: c.email,
-        phone: c.phone,
+        // email: c.email,
+        // phone: c.phone,
       },
     };
     try {
       const response = await fetchRazorPay(formData);
       if (response && response.status == 200) {
-        console.log(response);
-        if (response.body) {
-          const { id, currency, amount } = response.body;
+        console.log({ response: response.data });
+        if (response&&response.data) {
+          const { id, currency, amount } = response.data;
+          console.log({id, currency, amount});
           // display bold here
           this.launchRazorpay({ id, currency, amount });
         } else {
@@ -43,6 +45,8 @@ class PaymentModal extends React.PureComponent {
       handleCancelPayment,
       closeModalHandler,
     } = this.props;
+    console.log({id:data.id});
+    console.log("djjjjjjjjjjjjf");
     let options = {
       key: process.env.REACT_APP_RAZORPAY_KEY,
       amount: data.amount,
@@ -83,8 +87,12 @@ class PaymentModal extends React.PureComponent {
         },
       },
     };
+    console.log("aaaaaaaaaaaaaaaaaaaaa");
     let rzp = new window.Razorpay(options);
+    console.log({options});
     rzp.open();
+
+    console.log("cccccccccccccccccccc");
   };
 
   showError = () => {
