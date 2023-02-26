@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Box } from "@mui/material";
 import "./ThanksPopup.scss";
 import { useNavigate, useLocation } from "react-router-dom";
+import { secondsToTime } from "../../utils/formatter";
 
 const style = {
   position: "absolute",
@@ -19,6 +20,21 @@ const style = {
 };
 
 function ThanksPopup({ open, handleClose }) {
+  const [counter, setCounter] = useState(50);
+  useEffect(() => {
+    console.log({ counter });
+    const timer = setInterval(() => timeCountDown(), 1000);
+    return () => clearInterval(timer);
+  }, [counter]);
+
+  const timeCountDown = () => {
+    if (counter === 0) {
+      navigate("/auth/chat");
+    } else {
+      console.log({ counterrrr: counter });
+      setCounter(counter - 1);
+    }
+  };
   const navigate = useNavigate();
 
   return (
@@ -42,6 +58,14 @@ function ThanksPopup({ open, handleClose }) {
               >
                 Previous page
               </button>
+
+              {counter ? (
+                <p>
+                  Redirecting to chat in <b>{secondsToTime(counter)}</b>
+                </p>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>

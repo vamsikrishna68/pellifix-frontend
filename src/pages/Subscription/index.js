@@ -111,6 +111,7 @@ class Subscription extends React.Component {
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
     document.body.appendChild(script);
+    this.handleThanksPopupOpen();
   }
 
   fetchMyProfile = () => {
