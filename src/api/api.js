@@ -203,6 +203,14 @@ export const fetchRazorPay = (payload) => {
   });
 };
 
+export const completeRazorPay = (payload) => {
+  return apiService({
+    url: "/razor/payment/complete",
+    method: "POST",
+    body: payload,
+  });
+};
+
 // Delete profile
 export const deletingProfile = () => {
   return apiService({

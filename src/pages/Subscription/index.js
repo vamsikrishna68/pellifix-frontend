@@ -2,6 +2,9 @@ import React from "react";
 import PaymentModal from "./PaymentModal";
 import PricingCard from "./PricingCard";
 import { ls } from "../../utils/localStorage";
+import { completeRazorPay } from "../../api/api";
+import ThanksPopup from "./ThanksPopup";
+import { ToastContainer, toast, Zoom } from "react-toastify";
 import "./Subscription.scss";
 
 const pricingDataAll = {
@@ -80,8 +83,21 @@ class Subscription extends React.Component {
       fields,
       openCardDetailModal: false,
       selectedPlan: "regular",
+      thanksPopupOpen: false,
     };
   }
+
+  handleThanksPopupOpen = () => {
+    this.setState({
+      thanksPopupOpen: true,
+    });
+  };
+
+  handleClose = () => {
+    this.setState({
+      thanksPopupOpen: false,
+    });
+  };
 
   togglePromo = (plan) => {
     this.setState({
@@ -115,6 +131,29 @@ class Subscription extends React.Component {
     this.setState({ fields, openCardDetailModal: true });
   };
 
+  completePatment = async (data) => {
+    try {
+      const response = await completeRazorPay(data);
+      if (response && response.data) {
+        this.handleThanksPopupOpen();
+        setLoading(false);
+      }
+    } catch (error) {
+      toast.error(
+        error?.message
+          ? error.message
+          : error?.response?.data?.error?.message || "Something went wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
+      setLoading(false);
+    }
+  };
+
   /**
    * Function to handle after successfull payment
    */
@@ -125,9 +164,8 @@ class Subscription extends React.Component {
       {
         fields: {
           ...this.state.fields,
-          paymentInfo: {
-            ...this.state.fields.paymentInfo,
-            cardPayment: razorpay_payment_id ? "success" : "",
+          payment_info: {
+            ...this.state.fields.payment_info,
             razorpay_payment_id,
             razorpay_order_id,
             razorpay_signature,
@@ -135,13 +173,20 @@ class Subscription extends React.Component {
         },
       },
       () => {
-        consolelog("Payment complete");
+        let { fields } = this.state;
+        let data = {
+          profile_id: fields.profileId,
+          payment_info: fields.payment_info,
+        };
+        this.completePatment(data);
+        console.log("Payment complete");
       }
     );
   };
 
   render() {
-    const { openCardDetailModal, fields, selectedPlan } = this.state;
+    const { openCardDetailModal, fields, selectedPlan, thanksPopupOpen } =
+      this.state;
     let regularData = pricingDataAll.regular;
     let assistedServiceData = pricingDataAll.assistedService;
     return (
@@ -231,6 +276,8 @@ class Subscription extends React.Component {
             )}
           </div>
         </section>
+        <ThanksPopup open={thanksPopupOpen} handleClose={this.handleClose} />
+        <ToastContainer />
       </div>
     );
   }

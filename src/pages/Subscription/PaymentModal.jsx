@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Logo from "../../assets/logo.jpg";
 import { fetchRazorPay } from "../../api/api";
 
 class PaymentModal extends React.PureComponent {
@@ -23,9 +24,9 @@ class PaymentModal extends React.PureComponent {
       const response = await fetchRazorPay(formData);
       if (response && response.status == 200) {
         console.log({ response: response.data });
-        if (response&&response.data) {
+        if (response && response.data) {
           const { id, currency, amount } = response.data;
-          console.log({id, currency, amount});
+          console.log({ id, currency, amount });
           // display bold here
           this.launchRazorpay({ id, currency, amount });
         } else {
@@ -45,7 +46,7 @@ class PaymentModal extends React.PureComponent {
       handleCancelPayment,
       closeModalHandler,
     } = this.props;
-    console.log({id:data.id});
+    console.log({ id: data.id });
     console.log("djjjjjjjjjjjjf");
     let options = {
       key: process.env.REACT_APP_RAZORPAY_KEY,
@@ -53,9 +54,10 @@ class PaymentModal extends React.PureComponent {
       currency: data.currency,
       name: c.pellifixid,
       description: "Pellifix subscription payment",
-      image: "logo.png",
+      image: Logo,
       order_id: data.id,
       handler: function (response) {
+        console.log({ response });
         // check and return for success
         if (response.error && response.error.code === "BAD_REQUEST_ERROR") {
           handleCancelPayment();
@@ -89,7 +91,7 @@ class PaymentModal extends React.PureComponent {
     };
     console.log("aaaaaaaaaaaaaaaaaaaaa");
     let rzp = new window.Razorpay(options);
-    console.log({options});
+    console.log({ options });
     rzp.open();
 
     console.log("cccccccccccccccccccc");
