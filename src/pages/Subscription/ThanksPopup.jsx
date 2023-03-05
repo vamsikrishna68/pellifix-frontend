@@ -22,7 +22,6 @@ const style = {
 function ThanksPopup({ open, handleClose }) {
   const [counter, setCounter] = useState(50);
   useEffect(() => {
-    console.log({ counter });
     const timer = setInterval(() => timeCountDown(), 1000);
     return () => clearInterval(timer);
   }, [counter]);
@@ -31,7 +30,6 @@ function ThanksPopup({ open, handleClose }) {
     if (counter === 0) {
       navigate("/auth/chat");
     } else {
-      console.log({ counterrrr: counter });
       setCounter(counter - 1);
     }
   };

@@ -46,8 +46,6 @@ class PaymentModal extends React.PureComponent {
       handleCancelPayment,
       closeModalHandler,
     } = this.props;
-    console.log({ id: data.id });
-    console.log("djjjjjjjjjjjjf");
     let options = {
       key: process.env.REACT_APP_RAZORPAY_KEY,
       amount: data.amount,
@@ -64,7 +62,6 @@ class PaymentModal extends React.PureComponent {
         } else {
           const { razorpay_signature, razorpay_order_id, razorpay_payment_id } =
             response;
-
           handelPaymentComplete({
             razorpay_signature,
             razorpay_order_id,
@@ -89,12 +86,8 @@ class PaymentModal extends React.PureComponent {
         },
       },
     };
-    console.log("aaaaaaaaaaaaaaaaaaaaa");
     let rzp = new window.Razorpay(options);
-    console.log({ options });
     rzp.open();
-
-    console.log("cccccccccccccccccccc");
   };
 
   showError = () => {

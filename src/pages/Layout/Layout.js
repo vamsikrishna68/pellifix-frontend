@@ -164,6 +164,11 @@ const Layout = () => {
   const profilePage = () => {
     navigate("/auth/profile");
   };
+
+  const historyPage = () => {
+    navigate("/auth/history");
+  };
+
   const assosiateProfilePage = () => {
     navigate("associates/viewprofile");
   };
@@ -219,6 +224,7 @@ const Layout = () => {
               >
                 Profile
               </MenuItem>
+              <MenuItem onClick={historyPage}>Payment history</MenuItem>
               <MenuItem onClick={logout}>Logout</MenuItem>
               <MenuItem onClick={deleteProfile}>Delete</MenuItem>
             </Menu>

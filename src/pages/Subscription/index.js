@@ -93,10 +93,12 @@ class Subscription extends React.Component {
     });
   };
 
-  handleClose = () => {
-    this.setState({
-      thanksPopupOpen: false,
-    });
+  handleClose = (event, reason) => {
+    if (reason !== "backdropClick") {
+      this.setState({
+        thanksPopupOpen: false,
+      });
+    }
   };
 
   togglePromo = (plan) => {
@@ -111,7 +113,7 @@ class Subscription extends React.Component {
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
     document.body.appendChild(script);
-    this.handleThanksPopupOpen();
+    // this.handleThanksPopupOpen();
   }
 
   fetchMyProfile = () => {
@@ -132,12 +134,11 @@ class Subscription extends React.Component {
     this.setState({ fields, openCardDetailModal: true });
   };
 
-  completePatment = async (data) => {
+  completePayment = async (data) => {
     try {
       const response = await completeRazorPay(data);
-      if (response && response.data) {
+      if (response && response.status === 204) {
         this.handleThanksPopupOpen();
-        setLoading(false);
       }
     } catch (error) {
       toast.error(
@@ -151,7 +152,6 @@ class Subscription extends React.Component {
           transition: Zoom,
         }
       );
-      setLoading(false);
     }
   };
 
@@ -176,10 +176,9 @@ class Subscription extends React.Component {
       () => {
         let { fields } = this.state;
         let data = {
-          profile_id: fields.profileId,
           payment_info: fields.payment_info,
         };
-        this.completePatment(data);
+        this.completePayment(data);
         console.log("Payment complete");
       }
     );

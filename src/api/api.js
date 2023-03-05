@@ -211,6 +211,15 @@ export const completeRazorPay = (payload) => {
   });
 };
 
+// Payment history
+export const getPaymentHistory = () => {
+  return apiService({
+    url: "/razor/payment",
+    method: "GET",
+  });
+};
+
+
 // Delete profile
 export const deletingProfile = () => {
   return apiService({

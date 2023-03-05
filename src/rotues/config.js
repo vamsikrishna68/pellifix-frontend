@@ -18,6 +18,7 @@ import EditProfile from "../pages/Users/EditProfile/EditProfile";
 import EditPreferences from "../pages/Users/EditPreferences/EditPreferences";
 import Chat from "../pages/Chat";
 import Subscription from "../pages/Subscription";
+import PaymentHistory from "../pages/Users/PaymentHistory";
 import AdminLogin from "../pages/Admin/AdminLogin/AdminLogin";
 import SubOrdinates from "../pages/SubOrdinates/SubOrdinates";
 import Associates from "../pages/Associates/Associates";
@@ -96,6 +97,7 @@ const routes = (isLoggedIn) => [
       { path: `profile-viewed/view-profile/:id`, element: <ViewProfile /> },
       { path: "chat", element: <Chat /> },
       { path: "subscribe", element: <Subscription /> },
+      { path: "history", element: <PaymentHistory /> },
       { path: "sub-ordinates", element: <SubOrdinates /> },
       { path: "associates", element: <Associates /> },
       { path: "admin-dashboard", element: <AdminDashboard /> },
