@@ -15,6 +15,7 @@ import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import ViewProfile from "../pages/Users/ViewProfile/ViewProfile";
 import EditProfile from "../pages/Users/EditProfile/EditProfile";
+import {CustomerId} from "../pages/Users/EditCustomer/CustomerId";
 import EditPreferences from "../pages/Users/EditPreferences/EditPreferences";
 import Chat from "../pages/Chat";
 import Subscription from "../pages/Subscription";
@@ -31,6 +32,7 @@ import AssociateEarningsInfo from "../pages/Associates/Earnings/EarningsInfo";
 import SubOrdinatesViewProfile from "../pages/SubOrdinates/ViewProfile";
 import { EditSubordinateProfile } from "../pages/SubOrdinates/EditProfile";
 import SubordinateEarningsInfo from "../pages/SubOrdinates/Earnings/EarningsInfo";
+import  CustomerDetails  from "../pages/SubOrdinates/CustomerDetails";
 
 const routes = (isLoggedIn) => [
   {
@@ -114,6 +116,7 @@ const routes = (isLoggedIn) => [
       { path: `wishList/view-profile/:id`, element: <ViewProfile /> },
       { path: "profile", element: <Profile /> },
       { path: "edit-profile", element: <EditProfile /> },
+      { path: "sub-ordinate/edit-customer-profile", element: <CustomerId /> },
       { path: "edit-preference", element: <EditPreferences /> },
       { path: "profile-viewed", element: <ViewedProfile /> },
       { path: `profile-viewed/view-profile/:id`, element: <ViewProfile /> },
@@ -128,10 +131,11 @@ const routes = (isLoggedIn) => [
       { path: "associates/earnings", element: <AssociateEarningsInfo /> },
 
       { path: "sub-ordinates", element: <SubOrdinates /> },
+      { path: "sub-ordinate/home", element: <Home /> },
       { path: "sub-ordinate/view-profile", element: <SubOrdinatesViewProfile /> },
       { path: "sub-ordinate/edit-profile", element: <EditSubordinateProfile /> },
       { path: "sub-ordinate/earnings", element: <SubordinateEarningsInfo /> },
-
+      { path: "sub-ordinate/customer-details", element: <CustomerDetails /> },
     ],
   },
   {

@@ -44,10 +44,23 @@ export const getProfileData = () => {
     method: "GET",
   });
 };
+export const getCustomerProfileData = (id) => {
+  return apiService({
+    url: `${process.env.REACT_APP_BASE_URL}/cp/v1/profiles/${id}`,
+    method: "GET",
+  });
+};
 
 export const updateProfileData = (payload) => {
   return apiService({
     url: "/profiles",
+    method: "PATCH",
+    body: payload,
+  });
+};
+export const updateCustomerProfileData = (payload,id) => {
+  return apiService({
+    url: `${process.env.REACT_APP_BASE_URL}/cp/v1/profiles/${id}`,
     method: "PATCH",
     body: payload,
   });
@@ -230,5 +243,19 @@ export const deletingProfile = () => {
   return apiService({
     url: "/profiles",
     method: "DELETE",
+  });
+};
+//get subscription page visited customer Data
+export const getSubscriptionPageVisitedCustomerData = () => {
+  return apiService({
+    url: `${process.env.REACT_APP_BASE_URL}/cp/v1/payment/page/viewed`,
+    method: "GET",
+  });
+};
+//delete subscription page visited customer Data
+export const deleteViewedContactDetails = (id) => {
+  return apiService({
+    url: `${process.env.REACT_APP_BASE_URL}/cp/v1/payment/page/viewed/${id}`,
+    method: "PATCH",
   });
 };

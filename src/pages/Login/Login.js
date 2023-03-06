@@ -60,7 +60,7 @@ const Login = () => {
             if (isAssociatelogin) {
               navigate("/auth/associates/view-profile");
             } else if (isSubOrdinatelogin) {
-              navigate("/auth/sub-ordinate/view-profile");
+              navigate("/auth/sub-ordinate/home");
             } else {
               navigate("/auth/home");
             }
