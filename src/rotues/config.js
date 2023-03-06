@@ -28,9 +28,10 @@ import PrivacyPolicy from "../pages/Agreement/PrivacyPolicy";
 import { Navigate, Outlet } from "react-router-dom";
 import AssosiateProfile from "../pages/Associates/ViewProfile/AssosiateProfile";
 import { EditAssosiateProfile } from "../pages/Associates/EditProfile/EditAssosiateProfile";
-import EarningsInfo from "../pages/Associates/Earnings/EarningsInfo";
+import AssociateEarningsInfo from "../pages/Associates/Earnings/EarningsInfo";
 import SubOrdinatesViewProfile from "../pages/SubOrdinates/ViewProfile";
 import { EditSubordinateProfile } from "../pages/SubOrdinates/EditProfile";
+import SubordinateEarningsInfo from "../pages/SubOrdinates/Earnings/EarningsInfo";
 import  CustomerDetails  from "../pages/SubOrdinates/CustomerDetails";
 
 const routes = (isLoggedIn) => [
@@ -43,7 +44,7 @@ const routes = (isLoggedIn) => [
     element: !isLoggedIn ? <Login /> : <Navigate to="/auth/home" />,
   },
   {
-    path: "admin-login",
+    path: "admin/login",
     element: !isLoggedIn ? <AdminLogin /> : <Navigate to="/auth/home" />,
   },
   {
@@ -83,6 +84,14 @@ const routes = (isLoggedIn) => [
     element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
   },
   {
+    path: "admin/forgot-password",
+    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/home" />,
+  },
+  {
+    path: "admin/reset-password/:id",
+    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
+  },
+  {
     path: "terms-and-conditions",
     element: !isLoggedIn ? (
       <TermsAndConditions />
@@ -113,20 +122,20 @@ const routes = (isLoggedIn) => [
       { path: `profile-viewed/view-profile/:id`, element: <ViewProfile /> },
       { path: "chat", element: <Chat /> },
       { path: "subscribe", element: <Subscription /> },
-      { path: "admin-dashboard", element: <AdminDashboard /> },
+      
+      { path: "admin/dashboard", element: <AdminDashboard /> },
 
       { path: "associates", element: <Associates /> },
       { path: "associates/view-profile", element: <AssosiateProfile /> },
       { path: "associates/edit-profile", element: <EditAssosiateProfile /> },
-      { path: "associates/earnings", element: <EarningsInfo /> },
+      { path: "associates/earnings", element: <AssociateEarningsInfo /> },
 
       { path: "sub-ordinates", element: <SubOrdinates /> },
       { path: "sub-ordinate/home", element: <Home /> },
       { path: "sub-ordinate/view-profile", element: <SubOrdinatesViewProfile /> },
       { path: "sub-ordinate/edit-profile", element: <EditSubordinateProfile /> },
-      { path: "sub-ordinate/earnings", element: <EarningsInfo /> },
+      { path: "sub-ordinate/earnings", element: <SubordinateEarningsInfo /> },
       { path: "sub-ordinate/customer-details", element: <CustomerDetails /> },
-
     ],
   },
   {

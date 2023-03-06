@@ -82,6 +82,14 @@ const Header = () => {
             </li>
             <li>
               <span
+                onClick={() => navigate("/admin/login")}
+                className="getstarted"
+              >
+                Admin Login
+              </span>
+            </li>
+            <li>
+              <span
                 onClick={() => navigate("/associates/login")}
                 className="getstarted"
               >
