@@ -78,7 +78,7 @@ const PaymentHistory = () => {
           justify="flex-start"
           alignItems="flex-start"
         >
-          {!loading ? (
+          {loading ? (
             skeletonLoader()
           ) : paymentHistory?.length ? (
             paymentHistory.map((d, i) => (
