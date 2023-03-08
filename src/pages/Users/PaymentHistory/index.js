@@ -69,19 +69,39 @@ const PaymentHistory = () => {
             skeletonLoader()
           ) : paymentHistory?.length ? (
             paymentHistory.map((d, i) => (
-              <Grid item xs={12} sm={6} md={3} key={i}>
+              <Grid item xs={12} sm={6} md={4} key={i}>
                 <Card
                   className="history-card"
                   elevation={1}
-                  sx={{ maxWidth: 345 }}
+                  sx={{ maxWidth: 400 }}
                 >
                   <Box
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <Typography level="body3">₹{d.amount || "-"}</Typography>
-                    <Typography fontSize="lg" fontWeight="lg">
-                      {moment(d.created_at).format("MMM DD yyyy") || "-"}
-                    </Typography>
+                    <div>
+                      <Typography level="body3">Profile ID</Typography>
+                      <Typography fontSize="lg" fontWeight="lg">
+                        {d.profile_id || "-"}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography level="body3">Amount</Typography>
+                      <Typography fontSize="lg" fontWeight="lg">
+                        ₹{d.amount || "-"}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography level="body3">Date</Typography>
+                      <Typography fontSize="lg" fontWeight="lg">
+                        {moment(d.created_at).format("MMM DD yyyy") || "-"}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Typography level="body3">Time</Typography>
+                      <Typography fontSize="lg" fontWeight="lg">
+                        {moment(d.created_at).format("HH:mm") || "-"}
+                      </Typography>
+                    </div>
                   </Box>
                 </Card>
               </Grid>
