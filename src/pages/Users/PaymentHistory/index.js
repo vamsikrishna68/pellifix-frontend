@@ -40,11 +40,25 @@ const PaymentHistory = () => {
 
   const skeletonLoader = () => {
     return [1, 2, 3, 4].map((n) => (
-      <Grid item xs={12} sm={6} md={3} key={n}>
-        <Card className="history-card" elevation={1} sx={{ maxWidth: 345 }}>
+      <Grid item xs={12} sm={6} md={4} key={n}>
+        <Card className="history-card" elevation={1} sx={{ maxWidth: 400 }}>
           <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Skeleton width="30%" />
-            <Skeleton width="30%" />
+            <div style={{ width: "23%" }}>
+              <Skeleton width="80%" />
+              <Skeleton width="80%" />
+            </div>
+            <div style={{ width: "23%" }}>
+              <Skeleton width="80%" />
+              <Skeleton width="80%" />
+            </div>
+            <div style={{ width: "23%" }}>
+              <Skeleton width="80%" />
+              <Skeleton width="80%" />
+            </div>
+            <div style={{ width: "23%" }}>
+              <Skeleton width="80%" />
+              <Skeleton width="80%" />
+            </div>
           </Box>
         </Card>
       </Grid>
@@ -64,8 +78,7 @@ const PaymentHistory = () => {
           justify="flex-start"
           alignItems="flex-start"
         >
-          {console.log({ paymentHistory })}
-          {loading ? (
+          {!loading ? (
             skeletonLoader()
           ) : paymentHistory?.length ? (
             paymentHistory.map((d, i) => (
