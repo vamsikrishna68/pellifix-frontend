@@ -23,9 +23,9 @@ export const API = {
     associateResetPassword: `${baseUrl}/cp/v1/auth/associates/password/update/`,
     subOrdinateResetPassword: `${baseUrl}/cp/v1/auth/sub-ordinate/password/update/`,
     customerResetPassword: `${baseUrl}/v1/customer/password/update/`,
-    adminResetPassowrd: `${baseUrl}/cp/v1/auth/admin/password/update/`
-
-
+    adminResetPassowrd: `${baseUrl}/cp/v1/auth/admin/password/update/`,
+    createAssosiate:  `${baseUrl}/cp/v1/associates`,
+    createSubordinate:  `${baseUrl}/cp/v1/sub-ordinates`
 
 }
 

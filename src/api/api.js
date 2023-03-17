@@ -259,3 +259,22 @@ export const deleteViewedContactDetails = (id) => {
     method: "PATCH",
   });
 };
+
+
+export const createAssosiate = (payload) => {
+
+  return apiService({
+    url: `${API.createAssosiate}`,
+    method: "POST",
+    body: payload,
+  });
+};
+
+export const createSubordinate = (payload) => {
+
+  return apiService({
+    url: `${API.createSubordinate}`,
+    method: "POST",
+    body: payload,
+  });
+};

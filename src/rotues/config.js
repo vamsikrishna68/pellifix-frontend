@@ -33,6 +33,8 @@ import SubOrdinatesViewProfile from "../pages/SubOrdinates/ViewProfile";
 import { EditSubordinateProfile } from "../pages/SubOrdinates/EditProfile";
 import SubordinateEarningsInfo from "../pages/SubOrdinates/Earnings/EarningsInfo";
 import  CustomerDetails  from "../pages/SubOrdinates/CustomerDetails";
+import { CreateAssosiate } from "../pages/Admin/CreateAssosiate/CreateAssosiate";
+import { CreateSubordinate } from "../pages/Admin/CreateSubordinate/CreateSubordinate";
 
 const routes = (isLoggedIn) => [
   {
@@ -136,6 +138,9 @@ const routes = (isLoggedIn) => [
       { path: "sub-ordinate/edit-profile", element: <EditSubordinateProfile /> },
       { path: "sub-ordinate/earnings", element: <SubordinateEarningsInfo /> },
       { path: "sub-ordinate/customer-details", element: <CustomerDetails /> },
+
+      { path: "admin/create-assosiate", element: <CreateAssosiate /> },
+      { path: "admin/create-subordinate", element: <CreateSubordinate /> },
     ],
   },
   {
