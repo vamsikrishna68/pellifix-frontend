@@ -38,7 +38,7 @@ export const CreateAssosiate = () => {
         "date_of_joining": new Date(),
         "address": "",
         "candiate_referal_code": "",
-        "designation": "",
+        // "designation": "",
         "edit_access": false,
         "payment_permission": false,
         "pan_card": "",
@@ -109,7 +109,6 @@ export const CreateAssosiate = () => {
                             return errors;
                         }}
                         onSubmit={(values, { setSubmitting }) => {
-                            debugger;
                             const data = { ...values };
                             console.log(data, formData, "data");
                             Object.keys(data).forEach((e) => {
@@ -133,7 +132,7 @@ export const CreateAssosiate = () => {
                             payload.phone = phoneNumber.replaceAll(" ", "");
                             payload.address = payload.address.toString();
                             payload.candiate_referal_code = payload.candiate_referal_code.toString();
-                            payload.designation = payload.designation.toString();
+                            // payload.designation = payload.designation.toString();
                             payload.edit_access = payload.edit_access;
                             payload.payment_permission = payload.payment_permission;
                             payload.pan_card = payload.pan_card.toString();
@@ -245,7 +244,7 @@ export const CreateAssosiate = () => {
                                                     />
                                                 </div>
                                             </ListItem>
-                                            <ListItem className="row">
+                                            {/* <ListItem className="row">
                                                 <div className="col-sm-4">
                                                     <Typography
                                                         variant="subtitle1"
@@ -267,7 +266,7 @@ export const CreateAssosiate = () => {
                                                         variant="outlined"
                                                     />
                                                 </div>
-                                            </ListItem>
+                                            </ListItem> */}
                                             <ListItem className="row">
                                                 <div className="col-sm-4">
                                                     <Typography
@@ -548,7 +547,11 @@ export const CreateAssosiate = () => {
                                                     </FormGroup>
                                                 </div>
                                             </ListItem>
-                                            <ListItem className="row">
+                                        </List>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <List>
+                                    <ListItem className="row">
                                                 <div className="col-sm-6">
                                                     <Button
                                                         style={{ marginTop: 0 , width : "100%"}}
@@ -561,8 +564,7 @@ export const CreateAssosiate = () => {
                                                     </Button>
                                                 </div>
                                             </ListItem>
-
-                                        </List>
+                                            </List>
                                     </div>
                                 </div>
                                 <br />

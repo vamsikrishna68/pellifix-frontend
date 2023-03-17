@@ -548,7 +548,13 @@ export const CreateSubordinate = () => {
                                                     </FormGroup>
                                                 </div>
                                             </ListItem>
-                                            <ListItem className="row">
+                                            
+
+                                        </List>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <List>
+                                    <ListItem className="row">
                                                 <div className="col-sm-6">
                                                     <Button
                                                         style={{ marginTop: 0 , width : "100%"}}
@@ -561,9 +567,8 @@ export const CreateSubordinate = () => {
                                                     </Button>
                                                 </div>
                                             </ListItem>
-
-                                        </List>
-                                    </div>
+                                            </List>
+                                            </div>
                                 </div>
                                 <br />
                             </form>
