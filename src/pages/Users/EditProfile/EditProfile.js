@@ -36,6 +36,7 @@ const EditProfile = () => {
   const [loading, setLoading] = useState(true);
   const [dropdownOptions, setDropdownOptions] = useState(null);
   const [states, setStates] = useState(null);
+  const [enableSaveButton, setEnableSaveButton] = useState(false);
 
   const [formData, setFormData] = useState({
     about_me: "",
@@ -171,6 +172,7 @@ const EditProfile = () => {
         });
         setImages(response.data.images);
         setLoading(false);
+        setEnableSaveButton(false);
       }
     } catch (error) {
       toast.error(
@@ -232,7 +234,13 @@ const EditProfile = () => {
           <Formik
             enableReinitialize={true}
             initialValues={formData}
-            validate={(values) => {
+            validate={(values,initialValues) => {
+              if(JSON.stringify(values) === JSON.stringify(formData)){
+              setEnableSaveButton(false);
+              }
+              else {
+              setEnableSaveButton(true);
+              }
               const errors = {};
               return errors;
             }}
@@ -332,6 +340,7 @@ const EditProfile = () => {
                   className="save_btn"
                   variant="extended"
                   color="primary"
+                  disabled={!enableSaveButton}
                 >
                   <SaveIcon /> Save Changes
                 </Fab>
