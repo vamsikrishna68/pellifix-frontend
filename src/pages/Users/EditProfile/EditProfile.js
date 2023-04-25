@@ -15,6 +15,7 @@ import {
   Autocomplete,
   IconButton,
 } from "@mui/material";
+import { isValid } from 'date-fns';
 
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -84,7 +85,7 @@ const EditProfile = () => {
     state: "",
     sub_caste: "",
     surname: "",
-    time_of_birth: new Date(),
+    time_of_birth:  "",
     weight: "",
     zodiac: "",
   });
@@ -166,6 +167,7 @@ const EditProfile = () => {
         setFormData({
           ...formData,
           ...response.data,
+          time_of_birth:response.data.time_of_birth==""?"":new Date(response.data.time_of_birth)
         });
         setImages(response.data.images);
         setLoading(false);
@@ -298,7 +300,21 @@ const EditProfile = () => {
               delete payload.end_date;
 
               console.log(payload, "payload");
-              updateProfile(payload);
+              if(isValid(payload.time_of_birth) || payload.time_of_birth == ""){
+                payload.time_of_birth=payload.time_of_birth== ""? "" :payload.time_of_birth
+                updateProfile(payload);
+
+              }else{
+                toast.error(
+                   "Time of birth format is not correct",
+                  {
+                    position: "top-right",
+                    autoClose: 1500,
+                    theme: "colored",
+                    transition: Zoom,
+                  }
+                );
+              }
             }}
           >
             {({
@@ -974,7 +990,7 @@ const EditProfile = () => {
                               onChange={(value) =>
                                 setFieldValue("time_of_birth", value, true)
                               }
-                              value={values.time_of_birth}
+                              value={values.time_of_birth== "" ? null : values.time_of_birth}
                               renderInput={(params) => (
                                 <TextField
                                   size="small"
