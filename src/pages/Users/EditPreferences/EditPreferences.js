@@ -88,6 +88,7 @@ const EditPreferences = () => {
           age: [response?.data?.age?.from, response?.data?.age?.to],
           height: [response?.data?.height?.from, response?.data?.height?.to],
         });
+        if(state)
         filterDistrictFromState(state.DISTRICTS, formData);
         setLoading(false);
       }
@@ -829,7 +830,9 @@ const EditPreferences = () => {
                               onChange={handleChange}
                               onBlur={handleBlur}
                             >
-                              {filterDistrict.map((option) => (
+                                {states && states?.DISTRICTS.filter(
+                                (obj) => values.state == obj.state_id
+                              ).map((option) => (
                                 <MenuItem key={option.id} value={option.id}>
                                   {option.name}
                                 </MenuItem>
