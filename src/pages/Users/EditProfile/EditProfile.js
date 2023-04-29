@@ -168,7 +168,7 @@ const EditProfile = () => {
         setFormData({
           ...formData,
           ...response.data,
-          time_of_birth:response.data.time_of_birth==""?"":new Date(response.data.time_of_birth)
+          time_of_birth:response.data.time_of_birth==""?"":response.data.time_of_birth
         });
         setImages(response.data.images);
         setLoading(false);
@@ -235,12 +235,12 @@ const EditProfile = () => {
             enableReinitialize={true}
             initialValues={formData}
             validate={(values,initialValues) => {
-              if(JSON.stringify(values) === JSON.stringify(formData)){
-              setEnableSaveButton(false);
-              }
-              else {
+              // if(JSON.stringify(values) === JSON.stringify(formData)){
+              // setEnableSaveButton(false);
+              // }
+              // else {
               setEnableSaveButton(true);
-              }
+              // }
               const errors = {};
               return errors;
             }}
@@ -308,21 +308,22 @@ const EditProfile = () => {
               delete payload.end_date;
 
               console.log(payload, "payload");
-              if(isValid(payload.time_of_birth) || payload.time_of_birth == ""){
-                payload.time_of_birth=payload.time_of_birth== ""? "" :payload.time_of_birth
-                updateProfile(payload);
+              // if(isValid(payload.time_of_birth) || payload.time_of_birth == ""){
+              //   payload.time_of_birth=payload.time_of_birth== ""? "" :payload.time_of_birth
+              //   updateProfile(payload);
 
-              }else{
-                toast.error(
-                   "Time of birth format is not correct",
-                  {
-                    position: "top-right",
-                    autoClose: 1500,
-                    theme: "colored",
-                    transition: Zoom,
-                  }
-                );
-              }
+              // }else{
+              //   toast.error(
+              //      "Time of birth format is not correct",
+              //     {
+              //       position: "top-right",
+              //       autoClose: 1500,
+              //       theme: "colored",
+              //       transition: Zoom,
+              //     }
+              //   );
+              // }
+              updateProfile(payload);
             }}
           >
             {({
