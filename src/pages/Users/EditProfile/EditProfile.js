@@ -108,6 +108,7 @@ const EditProfile = () => {
   }, []);
 
   const removeFile = (file) => () => {
+    setEnableSaveButton(true);
     const newFiles = [...images];
     newFiles.splice(newFiles.indexOf(file), 1);
     setImages(newFiles);
