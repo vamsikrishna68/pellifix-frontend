@@ -227,3 +227,22 @@ export const deletingProfile = () => {
     method: "DELETE",
   });
 };
+
+
+//chat
+
+export const sendChatId = (payload) => {
+  return apiService({
+    url: "/users/chats/start",
+    method: "POST",
+    body: payload,
+  });
+};
+
+export const getSecret = () => {
+  return apiService({
+    url: "/users/chats/token",
+    method: "GET",
+  });
+};
+

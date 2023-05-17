@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import { Widget, addResponseMessage } from "react-chat-widget";
-import "react-chat-widget/lib/styles.css";
-import logo from "../../assets/logo.png";
 import SubscriptionPopup from "./SubscriptionPopup";
+import { PrettyChatWindow } from "react-chat-engine-pretty";
 
 function Chat() {
   const [open, setOpen] = React.useState(false);
@@ -10,29 +8,18 @@ function Chat() {
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    addResponseMessage("Welcome to this **awesome** chat!");
-    handleOpen()
+    handleOpen();
   }, []);
 
-  const handleNewUserMessage = (newMessage) => {
-    console.log(`New message incoming! ${newMessage}`);
-    // Now send the message throught the backend API
-  };
-
-
-  const getCustomLauncher = (handleToggle) =>
-    <button onClick={handleToggle}>This is my launcher component!</button>
-
   return (
-    <div className="App">
-      <Widget
-        handleNewUserMessage={handleNewUserMessage}
-        profileAvatar={logo}
-        title="My new awesome title"
-        subtitle="And my cool subtitle"
-        launcher={handleToggle => getCustomLauncher(handleToggle)}
+    <div style={{ height: "calc(100vh - 115px)" }}>
+      <PrettyChatWindow
+        projectId={'6151a0e4-48fc-4a3d-b67c-1ee393c7699c' || ""}
+        username="pm000073" //{props.user.username}
+        secret="pellifix_PM000073" //{props.user.secret}
+        style={{ height: "100%" }}
       />
-      <SubscriptionPopup open={open} handleClose={handleClose} />
+      {/* <SubscriptionPopup open={open} handleClose={handleClose} /> */}
     </div>
   );
 }
