@@ -15,6 +15,7 @@ import {
   Autocomplete,
   IconButton,
 } from "@mui/material";
+import { isValid } from 'date-fns';
 
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -35,6 +36,7 @@ const EditProfile = () => {
   const [loading, setLoading] = useState(true);
   const [dropdownOptions, setDropdownOptions] = useState(null);
   const [states, setStates] = useState(null);
+  const [enableSaveButton, setEnableSaveButton] = useState(false);
 
   const [formData, setFormData] = useState({
     about_me: "",
@@ -84,7 +86,7 @@ const EditProfile = () => {
     state: "",
     sub_caste: "",
     surname: "",
-    time_of_birth: new Date(),
+    time_of_birth:  "",
     weight: "",
     zodiac: "",
   });
@@ -106,6 +108,7 @@ const EditProfile = () => {
   }, []);
 
   const removeFile = (file) => () => {
+    setEnableSaveButton(true);
     const newFiles = [...images];
     newFiles.splice(newFiles.indexOf(file), 1);
     setImages(newFiles);
@@ -166,9 +169,11 @@ const EditProfile = () => {
         setFormData({
           ...formData,
           ...response.data,
+          time_of_birth:response.data.time_of_birth==""?"":response.data.time_of_birth
         });
         setImages(response.data.images);
         setLoading(false);
+        setEnableSaveButton(false);
       }
     } catch (error) {
       toast.error(
@@ -230,7 +235,13 @@ const EditProfile = () => {
           <Formik
             enableReinitialize={true}
             initialValues={formData}
-            validate={(values) => {
+            validate={(values,initialValues) => {
+              // if(JSON.stringify(values) === JSON.stringify(formData)){
+              // setEnableSaveButton(false);
+              // }
+              // else {
+              setEnableSaveButton(true);
+              // }
               const errors = {};
               return errors;
             }}
@@ -298,6 +309,21 @@ const EditProfile = () => {
               delete payload.end_date;
 
               console.log(payload, "payload");
+              // if(isValid(payload.time_of_birth) || payload.time_of_birth == ""){
+              //   payload.time_of_birth=payload.time_of_birth== ""? "" :payload.time_of_birth
+              //   updateProfile(payload);
+
+              // }else{
+              //   toast.error(
+              //      "Time of birth format is not correct",
+              //     {
+              //       position: "top-right",
+              //       autoClose: 1500,
+              //       theme: "colored",
+              //       transition: Zoom,
+              //     }
+              //   );
+              // }
               updateProfile(payload);
             }}
           >
@@ -316,6 +342,7 @@ const EditProfile = () => {
                   className="save_btn"
                   variant="extended"
                   color="primary"
+                  disabled={!enableSaveButton}
                 >
                   <SaveIcon /> Save Changes
                 </Fab>
@@ -974,7 +1001,7 @@ const EditProfile = () => {
                               onChange={(value) =>
                                 setFieldValue("time_of_birth", value, true)
                               }
-                              value={values.time_of_birth}
+                              value={values.time_of_birth== "" ? null : values.time_of_birth}
                               renderInput={(params) => (
                                 <TextField
                                   size="small"

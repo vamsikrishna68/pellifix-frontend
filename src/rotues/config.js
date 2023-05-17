@@ -141,6 +141,7 @@ const routes = (isLoggedIn) => [
 
       { path: "admin/create-assosiate", element: <CreateAssosiate /> },
       { path: "admin/create-subordinate", element: <CreateSubordinate /> },
+      { path: "viewed-profile/:id", element: <ViewProfile /> },
     ],
   },
   {

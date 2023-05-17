@@ -229,7 +229,7 @@ const Register = () => {
         </div>
       ) : (
         <div
-          data-aos="fade-up"
+          // data-aos="fade-up"
           className="col-xs-12 col-sm-12 col-md-12 col-lg-7 align-center"
         >
           <h3 className="primaryColor heading1">Register</h3>
