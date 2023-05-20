@@ -120,7 +120,6 @@ class Subscription extends React.Component {
     const { fields } = this.state;
     const data = JSON.parse(ls.getItem("profile_for_reference"));
     fields = { ...fields, data };
-    console.log({ data, fields });
     this.setState({ fields });
   };
 

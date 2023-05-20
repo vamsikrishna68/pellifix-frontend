@@ -20,19 +20,19 @@ const style = {
 };
 
 function ThanksPopup({ open, handleClose }) {
-  const [counter, setCounter] = useState(50);
-  useEffect(() => {
-    const timer = setInterval(() => timeCountDown(), 1000);
-    return () => clearInterval(timer);
-  }, [counter]);
+  // const [counter, setCounter] = useState(50);
+  // useEffect(() => {
+  //   const timer = setInterval(() => timeCountDown(), 1000);
+  //   return () => clearInterval(timer);
+  // }, [counter]);
 
-  const timeCountDown = () => {
-    if (counter === 0) {
-      navigate("/auth/chat");
-    } else {
-      setCounter(counter - 1);
-    }
-  };
+  // const timeCountDown = () => {
+  //   if (counter === 0) {
+  //     navigate("/auth/chat");
+  //   } else {
+  //     setCounter(counter - 1);
+  //   }
+  // };
   const navigate = useNavigate();
 
   return (
@@ -57,13 +57,13 @@ function ThanksPopup({ open, handleClose }) {
                 Previous page
               </button>
 
-              {counter ? (
+              {/* {counter ? (
                 <p>
                   Redirecting to chat in <b>{secondsToTime(counter)}</b>
                 </p>
               ) : (
                 ""
-              )}
+              )} */}
             </div>
           </div>
         </div>

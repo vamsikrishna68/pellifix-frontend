@@ -219,6 +219,13 @@ export const getPaymentHistory = () => {
   });
 };
 
+export const getMembership = () => {
+  return apiService({
+    url: "/profiles/membership",
+    method: "GET",
+  });
+};
+
 
 // Delete profile
 export const deletingProfile = () => {

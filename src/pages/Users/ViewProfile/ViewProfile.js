@@ -11,7 +11,6 @@ import {
   Stack,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import { Buffer } from "buffer";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -36,6 +35,7 @@ const ViewProfile = () => {
   useEffect(() => {
     fetchDropdownsValues();
     getProfile();
+    // fetchSecret();
   }, []);
 
   const fetchDropdownsValues = async () => {
@@ -97,25 +97,13 @@ const ViewProfile = () => {
     }
   };
 
-  function jsonToBase64(object) {
-    const json = JSON.stringify(object);
-    console.log({ json });
-    return Buffer.from(json).toString("base64");
-  }
 
-  function base64ToJson(base64String) {
-    const json = Buffer.from(base64String, "base64").toString();
-    return JSON.parse(json);
-  }
 
   const fetchSecret = async () => {
     const response = await getSecret();
-    const token = response.data;
-    let objJsonStr = JSON.stringify(token);
-    let objJsonB64 = Buffer.from(objJsonStr).toString("base64");
-    console.log({ objJsonStr, objJsonB64 });
-    // ls.setItem("chat_keys", jsonToBase64(response.data));
-    // ls.setItem("chat_keys", base64ToJson(response.data));
+    if (response && response.data) {
+      ls.setItem("chat_keys", JSON.stringify(response?.data));
+    }
   };
 
   const startchat = async (id) => {
