@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import Logo from "../../assets/logo.jpg";
 import { fetchRazorPay } from "../../api/api";
 
 class PaymentModal extends React.PureComponent {
@@ -10,20 +11,22 @@ class PaymentModal extends React.PureComponent {
   fetchPay = async () => {
     const { customer: c } = this.props;
     let formData = {
-      amount: c.fare,
+      amount: Number(c.fare),
       receipt: c.profileId,
       notes: {
+        id: c.id,
         name: c.name,
-        email: c.email,
-        phone: c.phone,
+        // email: c.email,
+        // phone: c.phone,
       },
     };
     try {
       const response = await fetchRazorPay(formData);
       if (response && response.status == 200) {
-        console.log(response);
-        if (response.body) {
-          const { id, currency, amount } = response.body;
+        console.log({ response: response.data });
+        if (response && response.data) {
+          const { id, currency, amount } = response.data;
+          console.log({ id, currency, amount });
           // display bold here
           this.launchRazorpay({ id, currency, amount });
         } else {
@@ -49,16 +52,16 @@ class PaymentModal extends React.PureComponent {
       currency: data.currency,
       name: c.pellifixid,
       description: "Pellifix subscription payment",
-      image: "logo.png",
+      image: Logo,
       order_id: data.id,
       handler: function (response) {
+        console.log({ response });
         // check and return for success
         if (response.error && response.error.code === "BAD_REQUEST_ERROR") {
           handleCancelPayment();
         } else {
           const { razorpay_signature, razorpay_order_id, razorpay_payment_id } =
             response;
-
           handelPaymentComplete({
             razorpay_signature,
             razorpay_order_id,
