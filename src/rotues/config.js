@@ -15,6 +15,7 @@ import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import ViewProfile from "../pages/Users/ViewProfile/ViewProfile";
 import EditProfile from "../pages/Users/EditProfile/EditProfile";
+import {CustomerId} from "../pages/Users/EditCustomer/CustomerId";
 import EditPreferences from "../pages/Users/EditPreferences/EditPreferences";
 import Chat from "../pages/Chat";
 import Subscription from "../pages/Subscription";
@@ -28,7 +29,13 @@ import PrivacyPolicy from "../pages/Agreement/PrivacyPolicy";
 import { Navigate, Outlet } from "react-router-dom";
 import AssosiateProfile from "../pages/Associates/ViewProfile/AssosiateProfile";
 import { EditAssosiateProfile } from "../pages/Associates/EditProfile/EditAssosiateProfile";
-import EarningsInfo from "../pages/Associates/Earnings/EarningsInfo";
+import AssociateEarningsInfo from "../pages/Associates/Earnings/EarningsInfo";
+import SubOrdinatesViewProfile from "../pages/SubOrdinates/ViewProfile";
+import { EditSubordinateProfile } from "../pages/SubOrdinates/EditProfile";
+import SubordinateEarningsInfo from "../pages/SubOrdinates/Earnings/EarningsInfo";
+import  CustomerDetails  from "../pages/SubOrdinates/CustomerDetails";
+import { CreateAssosiate } from "../pages/Admin/CreateAssosiate/CreateAssosiate";
+import { CreateSubordinate } from "../pages/Admin/CreateSubordinate/CreateSubordinate";
 
 const routes = (isLoggedIn) => [
   {
@@ -40,7 +47,7 @@ const routes = (isLoggedIn) => [
     element: !isLoggedIn ? <Login /> : <Navigate to="/auth/home" />,
   },
   {
-    path: "admin-login",
+    path: "admin/login",
     element: !isLoggedIn ? <AdminLogin /> : <Navigate to="/auth/home" />,
   },
   {
@@ -68,6 +75,26 @@ const routes = (isLoggedIn) => [
     element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
   },
   {
+    path: "sub-ordinate/login",
+    element: !isLoggedIn ? <Login /> : <Navigate to="/auth/home" />,
+  },
+  {
+    path: "sub-ordinate/forgot-password",
+    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/home" />,
+  },
+  {
+    path: "sub-ordinate/reset-password/:id",
+    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
+  },
+  {
+    path: "admin/forgot-password",
+    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/home" />,
+  },
+  {
+    path: "admin/reset-password/:id",
+    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
+  },
+  {
     path: "terms-and-conditions",
     element: !isLoggedIn ? (
       <TermsAndConditions />
@@ -92,6 +119,7 @@ const routes = (isLoggedIn) => [
       { path: `wishList/view-profile/:id`, element: <ViewProfile /> },
       { path: "profile", element: <Profile /> },
       { path: "edit-profile", element: <EditProfile /> },
+      { path: "sub-ordinate/edit-customer-profile", element: <CustomerId /> },
       { path: "edit-preference", element: <EditPreferences /> },
       { path: "profile-viewed", element: <ViewedProfile /> },
       { path: `profile-viewed/view-profile/:id`, element: <ViewProfile /> },
@@ -99,12 +127,23 @@ const routes = (isLoggedIn) => [
       { path: "subscribe", element: <Subscription /> },
       { path: "history", element: <PaymentHistory /> },
       { path: "sub-ordinates", element: <SubOrdinates /> },
+      { path: "admin/dashboard", element: <AdminDashboard /> },
+
       { path: "associates", element: <Associates /> },
-      { path: "admin-dashboard", element: <AdminDashboard /> },
-      { path: "associates/viewprofile", element: <AssosiateProfile /> },
-      { path: "associates/editprofile", element: <EditAssosiateProfile /> },
-      { path: "associates/home", element: <Home /> },
-      { path: "associates/earnings", element: <EarningsInfo /> },
+      { path: "associates/view-profile", element: <AssosiateProfile /> },
+      { path: "associates/edit-profile", element: <EditAssosiateProfile /> },
+      { path: "associates/earnings", element: <AssociateEarningsInfo /> },
+
+      { path: "sub-ordinates", element: <SubOrdinates /> },
+      { path: "sub-ordinate/home", element: <Home /> },
+      { path: "sub-ordinate/view-profile", element: <SubOrdinatesViewProfile /> },
+      { path: "sub-ordinate/edit-profile", element: <EditSubordinateProfile /> },
+      { path: "sub-ordinate/earnings", element: <SubordinateEarningsInfo /> },
+      { path: "sub-ordinate/customer-details", element: <CustomerDetails /> },
+
+      { path: "admin/create-assosiate", element: <CreateAssosiate /> },
+      { path: "admin/create-subordinate", element: <CreateSubordinate /> },
+      { path: "viewed-profile/:id", element: <ViewProfile /> },
     ],
   },
   {

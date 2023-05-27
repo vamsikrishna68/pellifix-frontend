@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API } from "../utils/apiEndpoints";
 axios.defaults.baseURL = "https://api.pellifix.com/v1/";
 import Authorization from "../utils/authorization";
 
@@ -43,6 +44,12 @@ export const getProfileData = () => {
     method: "GET",
   });
 };
+export const getCustomerProfileData = (id) => {
+  return apiService({
+    url: `${process.env.REACT_APP_BASE_URL}/cp/v1/profiles/${id}`,
+    method: "GET",
+  });
+};
 
 export const updateProfileData = (payload) => {
   return apiService({
@@ -51,19 +58,47 @@ export const updateProfileData = (payload) => {
     body: payload,
   });
 };
+export const updateCustomerProfileData = (payload, id) => {
+  return apiService({
+    url: `${process.env.REACT_APP_BASE_URL}/cp/v1/profiles/${id}`,
+    method: "PATCH",
+    body: payload,
+  });
+};
+
 export const getAssosiateProfileData = () => {
   let assosiateProfileId = Authorization.getProfileId();
 
   return apiService({
-    url: `https://api.pellifix.com/cp/v1/associates/${assosiateProfileId}`,
+    url: `${API.associateProfile}${assosiateProfileId}`,
     method: "GET",
   });
 };
+
 export const updateAssosiateProfileData = (payload) => {
   let assosiateProfileId = Authorization.getProfileId();
 
   return apiService({
-    url: `https://api.pellifix.com/cp/v1/associates/${assosiateProfileId}`,
+    url: `${API.associateProfile}${assosiateProfileId}`,
+    method: "PATCH",
+    body: payload,
+  });
+};
+
+export const getSubordinateProfileData = () => {
+  let ProfileId = Authorization.getProfileId();
+
+  return apiService({
+    url: `${API.subOrdinateUpdateProfile}${ProfileId}`,
+    method: "GET",
+  });
+};
+
+export const updateSubordinateProfileData = (payload) => {
+  let ProfileId = Authorization.getProfileId();
+
+  return apiService({
+    url: `${API.subOrdinateUpdateProfile}${ProfileId}`,
     method: "PATCH",
     body: payload,
   });
@@ -187,9 +222,9 @@ export const updateViewedProfile = (payload) => {
 };
 
 // Wishlist
-export const getAssociateEarningsInfo = (type) => {
+export const getEarningsInfo = (type) => {
   return apiService({
-    url: `https://api.pellifix.com/cp/v1/employees/earnings?type=${type}`,
+    url: `${API.getEarnings}${type}`,
     method: "GET",
   });
 };
@@ -226,7 +261,6 @@ export const getMembership = () => {
   });
 };
 
-
 // Delete profile
 export const deletingProfile = () => {
   return apiService({
@@ -235,12 +269,35 @@ export const deletingProfile = () => {
   });
 };
 
-
 //chat
 
 export const sendChatId = (payload) => {
   return apiService({
     url: "/users/chats/start",
+    method: "POST",
+    body: payload,
+  });
+};
+
+//get subscription page visited customer Data
+export const getSubscriptionPageVisitedCustomerData = () => {
+  return apiService({
+    url: `${process.env.REACT_APP_BASE_URL}/cp/v1/payment/page/viewed`,
+    method: "GET",
+  });
+};
+
+//delete subscription page visited customer Data
+export const deleteViewedContactDetails = (id) => {
+  return apiService({
+    url: `${process.env.REACT_APP_BASE_URL}/cp/v1/payment/page/viewed/${id}`,
+    method: "PATCH",
+  });
+};
+
+export const createAssosiate = (payload) => {
+  return apiService({
+    url: `${API.createAssosiate}`,
     method: "POST",
     body: payload,
   });
@@ -253,3 +310,10 @@ export const getSecret = () => {
   });
 };
 
+export const createSubordinate = (payload) => {
+  return apiService({
+    url: `${API.createSubordinate}`,
+    method: "POST",
+    body: payload,
+  });
+};

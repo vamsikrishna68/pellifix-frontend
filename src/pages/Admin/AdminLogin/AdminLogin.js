@@ -1,14 +1,54 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, TextField, Button } from '@mui/material'
 import { NavLink, useNavigate } from "react-router-dom";
 import { Formik } from "formik";
 import './style.scss'
+import axios from "axios";
+import { ToastContainer, toast, Zoom } from "react-toastify";
+import Loading from "../../../ui-components/Loding/Loading";
+import { API } from "../../../utils/apiEndpoints";
+import Authorization from "../../../utils/authorization";
 
 const AdminLogin = () => {
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+
+    const validateLogin = (values) => {
+        setLoading(true);
+        axios
+            .post(API.adminLogin, { ...values },)
+            .then((response) => {
+                if (response && response.status == 200) {
+                    Authorization.login(response.data)
+                    setLoading(false);
+                    toast.success("Login Successfully!", {
+                        position: "top-right",
+                        autoClose: 1500,
+                        theme: "colored",
+                        transition: Zoom,
+                    });
+                    setTimeout(() => {
+                        navigate("/auth/admin/dashboard");
+                    }, 1000);
+                }
+
+            })
+            .catch((err) => {
+                toast.error(err.response.data.error.message, {
+                    position: "top-right",
+                    autoClose: 3000,
+                    theme: "colored",
+                    transition: Zoom,
+                });
+                setLoading(false);
+            });
+    }
+
     return (
         <div className="container-fluid admin-login">
             <Card elevation={4} className='card'>
                 <CardContent className='content'>
-                <h3 className="primaryColor heading1">Login</h3>
+                    <h3 className="primaryColor heading1">Login</h3>
                     <Formik
                         initialValues={{ email_id: "", password: "" }}
                         validate={(values) => {
@@ -27,7 +67,7 @@ const AdminLogin = () => {
                         }}
                         onSubmit={(values, { setSubmitting }) => {
                             setTimeout(() => {
-                                login(values);
+                                validateLogin(values);
                             }, 400);
                         }}
                     >
@@ -89,7 +129,7 @@ const AdminLogin = () => {
                                     Login
                                 </Button>
                                 <div>
-                                    <NavLink to={'/forgot-password'} className="forgotpwd">Forgot Password?</NavLink>
+                                    <NavLink to={'/admin/forgot-password'} className="forgotpwd">Forgot Password?</NavLink>
                                 </div>
                             </form>
                         )}
@@ -97,6 +137,8 @@ const AdminLogin = () => {
                 </CardContent>
 
             </Card>
+            <Loading loading={loading} />
+            <ToastContainer />
         </div>
     )
 }

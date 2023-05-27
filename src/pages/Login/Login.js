@@ -10,12 +10,15 @@ import Authorization from "../../utils/authorization";
 import AOS from 'aos';
 import './style.scss'
 import "aos/dist/aos.css";
+import { API } from "../../utils/apiEndpoints";
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const isAssociatelogin = location && location.pathname && location.pathname == '/associates/login';
+  const isSubOrdinatelogin = location && location.pathname && location.pathname == '/sub-ordinate/login';
+
   useEffect(() => {
 
     AOS.init({
@@ -29,20 +32,21 @@ const Login = () => {
 
   const login = (values) => {
     setLoading(true);
-    let userType;
+    let api;
     if (isAssociatelogin) {
-      userType = `cp/v1/auth${location.pathname}`;
+      api = API.associateLogin;
+    }else if(isSubOrdinatelogin) {
+      api = API.subOrdinateLogin;
     } else {
-      userType = `v1/customer${location.pathname}`;
+      api = API.customerLogin;
     }
-    validateUserLogin(values, `https://api.pellifix.com/${userType}`);
+    validateUserLogin(values, api);
   };
 
   const validateUserLogin = (values, api) => {
     axios
       .post(api, { ...values },)
       .then((response) => {
-        console.log(response);
         if (response && response.status == 200) {
           Authorization.login(response.data)
           setLoading(false);
@@ -54,7 +58,9 @@ const Login = () => {
           });
           setTimeout(() => {
             if (isAssociatelogin) {
-              navigate("/auth/associates/home");
+              navigate("/auth/associates/view-profile");
+            } else if (isSubOrdinatelogin) {
+              navigate("/auth/sub-ordinate/home");
             } else {
               navigate("/auth/home");
             }
@@ -63,7 +69,6 @@ const Login = () => {
 
       })
       .catch((err) => {
-        console.log(err);
         toast.error(err.response.data.error.message, {
           position: "top-right",
           autoClose: 3000,
@@ -76,7 +81,7 @@ const Login = () => {
 
   return (
     <div className="container-fluid login-container">
-      {!isAssociatelogin ?
+      {(!isAssociatelogin && !isSubOrdinatelogin) ?
         <div
           data-aos="fade-down"
           className="col-xs-12 col-sm-12 col-md-12 col-lg-7"
@@ -173,7 +178,7 @@ const Login = () => {
                 Login
               </Button>
               <div>
-                <NavLink to={isAssociatelogin ? '/associates/forgot-password' : '/forgot-password'} className="forgotpwd">Forgot Password?</NavLink>
+                <NavLink to={isAssociatelogin ? '/associates/forgot-password' : isSubOrdinatelogin ? '/sub-ordinate/forgot-password'  :'/forgot-password'} className="forgotpwd">Forgot Password?</NavLink>
               </div>
 
               <div className="newuser">

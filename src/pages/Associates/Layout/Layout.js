@@ -1,31 +1,26 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
 import "./style.scss";
 import List from "@mui/material/List";
 
 
 const AssociateLayout = (props) => {
-  const {open} = props;
-  const location = useLocation();
-  const isAssociatelogin = location && location.pathname && location.pathname.includes('associates');
-
-
+  const { open } = props;
   let sideMenu = [
     {
       title: "View Profile",
       icon: "https://cdn.lordicon.com/imamsnbq.json",
-      path: "associates/viewprofile",
+      path: "associates/view-profile",
       role: "ASSOCIATE",
     },
     {
       title: "Edit Profile",
       icon: "https://cdn.lordicon.com/wloilxuq.json",
-      path: "associates/editprofile",
+      path: "associates/edit-profile",
       role: "ASSOCIATE",
     },
     {

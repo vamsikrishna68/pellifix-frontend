@@ -8,12 +8,15 @@ import AOS from "aos";
 import "./style.scss";
 import "aos/dist/aos.css";
 import { useLocation } from "react-router-dom";
+import { API } from "../../utils/apiEndpoints";
 
 const ForgotPassword = () => {
   const [emailId, setEmailId] = useState("");
   const [loading, setLoading] = useState(false);
   const location = useLocation();
   const isAssociate = location && location.pathname && location.pathname == '/associates/forgot-password';
+  const isSubOrdinate = location && location.pathname && location.pathname == '/sub-ordinate/forgot-password';
+  const isAdmin = location && location.pathname && location.pathname == '/admin/forgot-password';
 
   useEffect(() => {
     AOS.init({
@@ -35,9 +38,13 @@ const ForgotPassword = () => {
 
     let forgotPasswordUrl;
     if (isAssociate) {
-      forgotPasswordUrl = `${process.env.REACT_APP_BASE_URL}/cp/v1/auth/associates/password/reset`
+      forgotPasswordUrl = API.associateForgotPassword
+    } else if (isSubOrdinate) {
+      forgotPasswordUrl = API.subOrdinateForgotPassword
+    } else if (isAdmin) {
+      forgotPasswordUrl = API.adminForgotPassowrd
     } else {
-      forgotPasswordUrl = `${process.env.REACT_APP_BASE_URL}/v1/customer/password/reset`
+      forgotPasswordUrl = API.customerForgotPassword
     }
     setLoading(true);
     axios
@@ -75,11 +82,11 @@ const ForgotPassword = () => {
       <ToastContainer />
       <div className="forgot-password container-fluid">
         <div className="row justify-content-center">
-            <div
-              data-aos="fade-down"
-              className="center  col-xs-12 col-sm-12 col-md-8 col-lg-8"
-              style={{ position: "relative" }}
-            ></div>
+          <div
+            data-aos="fade-down"
+            className="center  col-xs-12 col-sm-12 col-md-8 col-lg-8"
+            style={{ position: "relative" }}
+          ></div>
           <div
             data-aos="fade-up"
             className="center-left col-xs-12 col-sm-12 col-md-4 col-lg-4"

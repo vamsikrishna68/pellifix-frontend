@@ -26,6 +26,8 @@ const EditPreferences = () => {
   const [dropdownOptions, setDropdownOptions] = useState(null);
   const [states, setStates] = useState(null);
   const [filterDistrict, setFilterDistrict] = useState([]);
+  const [enableSaveButton, setEnableSaveButton] = useState(false);
+
 
   const [formData, setFormData] = useState({
     age: [],
@@ -86,10 +88,13 @@ const EditPreferences = () => {
           ...formData,
           ...response.data,
           age: [response?.data?.age?.from, response?.data?.age?.to],
+
           height: [response?.data?.height?.from, response?.data?.height?.to],
         });
+        if(state)
         filterDistrictFromState(state.DISTRICTS, formData);
         setLoading(false);
+        setEnableSaveButton(false);
       }
     } catch (error) {
       toast.error(
@@ -151,8 +156,14 @@ const EditPreferences = () => {
             enableReinitialize={true}
             initialValues={formData}
             validate={(values) => {
-              const errors = {};
-              return errors;
+              // if(JSON.stringify(values) === JSON.stringify(formData)){
+              //   setEnableSaveButton(false);
+              //   }
+              //   else {
+                setEnableSaveButton(true);
+                // }
+                const errors = {};
+                return errors;
             }}
             onSubmit={(values, { setSubmitting }) => {
               const data = { ...values };
@@ -164,10 +175,10 @@ const EditPreferences = () => {
               });
               let payload = { ...formData, ...data };
               payload.height = {
-                from: payload.height[0],
-                to: payload.height[1],
+                from: payload.height[0].toString(),
+                to: payload.height[1].toString(),
               };
-              payload.age = { from: payload.age[0], to: payload.age[1] };
+              payload.age = { from: payload.age[0].toString(), to: payload.age[1].toString() };
               payload.caste = payload.caste.toString();
               payload.country = payload.country.toString();
               payload.drinking_habits = payload.drinking_habits.toString();
@@ -210,6 +221,7 @@ const EditPreferences = () => {
                   className="save_btn"
                   variant="extended"
                   color="primary"
+                  disabled={!enableSaveButton}
                 >
                   <SaveIcon /> Save Preferences
                 </Fab>
@@ -829,7 +841,9 @@ const EditPreferences = () => {
                               onChange={handleChange}
                               onBlur={handleBlur}
                             >
-                              {filterDistrict.map((option) => (
+                                {states && states?.DISTRICTS.filter(
+                                (obj) => values.state == obj.state_id
+                              ).map((option) => (
                                 <MenuItem key={option.id} value={option.id}>
                                   {option.name}
                                 </MenuItem>

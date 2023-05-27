@@ -15,6 +15,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import AOS from "aos";
 import "./style.scss";
 import "aos/dist/aos.css";
+import { API } from "../../utils/apiEndpoints";
 
 const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
@@ -24,6 +25,8 @@ const ResetPassword = () => {
   const params = window.location.pathname.split("d/").pop();
   const location = useLocation();
   const isAssociate = location && location.pathname && location.pathname.includes('/associates/reset-password');
+  const isSubOrdinate = location && location.pathname && location.pathname.includes('/sub-ordinate/reset-password');
+  const isAdmin = location && location.pathname && location.pathname.includes('/admin/reset-password');
 
   useEffect(() => {
     AOS.init({
@@ -42,9 +45,13 @@ const ResetPassword = () => {
     let resetPasswordUrl;
 
     if (isAssociate) {
-      resetPasswordUrl = `${process.env.REACT_APP_BASE_URL}/cp/v1/auth/associates/password/update/${params}`
+      resetPasswordUrl = `${API.associateResetPassword}${params}`
+    } else if (isSubOrdinate) {
+      resetPasswordUrl = `${API.subOrdinateResetPassword}${params}`
+    }else if (isAdmin) {
+      resetPasswordUrl = `${API.adminResetPassowrd}${params}`
     } else {
-      resetPasswordUrl = `${process.env.REACT_APP_BASE_URL}/v1/customer/password/update/${params}`
+      resetPasswordUrl = `${API.customerResetPassword}${params}`
     }
     axios
       .patch(
@@ -69,6 +76,8 @@ const ResetPassword = () => {
           setTimeout(() => {
             if (isAssociate) {
               navigate("/associates/login");
+            } else if (isSubOrdinate) {
+              navigate("/sub-ordinate/login");
             } else {
               navigate("/login");
             }
