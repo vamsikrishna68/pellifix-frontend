@@ -23,6 +23,8 @@ export const API = {
     adminResetPassowrd: `${baseUrl}/cp/v1/auth/admin/password/update/`,
     adminForgotPassowrd: `${baseUrl}/cp/v1/auth/admin/password/reset`,
     adminLogin: `${baseUrl}/cp/v1/auth/admin/login`,
+    createAssosiate:  `${baseUrl}/cp/v1/associates`,
+    createSubordinate:  `${baseUrl}/cp/v1/sub-ordinates`
 
 }
 

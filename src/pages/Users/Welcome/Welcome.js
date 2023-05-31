@@ -44,7 +44,7 @@ const Welcome = () => {
                   Login
                 </span>
                 <span
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate("/register")}
                   className="download-btn"
                 >
                   Register

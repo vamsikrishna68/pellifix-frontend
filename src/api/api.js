@@ -58,7 +58,7 @@ export const updateProfileData = (payload) => {
     body: payload,
   });
 };
-export const updateCustomerProfileData = (payload,id) => {
+export const updateCustomerProfileData = (payload, id) => {
   return apiService({
     url: `${process.env.REACT_APP_BASE_URL}/cp/v1/profiles/${id}`,
     method: "PATCH",
@@ -238,6 +238,29 @@ export const fetchRazorPay = (payload) => {
   });
 };
 
+export const completeRazorPay = (payload) => {
+  return apiService({
+    url: "/razor/payment/complete",
+    method: "POST",
+    body: payload,
+  });
+};
+
+// Payment history
+export const getPaymentHistory = () => {
+  return apiService({
+    url: "/razor/payment",
+    method: "GET",
+  });
+};
+
+export const getMembership = () => {
+  return apiService({
+    url: "/profiles/membership",
+    method: "GET",
+  });
+};
+
 // Delete profile
 export const deletingProfile = () => {
   return apiService({
@@ -245,6 +268,17 @@ export const deletingProfile = () => {
     method: "DELETE",
   });
 };
+
+//chat
+
+export const sendChatId = (payload) => {
+  return apiService({
+    url: "/users/chats/start",
+    method: "POST",
+    body: payload,
+  });
+};
+
 //get subscription page visited customer Data
 export const getSubscriptionPageVisitedCustomerData = () => {
   return apiService({
@@ -252,6 +286,7 @@ export const getSubscriptionPageVisitedCustomerData = () => {
     method: "GET",
   });
 };
+
 //delete subscription page visited customer Data
 export const deleteViewedContactDetails = (id) => {
   return apiService({
@@ -265,5 +300,27 @@ export const getPaymentReferenceNumbersData = () => {
   return apiService({
     url: `${API.subordinatePaymentReferenceNumbers}`,
     method: "GET",
+  });
+};
+export const createAssosiate = (payload) => {
+  return apiService({
+    url: `${API.createAssosiate}`,
+    method: "POST",
+    body: payload,
+  });
+};
+
+export const getSecret = () => {
+  return apiService({
+    url: "/users/chats/token",
+    method: "GET",
+  });
+};
+
+export const createSubordinate = (payload) => {
+  return apiService({
+    url: `${API.createSubordinate}`,
+    method: "POST",
+    body: payload,
   });
 };

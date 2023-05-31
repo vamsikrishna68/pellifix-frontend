@@ -19,6 +19,7 @@ import {CustomerId} from "../pages/Users/EditCustomer/CustomerId";
 import EditPreferences from "../pages/Users/EditPreferences/EditPreferences";
 import Chat from "../pages/Chat";
 import Subscription from "../pages/Subscription";
+import PaymentHistory from "../pages/Users/PaymentHistory";
 import AdminLogin from "../pages/Admin/AdminLogin/AdminLogin";
 import SubOrdinates from "../pages/SubOrdinates/SubOrdinates";
 import Associates from "../pages/Associates/Associates";
@@ -37,6 +38,8 @@ import  PaymentReferences  from "../pages/SubOrdinates/PaymentReferences";
 import SubordinateHome from '../pages/SubOrdinates/Home/Home';
 import AdminHome from '../pages/Admin/Home/Home';
 import AssociatesHome from '../pages/Associates/Home/Home';
+import { CreateAssosiate } from "../pages/Admin/CreateAssosiate/CreateAssosiate";
+import { CreateSubordinate } from "../pages/Admin/CreateSubordinate/CreateSubordinate";
 
 const routes = (isLoggedIn) => [
   {
@@ -126,7 +129,8 @@ const routes = (isLoggedIn) => [
       { path: `profile-viewed/view-profile/:id`, element: <ViewProfile /> },
       { path: "chat", element: <Chat /> },
       { path: "subscribe", element: <Subscription /> },
-      
+      { path: "history", element: <PaymentHistory /> },
+      { path: "sub-ordinates", element: <SubOrdinates /> },
       { path: "admin/dashboard", element: <AdminDashboard /> },
       { path: "admin/home", element: <AdminDashboard /> },
 
@@ -143,7 +147,9 @@ const routes = (isLoggedIn) => [
       { path: "sub-ordinate/earnings", element: <SubordinateEarningsInfo /> },
       { path: "sub-ordinate/customer-details", element: <CustomerDetails /> },
       { path: "sub-ordinate/payment-references", element: <PaymentReferences /> },
-
+      { path: "admin/create-assosiate", element: <CreateAssosiate /> },
+      { path: "admin/create-subordinate", element: <CreateSubordinate /> },
+      { path: "viewed-profile/:id", element: <ViewProfile /> },
     ],
   },
   {

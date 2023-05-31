@@ -1,38 +1,71 @@
 import React, { useEffect } from "react";
-import { Widget, addResponseMessage } from "react-chat-widget";
-import "react-chat-widget/lib/styles.css";
-import logo from "../../assets/logo.png";
 import SubscriptionPopup from "./SubscriptionPopup";
+import { getMembership } from "../../api/api";
+import { PrettyChatWindow } from "react-chat-engine-pretty";
+import { ls } from "../../utils/localStorage";
+import { Buffer } from "buffer";
 
 function Chat() {
   const [open, setOpen] = React.useState(false);
+  const [credential, setCredential] = React.useState(
+    JSON.parse(ls.getItem("chat_keys")) || ""
+  );
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   useEffect(() => {
-    addResponseMessage("Welcome to this **awesome** chat!");
-    handleOpen()
+    if (credential && credential.token) {
+      setCredential(base64ToJson(credential.token));
+    } else {
+      setCredential("");
+    }
+    checkSubscription();
   }, []);
+  function base64ToJson(base64String) {
+    const json = Buffer.from(base64String, "base64").toString();
+    return JSON.parse(json);
+  }
 
-  const handleNewUserMessage = (newMessage) => {
-    console.log(`New message incoming! ${newMessage}`);
-    // Now send the message throught the backend API
+  const checkSubscription = async () => {
+    try {
+      const response = await getMembership();
+      if (response && response.status >= 200 && response.status <= 300) {
+        if (response?.data?.is_membership) {
+          handleClose();
+        } else {
+          handleOpen();
+        }
+      }
+    } catch (error) {
+      handleClose();
+      toast.error(
+        error?.response?.data?.error?.message || "Something wend wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
+    }
   };
 
-
-  const getCustomLauncher = (handleToggle) =>
-    <button onClick={handleToggle}>This is my launcher component!</button>
-
   return (
-    <div className="App">
-      <Widget
-        handleNewUserMessage={handleNewUserMessage}
-        profileAvatar={logo}
-        title="My new awesome title"
-        subtitle="And my cool subtitle"
-        launcher={handleToggle => getCustomLauncher(handleToggle)}
-      />
-      <SubscriptionPopup open={open} handleClose={handleClose} />
+    <div style={{ height: "calc(100vh - 115px)" }}>
+      {open ? (
+        <SubscriptionPopup open={open} handleClose={handleClose} />
+      ) : credential?.username && credential?.secret ? (
+        <>
+          <PrettyChatWindow
+            projectId={process.env.REACT_APP_CHAT_PROJECT_ID || ""}
+            username={credential.username}
+            secret={credential.secret}
+            style={{ height: "100%" }}
+          />
+        </>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

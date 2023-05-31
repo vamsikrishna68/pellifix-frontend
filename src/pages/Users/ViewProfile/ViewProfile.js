@@ -7,24 +7,35 @@ import {
   Typography,
   Grid,
   Skeleton,
+  Button,
+  Stack,
 } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
 import { ToastContainer, toast, Zoom } from "react-toastify";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getProfileDetails, updateViewedProfile } from "../../../api/api";
+import {
+  getProfileDetails,
+  updateViewedProfile,
+  sendChatId,
+  getSecret,
+} from "../../../api/api";
 import { ls } from "../../../utils/localStorage";
 import moment from "moment";
 import "./style.scss";
 
 const ViewProfile = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [profileDetails, setProfileDetails] = useState(null);
   const [dropdownOptions, setDropdownOptions] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [chatLoading, setChatLoading] = useState(false);
 
   useEffect(() => {
     fetchDropdownsValues();
     getProfile();
+    // fetchSecret();
   }, []);
 
   const fetchDropdownsValues = async () => {
@@ -74,6 +85,43 @@ const ViewProfile = () => {
         });
       }
     } catch (error) {
+      toast.error(
+        error?.response?.data?.error?.message || "Something wend wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
+    }
+  };
+
+
+
+  const fetchSecret = async () => {
+    const response = await getSecret();
+    if (response && response.data) {
+      ls.setItem("chat_keys", JSON.stringify(response?.data));
+    }
+  };
+
+  const startchat = async (id) => {
+    setChatLoading(true);
+    try {
+      let data = {
+        reciverId: id,
+      };
+      const response = await sendChatId(data);
+      if (response && response.status >= 200 && response.status <= 300) {
+        setChatLoading(false);
+        fetchSecret();
+        setTimeout(() => {
+          navigate("/auth/chat");
+        }, 500);
+      }
+    } catch (error) {
+      setChatLoading(false);
       toast.error(
         error?.response?.data?.error?.message || "Something wend wrong",
         {
@@ -167,6 +215,7 @@ const ViewProfile = () => {
                   <Typography gutterBottom variant="h4" component="div">
                     {profileDetails?.name || "-"}
                   </Typography>
+
                   <Typography sx={{ fontSize: 14 }} color="text.secondary">
                     {profileDetails?.about_me || "-"}
                   </Typography>
@@ -487,6 +536,18 @@ const ViewProfile = () => {
                                 x.id === parseInt(profileDetails?.eating_habit)
                             ).map((x) => x.name)} */}
                           </Typography>
+                        </div>
+                      </ListItem>
+                      <ListItem className="row">
+                        <div className="col-sm-10">
+                          <Button
+                            onClick={() => startchat(profileDetails?.id)}
+                            variant="contained"
+                            endIcon={<SendIcon />}
+                            disabled={chatLoading}
+                          >
+                            Chat now
+                          </Button>
                         </div>
                       </ListItem>
                     </List>
