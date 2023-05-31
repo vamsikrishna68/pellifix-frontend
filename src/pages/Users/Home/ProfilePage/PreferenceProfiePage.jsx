@@ -17,7 +17,7 @@ import Search from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Pagination } from "@mui/material";
 import usePagination from "./Pagination";
-import { getHoroscopeMatches } from "../../../api/api";
+import { getPreferenceMatches } from "../../../../api/api";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 
 export default function App() {
@@ -31,7 +31,7 @@ export default function App() {
 
   const fetchRecords = async () => {
     try {
-      const response = await getHoroscopeMatches();
+      const response = await getPreferenceMatches();
       if (response && response.data) {
         setRecords(response.data);
         setLoading(false);

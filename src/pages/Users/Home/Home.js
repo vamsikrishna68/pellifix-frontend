@@ -19,9 +19,9 @@ import {
   getPreferenceMatches,
   getHoroscopeMatches,
   sendWishList,
-} from "../../api/api";
+} from "../../../api/api";
 import axios from "axios";
-import { ls } from "../../utils/localStorage";
+import { ls } from "../../../utils/localStorage";
 import { NavLink, useNavigate } from "react-router-dom";
 
 // register lottie and define custom element

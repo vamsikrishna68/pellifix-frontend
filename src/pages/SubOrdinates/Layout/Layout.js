@@ -14,6 +14,12 @@ const SubordinateLayout = (props) => {
 
   let sideMenu = [
     {
+      title: "Home",
+      icon: "https://cdn.lordicon.com/gmzxduhd.json",
+      path: "sub-ordinate/home",
+      role: "SUB_ORDINATE",
+    },
+    {
       title: "View Profile",
       icon: "https://cdn.lordicon.com/imamsnbq.json",
       path: "sub-ordinate/view-profile",
@@ -32,7 +38,8 @@ const SubordinateLayout = (props) => {
       role: "SUB_ORDINATE",
     },
   ];
-  let subordinateSidemenu =[
+
+  let subordinateSidemenu = [
     {
       title: "Edit customer",
       icon: "https://cdn.lordicon.com/dxjqoygy.json",
@@ -44,7 +51,13 @@ const SubordinateLayout = (props) => {
       icon: "https://cdn.lordicon.com/tyounuzx.json",
       path: "sub-ordinate/customer-details",
       role: "SUB_ORDINATE",
-  },
+    },
+    {
+      title: "Payment References",
+      icon: "https://cdn.lordicon.com/lupuorrc.json",
+      path: "sub-ordinate/payment-references",
+      role: "SUB_ORDINATE",
+    },
   ];
 
   return (
@@ -92,7 +105,7 @@ const SubordinateLayout = (props) => {
           </NavLink>
         ) : null
       )}
-      <Divider/>
+      <Divider />
       {subordinateSidemenu.map((menu, index) =>
         menu.role === "SUB_ORDINATE" ? (
           <NavLink

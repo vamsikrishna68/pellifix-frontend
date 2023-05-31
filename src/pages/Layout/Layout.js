@@ -23,7 +23,7 @@ import UserLayout from "../Users/Layout/Layout";
 import { deletingProfile } from "../../api/api";
 import SubordinateLayout from "../SubOrdinates/Layout/Layout";
 import { ls } from "../../utils/localStorage";
-
+import AdminLayout from '../Admin/Layout/Layout'
 const drawerWidth = 280;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
@@ -132,6 +132,8 @@ const Layout = () => {
     location && location.pathname && location.pathname.includes("associates");
   const isSubordinateLogin =
     location && location.pathname && location.pathname.includes("sub-ordinate");
+  const isAdminLogin =
+    location && location.pathname && location.pathname.includes("admin");
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -253,9 +255,11 @@ const Layout = () => {
         ) :
           isSubordinateLogin ?
             <SubordinateLayout open={open} />
-            : (
-              <UserLayout open={open} />
-            )}
+            : isAdminLogin ?
+              <AdminLayout open={open} />
+              : (
+                <UserLayout open={open} />
+              )}
       </Drawer>
       <Main open={open}>
         <DrawerHeader />

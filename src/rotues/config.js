@@ -4,12 +4,12 @@ import Welcome from "../pages/Users/Welcome/Welcome";
 import Register from "../pages/Register/Register";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
 import Layout from "../pages/Layout/Layout";
-import Home from "../pages/Home/Home";
+import Home from "../pages/Users/Home/Home";
 import WishList from "../pages/Users/WishList";
 import ViewedProfile from "../pages/Users/ViewedProfile";
-import DailyRecomProfilePage from "../pages/Home/ProfilePage";
-import HoroscopeProfilePage from "../pages/Home/ProfilePage/HoroscopeProfilePage";
-import PreferenceProfiePage from "../pages/Home/ProfilePage/PreferenceProfiePage";
+import DailyRecomProfilePage from "../pages/Users/Home/ProfilePage";
+import HoroscopeProfilePage from "../pages/Users/Home/ProfilePage/HoroscopeProfilePage";
+import PreferenceProfiePage from "../pages/Users/Home/ProfilePage/PreferenceProfiePage";
 import Profile from "../pages/Users/Profile/Profile";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
@@ -33,6 +33,10 @@ import SubOrdinatesViewProfile from "../pages/SubOrdinates/ViewProfile";
 import { EditSubordinateProfile } from "../pages/SubOrdinates/EditProfile";
 import SubordinateEarningsInfo from "../pages/SubOrdinates/Earnings/EarningsInfo";
 import  CustomerDetails  from "../pages/SubOrdinates/CustomerDetails";
+import  PaymentReferences  from "../pages/SubOrdinates/PaymentReferences";
+import SubordinateHome from '../pages/SubOrdinates/Home/Home';
+import AdminHome from '../pages/Admin/Home/Home';
+import AssociatesHome from '../pages/Associates/Home/Home';
 
 const routes = (isLoggedIn) => [
   {
@@ -45,11 +49,11 @@ const routes = (isLoggedIn) => [
   },
   {
     path: "admin/login",
-    element: !isLoggedIn ? <AdminLogin /> : <Navigate to="/auth/home" />,
+    element: !isLoggedIn ? <AdminLogin /> : <Navigate to="/auth/admin/home" />,
   },
   {
     path: "associates/login",
-    element: !isLoggedIn ? <Login /> : <Navigate to="/auth/home" />,
+    element: !isLoggedIn ? <Login /> : <Navigate to="/auth/associates/home" />,
   },
   {
     path: "register",
@@ -61,7 +65,7 @@ const routes = (isLoggedIn) => [
   },
   {
     path: "associates/forgot-password",
-    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/home" />,
+    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/associates/home" />,
   },
   {
     path: "reset-password/:id",
@@ -69,27 +73,27 @@ const routes = (isLoggedIn) => [
   },
   {
     path: "associates/reset-password/:id",
-    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
+    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/associates/home" />,
   },
   {
     path: "sub-ordinate/login",
-    element: !isLoggedIn ? <Login /> : <Navigate to="/auth/home" />,
+    element: !isLoggedIn ? <Login /> : <Navigate to="/auth/sub-ordinate/home" />,
   },
   {
     path: "sub-ordinate/forgot-password",
-    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/home" />,
+    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/sub-ordinate/home" />,
   },
   {
     path: "sub-ordinate/reset-password/:id",
-    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
+    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/sub-ordinate/home" />,
   },
   {
     path: "admin/forgot-password",
-    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/home" />,
+    element: !isLoggedIn ? <ForgotPassword /> : <Navigate to="/auth/admin/home" />,
   },
   {
     path: "admin/reset-password/:id",
-    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/home" />,
+    element: !isLoggedIn ? <ResetPassword /> : <Navigate to="/auth/admin/home" />,
   },
   {
     path: "terms-and-conditions",
@@ -124,18 +128,22 @@ const routes = (isLoggedIn) => [
       { path: "subscribe", element: <Subscription /> },
       
       { path: "admin/dashboard", element: <AdminDashboard /> },
+      { path: "admin/home", element: <AdminDashboard /> },
 
       { path: "associates", element: <Associates /> },
       { path: "associates/view-profile", element: <AssosiateProfile /> },
       { path: "associates/edit-profile", element: <EditAssosiateProfile /> },
       { path: "associates/earnings", element: <AssociateEarningsInfo /> },
+      { path: "associates/home", element: <AssociatesHome /> },
 
       { path: "sub-ordinates", element: <SubOrdinates /> },
-      { path: "sub-ordinate/home", element: <Home /> },
+      { path: "sub-ordinate/home", element: <SubordinateHome /> },
       { path: "sub-ordinate/view-profile", element: <SubOrdinatesViewProfile /> },
       { path: "sub-ordinate/edit-profile", element: <EditSubordinateProfile /> },
       { path: "sub-ordinate/earnings", element: <SubordinateEarningsInfo /> },
       { path: "sub-ordinate/customer-details", element: <CustomerDetails /> },
+      { path: "sub-ordinate/payment-references", element: <PaymentReferences /> },
+
     ],
   },
   {

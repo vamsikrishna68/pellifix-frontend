@@ -14,33 +14,28 @@ const AssociateLayout = (props) => {
     {
       title: "Home",
       icon: "https://cdn.lordicon.com/gmzxduhd.json",
-      path: "associates/home",
-      role: "ASSOCIATE",
+      path: "admin/home",
+      role: "ADMIN",
     },
     {
       title: "View Profile",
       icon: "https://cdn.lordicon.com/imamsnbq.json",
-      path: "associates/view-profile",
-      role: "ASSOCIATE",
+      path: "admin/view-profile",
+      role: "ADMIN",
     },
     {
       title: "Edit Profile",
       icon: "https://cdn.lordicon.com/wloilxuq.json",
-      path: "associates/edit-profile",
-      role: "ASSOCIATE",
+      path: "admin/edit-profile",
+      role: "ADMIN",
     },
-    {
-      title: "Earnings",
-      icon: "https://cdn.lordicon.com/zpxybbhl.json",
-      path: "associates/Earnings",
-      role: "ASSOCIATE",
-    },
+    
   ];
 
   return (
     <List sx={{ paddingTop: 0 }}>
       {sideMenu.map((menu, index) =>
-        menu.role === "ASSOCIATE" ? (
+        menu.role === "ADMIN" ? (
           <NavLink
             to={menu.path}
             className={({ isActive }) =>

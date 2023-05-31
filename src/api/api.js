@@ -259,3 +259,11 @@ export const deleteViewedContactDetails = (id) => {
     method: "PATCH",
   });
 };
+
+//get subscription page visited customer Data
+export const getPaymentReferenceNumbersData = () => {
+  return apiService({
+    url: `${API.subordinatePaymentReferenceNumbers}`,
+    method: "GET",
+  });
+};

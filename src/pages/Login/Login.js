@@ -58,7 +58,7 @@ const Login = () => {
           });
           setTimeout(() => {
             if (isAssociatelogin) {
-              navigate("/auth/associates/view-profile");
+              navigate("/auth/associates/home");
             } else if (isSubOrdinatelogin) {
               navigate("/auth/sub-ordinate/home");
             } else {

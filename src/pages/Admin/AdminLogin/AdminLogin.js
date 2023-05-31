@@ -28,7 +28,7 @@ const AdminLogin = () => {
                         transition: Zoom,
                     });
                     setTimeout(() => {
-                        navigate("/auth/admin/dashboard");
+                        navigate("/auth/admin/home");
                     }, 1000);
                 }
 

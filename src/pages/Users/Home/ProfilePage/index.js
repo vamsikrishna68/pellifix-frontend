@@ -17,7 +17,7 @@ import Search from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Pagination } from "@mui/material";
 import usePagination from "./Pagination";
-import { getPreferenceMatches } from "../../../api/api";
+import { getDailyRecommendation } from "../../../../api/api";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 
 export default function App() {
@@ -31,7 +31,7 @@ export default function App() {
 
   const fetchRecords = async () => {
     try {
-      const response = await getPreferenceMatches();
+      const response = await getDailyRecommendation();
       if (response && response.data) {
         setRecords(response.data);
         setLoading(false);
@@ -59,11 +59,14 @@ export default function App() {
     : records?.data?.length
     ? records?.data?.length
     : 0;
+  console.log({ length });
   const count = Math.ceil(length / PER_PAGE);
+  console.log({ count });
   const _DATA = usePagination(
     copyList.length ? copyList : records?.data,
     PER_PAGE
   );
+  console.log({ _DATA });
 
   const handleChange = (e, p) => {
     setPage(p);
@@ -118,6 +121,7 @@ export default function App() {
           justify="flex-start"
           alignItems="flex-start"
         >
+          {console.log({ copyList, dkjjj: _DATA.currentData() })}
           {loading ? (
             skeletonLoader()
           ) : _DATA.currentData().length ? (
