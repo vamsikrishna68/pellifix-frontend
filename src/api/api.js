@@ -181,6 +181,13 @@ export const getPreferenceMatches = () => {
   });
 };
 
+export const getProfileAssist = () => {
+  return apiService({
+    url: "/profiles/assist",
+    method: "GET",
+  });
+};
+
 // Marriage profile
 export const getProfileDetails = (id) => {
   return apiService({

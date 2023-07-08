@@ -11,6 +11,7 @@ import DailyRecomProfilePage from "../pages/Home/ProfilePage";
 import HoroscopeProfilePage from "../pages/Home/ProfilePage/HoroscopeProfilePage";
 import PreferenceProfiePage from "../pages/Home/ProfilePage/PreferenceProfiePage";
 import Profile from "../pages/Users/Profile/Profile";
+import ProfileAssist from "../pages/Home/ProfilePage/ProfileAssist";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import ViewProfile from "../pages/Users/ViewProfile/ViewProfile";
@@ -123,6 +124,7 @@ const routes = (isLoggedIn) => [
       { path: "edit-preference", element: <EditPreferences /> },
       { path: "profile-viewed", element: <ViewedProfile /> },
       { path: `profile-viewed/view-profile/:id`, element: <ViewProfile /> },
+      { path: "profile-assist", element: <ProfileAssist /> },
       { path: "chat", element: <Chat /> },
       { path: "subscribe", element: <Subscription /> },
       { path: "history", element: <PaymentHistory /> },

@@ -1,4 +1,4 @@
-import * as React from "react";
+import  React, { useState, useEffect } from "react";
 import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -20,7 +20,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Authorization from "../../utils/authorization";
 import AssociateLayout from "../Associates/Layout/Layout";
 import UserLayout from "../Users/Layout/Layout";
-import { deletingProfile } from "../../api/api";
+import { deletingProfile, getMembership } from "../../api/api";
 import SubordinateLayout from "../SubOrdinates/Layout/Layout";
 import { ls } from "../../utils/localStorage";
 
@@ -125,6 +125,7 @@ const Layout = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const [open, setOpen] = React.useState(false);
+  const [membership, setMembership] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const role = "";
   const location = useLocation();
@@ -132,6 +133,10 @@ const Layout = () => {
     location && location.pathname && location.pathname.includes("associates");
   const isSubordinateLogin =
     location && location.pathname && location.pathname.includes("sub-ordinate");
+
+  useEffect(() => {
+    checkSubscription();
+  }, []);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -143,21 +148,41 @@ const Layout = () => {
 
   const logout = () => {
     Authorization.logout();
-    ls.clear()
-  }
+    ls.clear();
+  };
 
   const deleteProfile = async () => {
     try {
       const response = await deletingProfile();
       if (response.status === 204) {
         Authorization.logout();
-        ls.clear()
+        ls.clear();
       }
     } catch (error) {
       toast.error(
         error?.message
           ? error.message
           : error?.response?.data?.error?.message || "Something went wrong",
+        {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        }
+      );
+    }
+  };
+
+  const checkSubscription = async () => {
+    try {
+      const response = await getMembership();
+      if (response && response.status >= 200 && response.status <= 300) {
+        setMembership(response?.data?.is_membership);
+      }
+    } catch (error) {
+      setMembership(false);
+      toast.error(
+        error?.response?.data?.error?.message || "Something wend wrong",
         {
           position: "top-right",
           autoClose: 1500,
@@ -231,7 +256,13 @@ const Layout = () => {
               onClose={handleClose}
             >
               <MenuItem
-                onClick={isAssociatelogin ? assosiateProfilePage : isSubordinateLogin ? subOrdinateProfilePage : profilePage}
+                onClick={
+                  isAssociatelogin
+                    ? assosiateProfilePage
+                    : isSubordinateLogin
+                    ? subOrdinateProfilePage
+                    : profilePage
+                }
               >
                 Profile
               </MenuItem>
@@ -256,12 +287,11 @@ const Layout = () => {
 
         {isAssociatelogin ? (
           <AssociateLayout open={open} />
-        ) :
-          isSubordinateLogin ?
-            <SubordinateLayout open={open} />
-            : (
-              <UserLayout open={open} />
-            )}
+        ) : isSubordinateLogin ? (
+          <SubordinateLayout open={open} />
+        ) : (
+          <UserLayout open={open} membership={membership} />
+        )}
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
