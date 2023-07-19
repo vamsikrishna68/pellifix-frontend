@@ -6,7 +6,7 @@ const Footer = () => {
 
   return (
     <footer id="footer">
-      <div className="footer-newsletter">
+      {/* <div className="footer-newsletter">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-6">
@@ -22,7 +22,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="footer-top">
         <div className="container">
