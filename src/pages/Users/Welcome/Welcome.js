@@ -67,7 +67,7 @@ const Welcome = () => {
       </section>
 
       <main id="main">
-        <section id="features" className="features">
+        {/* <section id="features" className="features">
           <div className="container">
             <div className="section-title">
               <h2>App Features</h2>
@@ -167,9 +167,9 @@ const Welcome = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
-        <section id="details" className="details">
+        {/* <section id="details" className="details">
           <div className="container">
             <div className="row content">
               <div className="col-md-4" data-aos="fade-right">
@@ -339,9 +339,9 @@ const Welcome = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
-        <section id="faq" className="faq section-bg">
+        {/* <section id="faq" className="faq section-bg">
           <div className="container" data-aos="fade-up">
             <div className="section-title">
               <h2>Frequently Asked Questions</h2>
@@ -489,18 +489,12 @@ const Welcome = () => {
               </ul>
             </div>
           </div>
-        </section>
+        </section> */}
 
         <section id="contact" className="contact">
           <div className="container" data-aos="fade-up">
             <div className="section-title">
               <h2>Contact</h2>
-              <p>
-                Magnam dolores commodi suscipit. Necessitatibus eius consequatur
-                ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam
-                quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.
-                Quia fugiat sit in iste officiis commodi quidem hic quas.
-              </p>
             </div>
 
             <div className="row">

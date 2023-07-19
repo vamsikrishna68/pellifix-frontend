@@ -52,7 +52,7 @@ const Header = () => {
                 Home
               </a>
             </li>
-            <li>
+            {/* <li>
               <a className="nav-link scrollto" href="#features">
                 App Features
               </a>
@@ -61,7 +61,7 @@ const Header = () => {
               <a className="nav-link scrollto" href="#faq">
                 F.A.Q
               </a>
-            </li>
+            </li> */}
             <li>
               <a className="nav-link scrollto" href="#contact">
                 Contact
