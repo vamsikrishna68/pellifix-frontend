@@ -58,6 +58,12 @@ const UserLayout = (props) => {
       role: membership ? "USER" : "",
     },
     {
+      title: "Compare Profile",
+      icon: "https://cdn.lordicon.com/imamsnbq.json",
+      path: "compare-profile",
+      role: membership ? "USER" : "",
+    },
+    {
       title: "Admin Dashboard",
       icon: "https://cdn.lordicon.com/imamsnbq.json",
       path: "admin-dashboard",

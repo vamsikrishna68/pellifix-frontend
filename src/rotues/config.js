@@ -12,11 +12,12 @@ import HoroscopeProfilePage from "../pages/Home/ProfilePage/HoroscopeProfilePage
 import PreferenceProfiePage from "../pages/Home/ProfilePage/PreferenceProfiePage";
 import Profile from "../pages/Users/Profile/Profile";
 import ProfileAssist from "../pages/Home/ProfilePage/ProfileAssist";
+import CompareProfile from "../pages/Home/ProfilePage/CompareProfile";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword/ResetPassword";
 import ViewProfile from "../pages/Users/ViewProfile/ViewProfile";
 import EditProfile from "../pages/Users/EditProfile/EditProfile";
-import {CustomerId} from "../pages/Users/EditCustomer/CustomerId";
+import { CustomerId } from "../pages/Users/EditCustomer/CustomerId";
 import EditPreferences from "../pages/Users/EditPreferences/EditPreferences";
 import Chat from "../pages/Chat";
 import Subscription from "../pages/Subscription";
@@ -34,7 +35,7 @@ import AssociateEarningsInfo from "../pages/Associates/Earnings/EarningsInfo";
 import SubOrdinatesViewProfile from "../pages/SubOrdinates/ViewProfile";
 import { EditSubordinateProfile } from "../pages/SubOrdinates/EditProfile";
 import SubordinateEarningsInfo from "../pages/SubOrdinates/Earnings/EarningsInfo";
-import  CustomerDetails  from "../pages/SubOrdinates/CustomerDetails";
+import CustomerDetails from "../pages/SubOrdinates/CustomerDetails";
 import { CreateAssosiate } from "../pages/Admin/CreateAssosiate/CreateAssosiate";
 import { CreateSubordinate } from "../pages/Admin/CreateSubordinate/CreateSubordinate";
 
@@ -125,6 +126,7 @@ const routes = (isLoggedIn) => [
       { path: "profile-viewed", element: <ViewedProfile /> },
       { path: `profile-viewed/view-profile/:id`, element: <ViewProfile /> },
       { path: "profile-assist", element: <ProfileAssist /> },
+      { path: "compare-profile", element: <CompareProfile /> },
       { path: "chat", element: <Chat /> },
       { path: "subscribe", element: <Subscription /> },
       { path: "history", element: <PaymentHistory /> },
@@ -138,8 +140,14 @@ const routes = (isLoggedIn) => [
 
       { path: "sub-ordinates", element: <SubOrdinates /> },
       { path: "sub-ordinate/home", element: <Home /> },
-      { path: "sub-ordinate/view-profile", element: <SubOrdinatesViewProfile /> },
-      { path: "sub-ordinate/edit-profile", element: <EditSubordinateProfile /> },
+      {
+        path: "sub-ordinate/view-profile",
+        element: <SubOrdinatesViewProfile />,
+      },
+      {
+        path: "sub-ordinate/edit-profile",
+        element: <EditSubordinateProfile />,
+      },
       { path: "sub-ordinate/earnings", element: <SubordinateEarningsInfo /> },
       { path: "sub-ordinate/customer-details", element: <CustomerDetails /> },
 

@@ -29,6 +29,7 @@ const WishList = () => {
     try {
       const response = await getWishList();
       if (response && response.data) {
+        debugger;
         setWishList(response.data);
         setLoading(false);
       }
@@ -104,7 +105,13 @@ const WishList = () => {
                             console.log("Button clicked");
                           }}
                         >
-                          <FavoriteIcon />
+                          <FavoriteIcon
+                            style={{
+                              color: d.is_liked
+                                ? "#D53833"
+                                : "rgba(0, 0, 0, 0.54)",
+                            }}
+                          />
                         </IconButton>
                       }
                       title={d.name}
