@@ -22,6 +22,8 @@ import {
 } from "../../api/api";
 import axios from "axios";
 import { ls } from "../../utils/localStorage";
+import Loading from "../../ui-components/Loding/Loading";
+
 import { NavLink, useNavigate } from "react-router-dom";
 
 // register lottie and define custom element
@@ -56,6 +58,7 @@ const Home = () => {
 
   const [isLiked, setIsLiked] = useState([]);
   const [short_id, setShortId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchDropdownsValues();
@@ -82,8 +85,8 @@ const Home = () => {
       name: response?.data?.name,
       email: response?.data?.email_id,
       phone: response?.data?.mobileno,
-      profileId:response?.data?.profile_id,
-      id:response?.data?.id
+      profileId: response?.data?.profile_id,
+      id: response?.data?.id,
     };
     ls.setItem("profile_for_reference", JSON.stringify(profileData));
   };
@@ -192,33 +195,46 @@ const Home = () => {
     setShortId(item.id);
   };
 
-  useEffect(() => {
-    if (short_id > 0) {
-      let data = {
-        is_liked: isLiked,
-        short_id: Number(short_id),
-      };
-      handleUpdateWishlist(data);
-    }
-  }, [short_id > 0]);
+  // useEffect(() => {
+  //   if (short_id > 0) {
+  //     let data = {
+  //       is_liked: isLiked,
+  //       short_id: Number(short_id),
+  //     };
+  //     handleUpdateWishlist(data);
+  //   }
+  // }, [short_id > 0]);
 
-  const handleUpdateWishlist = (data) => {
+  const shortListProfile = (id, is_liked) => {
+    setLoading(true);
+    let data = {
+      is_liked: is_liked,
+      short_id: Number(id),
+    };
+    handleUpdateWishlist(data, is_liked);
+  };
+
+  const handleUpdateWishlist = async (data, is_liked) => {
     try {
-      const response = sendWishList(data);
-      if (response) {
-        toast.success(
-          response.message || "Profile is shortlisted successfully",
-          {
-            position: "top-right",
-            autoClose: 1500,
-            theme: "colored",
-            transition: Zoom,
-          }
-        );
+      const response = await sendWishList(data);
+      let message = "";
+      if (response && response.data) {
+        if (is_liked) {
+          message = "Profile is shortlisted successfully";
+        } else {
+          message = "Profile is removed successfully";
+        }
+        toast.success(response.message || message, {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        });
         setIsLiked("");
         fetchDailyRecommendation();
         fetchHoroscopeMatches();
         fetchPreferenceMatches();
+        setLoading(false);
       }
     } catch (err) {
       toast.error(err.response.data.error.message, {
@@ -227,6 +243,7 @@ const Home = () => {
         theme: "colored",
         transition: Zoom,
       });
+      setLoading(false);
       setIsLiked("");
     }
   };
@@ -257,6 +274,7 @@ const Home = () => {
           onClickLike={onClickLike}
           content={dailyRecommendation}
           responsive={responsive}
+          shortListProfile={shortListProfile}
         />
       )}
       <br />
@@ -315,6 +333,10 @@ const Home = () => {
           responsive={responsive}
         />
       )}
+      <Loading
+        styles={{ top: 0, left: 0, right: 0, width: "100%" }}
+        loading={loading}
+      />
 
       <ToastContainer />
     </Box>

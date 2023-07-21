@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 function createData(category, firstProfile, secondProfile) {
   return { category, firstProfile, secondProfile };
@@ -14,7 +15,11 @@ function createData(category, firstProfile, secondProfile) {
 
 export default function CompareProfileTable({ profileOne, profileTwo }) {
   const rows = [
-    createData("Name", profileOne.name, profileTwo.name),
+    createData(
+      "Name",
+      profileOne.name + " " + profileOne.surname,
+      profileTwo.name + " " + profileTwo.surname
+    ),
     createData("Age", profileOne.age, profileTwo.age),
     createData("Height (In CM)", profileOne.height, profileTwo.height),
     createData("Weight (In KG)", profileOne.weight, profileTwo.weight),
@@ -29,7 +34,7 @@ export default function CompareProfileTable({ profileOne, profileTwo }) {
     createData(
       "Date Of Birth",
       moment(profileOne.dob).format("MMM DD yyyy"),
-      moment(profileTwo.dob).format("MM DD yyyy")
+      moment(profileTwo.dob).format("MMM DD yyyy")
     ),
     createData(
       "Mother Tounge",
@@ -37,22 +42,35 @@ export default function CompareProfileTable({ profileOne, profileTwo }) {
       profileTwo.mother_tongue
     ),
   ];
+  const navigate = useNavigate();
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell align="left">Avatar</TableCell>
+            <TableCell align="left" style={{ fontWeight: 700 }}>
+              Avatar
+            </TableCell>
             <TableCell align="center">
               <img
-                style={{ width: "300px" }}
-                src={
-                  "https://img.pellifix.com/profiles/pm000003_409895ed-ae9f-4817-96b6-371bff80981d.jpg"
+                style={{ width: "300px", cursor: "pointer" }}
+                src={profileTwo.image}
+                onClick={() =>
+                  navigate(`/auth/home/view-profile/${profileOne.id}`)
                 }
+                title="View Profile"
               ></img>
             </TableCell>
             <TableCell align="center">
-              <img style={{ width: "300px" }} src={profileTwo.image}></img>
+              <img
+                style={{ width: "300px", cursor: "pointer" }}
+                src={profileTwo.image}
+                onClick={() =>
+                  navigate(`/auth/home/view-profile/${profileTwo.id}`)
+                }
+                title="View Profile"
+              ></img>
             </TableCell>
           </TableRow>
         </TableHead>
@@ -62,7 +80,12 @@ export default function CompareProfileTable({ profileOne, profileTwo }) {
               key={row.name}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell align="left" component="th" scope="row">
+              <TableCell
+                align="left"
+                component="th"
+                scope="row"
+                style={{ fontWeight: 700 }}
+              >
                 {row.category}
               </TableCell>
               <TableCell align="center" component="th" scope="row">

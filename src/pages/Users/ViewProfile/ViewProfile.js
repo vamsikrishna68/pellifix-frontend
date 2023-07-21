@@ -97,8 +97,6 @@ const ViewProfile = () => {
     }
   };
 
-
-
   const fetchSecret = async () => {
     const response = await getSecret();
     if (response && response.data) {
@@ -149,10 +147,27 @@ const ViewProfile = () => {
       <Card className="wishlist-card" elevation={8}>
         <CardContent>
           <div className="row">
-            <div className="row">
-              <div className="col-sm-12">
-                <Skeleton width="50%" />
-              </div>
+            <div className="col-sm-6">
+              <Card className="wishlist-card" elevation={8}>
+                <Skeleton variant="rectangular" height={158} />
+                <Skeleton />
+                <Skeleton width="60%" />
+              </Card>
+            </div>
+
+            <div className="col-sm-6">
+              <List>
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                  <ListItem className="row">
+                    <div className="col-sm-6">
+                      <Skeleton />
+                    </div>
+                    <div className="col-sm-6">
+                      <Skeleton />
+                    </div>
+                  </ListItem>
+                ))}
+              </List>
             </div>
             <div className="col-sm-6">
               <List>
@@ -168,6 +183,7 @@ const ViewProfile = () => {
                 ))}
               </List>
             </div>
+
             <div className="col-sm-6">
               <List>
                 {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
@@ -191,7 +207,7 @@ const ViewProfile = () => {
   return (
     <div className="container-fluid view_profile">
       <div className="vp-flex">
-        <div className="profile_image">
+        {/* <div className="profile_image">
           <div className="profile_basic_details">
             <h1>Profile</h1>
             {loading ? (
@@ -223,7 +239,7 @@ const ViewProfile = () => {
               </Card>
             )}
           </div>
-        </div>
+        </div> */}
         <div className="profile_details">
           {loading ? (
             skeletonProfileLoader()
@@ -237,6 +253,50 @@ const ViewProfile = () => {
                         Personal Information
                       </Typography>
                     </div>
+                  </div>
+                  <div className="col-sm-6">
+                    <List>
+                      <Card
+                        elevation={8}
+                        raised
+                        sx={{
+                          maxWidth: "90%",
+                          maxHeight: "20%",
+                          margin: "0 auto",
+                          padding: "0.1em",
+                        }}
+                      >
+                        <CardMedia
+                          component="img"
+                          height="300"
+                          sx={{
+                            padding: "1em 1em 0 1em",
+                            objectFit: "contain",
+                          }}
+                          image={
+                            profileDetails?.image !== "" &&
+                            profileDetails?.image !== undefined &&
+                            profileDetails?.image !== null
+                              ? // process.env.REACT_APP_BASE_URL + "/" +
+                                profileDetails?.image
+                              : ""
+                          }
+                          alt="green iguana"
+                        />
+                        <CardContent>
+                          <Typography gutterBottom variant="h4" component="div">
+                            {profileDetails?.name || "-"}
+                          </Typography>
+
+                          <Typography
+                            sx={{ fontSize: 14 }}
+                            color="text.secondary"
+                          >
+                            {profileDetails?.about_me || "-"}
+                          </Typography>
+                        </CardContent>
+                      </Card>
+                    </List>
                   </div>
                   <div className="col-sm-6">
                     <List>
@@ -277,9 +337,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.gender || "-"}
-                            {/* {dropdownOptions?.GENDER.filter(
-                              (x) => x.id === parseInt(profileDetails?.gender)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -300,11 +357,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.physical_status || "-"}
-                            {/* {dropdownOptions?.PHYSICAL_STATUS.filter(
-                              (x) =>
-                                x.id ===
-                                parseInt(profileDetails?.physical_status)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -345,11 +397,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.marital_status || "-"}
-                            {/* {dropdownOptions?.MARITAL_STATUS.filter(
-                              (x) =>
-                                x.id ===
-                                parseInt(profileDetails?.marital_status)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -370,10 +417,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.smoking_habit || "-"}
-                            {/* {dropdownOptions?.SMOKING.filter(
-                              (x) =>
-                                x.id === parseInt(profileDetails?.smoking_habit)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -394,18 +437,9 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.drinking_habit || "-"}
-                            {/* {dropdownOptions?.DRINKING.filter(
-                              (x) =>
-                                x.id ===
-                                parseInt(profileDetails?.drinking_habit)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
-                    </List>
-                  </div>
-                  <div className="col-sm-6">
-                    <List>
                       <ListItem className="row">
                         <div className="col-sm-6">
                           <Typography
@@ -463,10 +497,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.body_type || "-"}
-                            {/* {dropdownOptions?.BODY_TYPES.filter(
-                              (x) =>
-                                x.id === parseInt(profileDetails?.body_type)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -507,10 +537,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.mother_tongue || "-"}
-                            {/* {dropdownOptions?.MOTHER_TOUNGE_LIST.filter(
-                              (x) =>
-                                x.id === parseInt(profileDetails?.mother_tongue)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -531,10 +557,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.eating_habit || "-"}
-                            {/* {dropdownOptions?.FOOD.filter(
-                              (x) =>
-                                x.id === parseInt(profileDetails?.eating_habit)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -581,9 +603,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.religion || "-"}
-                            {/* {dropdownOptions?.RELIGION.filter(
-                              (x) => x.id === parseInt(profileDetails?.religion)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -604,9 +623,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.caste || "-"}
-                            {/* {dropdownOptions?.CASTE.filter(
-                              (x) => x.id === parseInt(profileDetails?.caste)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -638,9 +654,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.star || "-"}
-                            {/* {dropdownOptions?.STAR_LIST.filter(
-                              (x) => x.id === parseInt(profileDetails?.star)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -661,9 +674,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.zodiac || "-"}
-                            {/* {dropdownOptions?.ZODIAC_LIST.filter(
-                              (x) => x.id === parseInt(profileDetails?.zodiac)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -778,9 +788,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.country || "-"}
-                            {/* {dropdownOptions?.COUNTRYS.filter(
-                              (x) => x.id === parseInt(profileDetails?.country)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -801,9 +808,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.citizen || "-"}
-                            {/* {dropdownOptions?.COUNTRYS.filter(
-                              (x) => x.id === parseInt(profileDetails?.citizen)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -835,10 +839,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.education || "-"}
-                            {/* {dropdownOptions?.EDUCATION.filter(
-                              (x) =>
-                                x.id === parseInt(profileDetails?.education)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -879,10 +879,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.occupation || "-"}
-                            {/* {dropdownOptions?.OCCUPATION.filter(
-                              (x) =>
-                                x.id === parseInt(profileDetails?.occupation)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -903,9 +899,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.country || "-"}
-                            {/* {dropdownOptions?.COUNTRYS.filter(
-                              (x) => x.id === parseInt(profileDetails?.country)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -926,9 +919,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.salary || "-"}
-                            {/* {dropdownOptions?.SALARY.filter(
-                              (x) => x.id === parseInt(profileDetails?.salary)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -961,10 +951,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.family_type || "-"}
-                            {/* {dropdownOptions?.FAMILY_TYPE.filter(
-                              (x) =>
-                                x.id === parseInt(profileDetails?.family_type)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
@@ -1031,10 +1017,6 @@ const ViewProfile = () => {
                             component="div"
                           >
                             {profileDetails?.family_status || "-"}
-                            {/* {dropdownOptions?.FAMILY_STATUS.filter(
-                              (x) =>
-                                x.id === parseInt(profileDetails?.family_status)
-                            ).map((x) => x.name)} */}
                           </Typography>
                         </div>
                       </ListItem>
