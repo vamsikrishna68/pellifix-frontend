@@ -45,6 +45,7 @@ const HomeCarousel = (props) => {
                         style={{
                           color: d.is_liked ? "#D53833" : "rgba(0, 0, 0, 0.54)",
                         }}
+                        onClick={()=>props.shortListProfile(d.id,!d.is_liked)}
                       />
                     </IconButton>
                   }

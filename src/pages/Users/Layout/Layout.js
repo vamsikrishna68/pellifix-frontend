@@ -59,7 +59,7 @@ const UserLayout = (props) => {
     },
     {
       title: "Compare Profile",
-      icon: "https://cdn.lordicon.com/imamsnbq.json",
+      icon: "https://cdn.lordicon.com/qvzrpodt.json",
       path: "compare-profile",
       role: membership ? "USER" : "",
     },

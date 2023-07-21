@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { getWishList } from "../../../api/api";
-import { getProfileDetails } from "../../../api/api";
+import { getProfileDetails, getCustomerProfileData } from "../../../api/api";
 
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import CompareProfileTable from "./CompareProfileTable";
@@ -101,7 +101,7 @@ const CompareProfile = () => {
     <div className="row">
       <div className="col-sm-4">
         <FormControl size="small" fullWidth>
-          <InputLabel>Profile</InputLabel>
+          <InputLabel>Select </InputLabel>
           <Select
             name="wishlistData"
             value={profileOne || ""}
@@ -119,7 +119,7 @@ const CompareProfile = () => {
       </div>
       <div className="col-sm-4">
         <FormControl size="small" fullWidth>
-          <InputLabel>Profile</InputLabel>
+          <InputLabel>Select </InputLabel>
           <Select
             name="wishlistData"
             value={profileTwo || ""}
@@ -142,6 +142,7 @@ const CompareProfile = () => {
           variant="contained"
           color="primary"
           onClick={getProfilesData}
+          disabled={!(profileTwo && profileOne)}
         >
           Compare
         </Button>
