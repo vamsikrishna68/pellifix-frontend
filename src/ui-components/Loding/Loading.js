@@ -1,12 +1,11 @@
 import CircularProgress from "@mui/material/CircularProgress";
 
-const Loading = ({ loading,styles }) => {
+const Loading = ({ loading, styles }) => {
   return (
     <>
       {loading ? (
         <div
           style={{
-            ...styles,
             zIndex: 10000,
             width: "100%",
             height: "100vh",
@@ -15,6 +14,7 @@ const Loading = ({ loading,styles }) => {
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: "rgba(0,0,0,0.4)",
+            ...styles,
           }}
         >
           <CircularProgress color="primary" />

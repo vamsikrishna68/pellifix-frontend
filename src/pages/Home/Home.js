@@ -303,6 +303,7 @@ const Home = () => {
           onClickLike={onClickLike}
           content={horoscopeMatches}
           responsive={responsive}
+          shortListProfile={shortListProfile}
         />
       )}
       <br />
@@ -331,10 +332,18 @@ const Home = () => {
           onClickLike={onClickLike}
           content={preferenceMatches}
           responsive={responsive}
+          shortListProfile={shortListProfile}
         />
       )}
       <Loading
-        styles={{ top: 0, left: 0, right: 0, width: "100%" }}
+        styles={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          width: "100%",
+          height: "100%",
+        }}
         loading={loading}
       />
 
