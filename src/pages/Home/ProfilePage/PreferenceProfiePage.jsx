@@ -19,8 +19,11 @@ import { Pagination } from "@mui/material";
 import usePagination from "./Pagination";
 import { getPreferenceMatches } from "../../../api/api";
 import { ToastContainer, toast, Zoom } from "react-toastify";
+import { useParams, useNavigate } from "react-router-dom";
+
 
 export default function App() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [records, setRecords] = useState([]);
   const [copyList, setCopyList] = useState([]);
@@ -130,7 +133,7 @@ export default function App() {
                 >
                   <ButtonBase
                     className="wishlist-btn"
-                    onClick={() => navigate(`/auth/wishlist/${d.id}`)}
+                    onClick={() => navigate(`/auth/home/view-profile/${d.id}`)}
                   >
                     <CardMedia
                       component="img"

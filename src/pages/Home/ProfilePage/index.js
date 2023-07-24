@@ -17,10 +17,13 @@ import Search from "@mui/icons-material/Search";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Pagination } from "@mui/material";
 import usePagination from "./Pagination";
-import { getDailyRecommendation } from "../../../api/api";
+import { getDailyRecommendation, sendWishList } from "../../../api/api";
 import { ToastContainer, toast, Zoom } from "react-toastify";
+import { useParams, useNavigate } from "react-router-dom";
+import Loading from "../../../ui-components/Loding/Loading";
 
 export default function App() {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [records, setRecords] = useState([]);
   const [copyList, setCopyList] = useState([]);
@@ -92,7 +95,43 @@ export default function App() {
       </Grid>
     ));
   };
+  const shortListProfile = (id, is_liked) => {
+    setLoading(true);
+    let data = {
+      is_liked: is_liked,
+      short_id: Number(id),
+    };
+    handleUpdateWishlist(data, is_liked);
+  };
 
+  const handleUpdateWishlist = async (data, is_liked) => {
+    try {
+      const response = await sendWishList(data);
+      let message = "";
+      if (response && response.data) {
+        if (is_liked) {
+          message = "Profile is shortlisted successfully";
+        } else {
+          message = "Profile is removed successfully";
+        }
+        toast.success(response.message || message, {
+          position: "top-right",
+          autoClose: 1500,
+          theme: "colored",
+          transition: Zoom,
+        });
+        fetchRecords();
+      }
+    } catch (err) {
+      toast.error(err.response.data.error.message, {
+        position: "top-right",
+        autoClose: 3000,
+        theme: "colored",
+        transition: Zoom,
+      });
+      setLoading(false);
+    }
+  };
   return (
     <>
       <Box p="5">
@@ -134,7 +173,7 @@ export default function App() {
                 >
                   <ButtonBase
                     className="wishlist-btn"
-                    onClick={() => navigate(`/auth/wishlist/${d.id}`)}
+                    onClick={() => navigate(`/auth/home/view-profile/${d.id}`)}
                   >
                     <CardMedia
                       component="img"
@@ -153,7 +192,14 @@ export default function App() {
                             console.log("Button clicked");
                           }}
                         >
-                          <FavoriteIcon />
+                          <FavoriteIcon
+                            style={{
+                              color: d.is_liked
+                                ? "#D53833"
+                                : "rgba(0, 0, 0, 0.54)",
+                            }}
+                            onClick={() => shortListProfile(d.id, !d.is_liked)}
+                          />
                         </IconButton>
                       }
                       title={d.name}
@@ -189,6 +235,18 @@ export default function App() {
           onChange={handleChange}
         />
       </Stack>
+      <Loading
+        styles={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          width: "100%",
+          height: "100%",
+        }}
+        loading={loading}
+      />
+
       <ToastContainer />
     </>
   );
