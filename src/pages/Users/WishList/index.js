@@ -86,7 +86,7 @@ const WishList = () => {
                 >
                   <ButtonBase
                     className="wishlist-btn"
-                    onClick={() => navigate(`/auth/wishlist/${d.id}`)}
+                    onClick={() => navigate(`/auth/viewed-profile/${d.id}`)}
                   >
                     <CardMedia
                       component="img"
