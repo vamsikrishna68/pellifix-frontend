@@ -20,13 +20,15 @@ import usePagination from "./Pagination";
 import { getPreferenceMatches } from "../../../api/api";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import { useParams, useNavigate } from "react-router-dom";
-
+import useWishList from "../../../utils/useWishList";
+import Loading from "../../../ui-components/Loding/Loading";
 
 export default function App() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [records, setRecords] = useState([]);
   const [copyList, setCopyList] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     fetchRecords();
@@ -34,9 +36,11 @@ export default function App() {
 
   const fetchRecords = async () => {
     try {
+      setLoader(true);
       const response = await getPreferenceMatches();
       if (response && response.data) {
         setRecords(response.data);
+        setLoader(false);
         setLoading(false);
       }
     } catch (error) {
@@ -51,9 +55,11 @@ export default function App() {
           transition: Zoom,
         }
       );
+      setLoader(false);
       setLoading(false);
     }
   };
+  const { handleUpdateWishlist } = useWishList(fetchRecords);
 
   let [page, setPage] = useState(1);
   const PER_PAGE = 10;
@@ -91,6 +97,10 @@ export default function App() {
         </Card>
       </Grid>
     ));
+  };
+  const shortListButtonClicked = (id, is_liked) => {
+    setLoader(true);
+    handleUpdateWishlist(id, !is_liked);
   };
 
   return (
@@ -152,7 +162,16 @@ export default function App() {
                             console.log("Button clicked");
                           }}
                         >
-                          <FavoriteIcon />
+                          <FavoriteIcon
+                            style={{
+                              color: d.is_liked
+                                ? "#D53833"
+                                : "rgba(0, 0, 0, 0.54)",
+                            }}
+                            onClick={() =>
+                              shortListButtonClicked(d.id, d.is_liked)
+                            }
+                          />
                         </IconButton>
                       }
                       title={d.name}
@@ -188,6 +207,17 @@ export default function App() {
           onChange={handleChange}
         />
       </Stack>
+      <Loading
+        styles={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          width: "100%",
+          height: "100%",
+        }}
+        loading={loader}
+      />
       <ToastContainer />
     </>
   );
