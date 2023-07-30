@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import "./WishList.scss";
 import { useNavigate } from "react-router-dom";
+import useWishList from "../../../utils/useWishList";
 
 const WishList = () => {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const WishList = () => {
       setLoading(false);
     }
   };
+  const { handleUpdateWishlist } = useWishList(fetchWishList);
 
   const skeletonLoader = () => {
     return [1, 2, 3, 4].map((n) => (
@@ -59,6 +61,11 @@ const WishList = () => {
         </Card>
       </Grid>
     ));
+  };
+
+  const shortListButtonClicked = (id, is_liked) => {
+    setLoading(true);
+    handleUpdateWishlist(id, !is_liked);
   };
 
   return (
@@ -103,6 +110,7 @@ const WishList = () => {
                             event.stopPropagation();
                             event.preventDefault();
                             console.log("Button clicked");
+                            shortListButtonClicked(d.id, d.is_liked);
                           }}
                         >
                           <FavoriteIcon
